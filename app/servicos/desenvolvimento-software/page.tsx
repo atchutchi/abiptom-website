@@ -201,27 +201,27 @@ export default function DesenvolvimentoSoftwarePage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="JavaScript" className="h-16 w-auto mb-2" src="/placeholder.svg?height=64&width=64" />
+              <img alt="JavaScript" className="h-16 w-auto mb-2" src="/images/servicos/JavaScript-logo.png" />
               <span className="text-sm font-medium">JavaScript</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="Python" className="h-16 w-auto mb-2" src="/placeholder.svg?height=64&width=64" />
+              <img alt="Python" className="h-16 w-auto mb-2" src="/images/servicos/Python-logo-notext.svg.png" />
               <span className="text-sm font-medium">Python</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="React" className="h-16 w-auto mb-2" src="/placeholder.svg?height=64&width=64" />
+              <img alt="React" className="h-16 w-auto mb-2" src="/images/servicos/React_Logo_SVG.svg.png" />
               <span className="text-sm font-medium">React</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="Node.js" className="h-16 w-auto mb-2" src="/placeholder.svg?height=64&width=64" />
+              <img alt="Node.js" className="h-16 w-auto mb-2" src="/images/servicos/Node.js_logo.svg" />
               <span className="text-sm font-medium">Node.js</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="Flutter" className="h-16 w-auto mb-2" src="/placeholder.svg?height=64&width=64" />
+              <img alt="Flutter" className="h-16 w-auto mb-2" src="/images/servicos/flutter-logo-white-inset.svg" />
               <span className="text-sm font-medium">Flutter</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="SQL" className="h-16 w-auto mb-2" src="/placeholder.svg?height=64&width=64" />
+              <img alt="SQL" className="h-16 w-auto mb-2" src="/images/servicos/SQL-Database.png" />
               <span className="text-sm font-medium">SQL</span>
             </div>
           </div>
