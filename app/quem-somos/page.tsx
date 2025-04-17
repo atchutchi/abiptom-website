@@ -151,11 +151,9 @@ export default function AboutPage() {
               </div>
               <div className="space-y-2 text-center">
                 <h3 className="text-xl font-bold text-black font-bauhaus">Clayton da Cruz L.J. Correia</h3>
-                <p className="text-sm text-yellow font-semibold">Engenheiro Informático</p>
+                <p className="text-sm text-yellow font-semibold">Chief Technology Officer (CTO)</p>
                 <p className="text-sm text-gray-dark">
-                  Engenheiro informático e programador com uma rica experiência profissional internacional e um
-                  histórico comprovado de contribuições significativas em workshops e missões técnicas relacionadas à
-                  inovação digital.
+                  Com mais de 15 anos de experiência em desenvolvimento de software, infraestruturas digitais e gestão de sistemas, lidera a arquitetura técnica e operacional dos projectos digitais da empresa.
                 </p>
               </div>
             </div>
@@ -172,10 +170,48 @@ export default function AboutPage() {
               </div>
               <div className="space-y-2 text-center">
                 <h3 className="text-xl font-bold text-black font-bauhaus">Emerson Demésio Mendes</h3>
-                <p className="text-sm text-yellow font-semibold">Economista</p>
+                <p className="text-sm text-yellow font-semibold">Director Geral</p>
                 <p className="text-sm text-gray-dark">
                   Economista altamente qualificado, com formação em Economia com especialização em Finanças e Crédito
                   pela Universidade Estatal Orçamentária de Construção Civil de Rostov-on-Don, Federação da Rússia.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center space-y-4">
+              <div className="overflow-hidden rounded-full">
+                <Image
+                  alt="Carlos Rittos dos Santos"
+                  className="aspect-square object-cover w-40 h-40"
+                  src="/images/team/carlos-rittos-dos-santos.jpeg"
+                  width={160}
+                  height={160}
+                  priority
+                />
+              </div>
+              <div className="space-y-2 text-center">
+                <h3 className="text-xl font-bold text-black font-bauhaus">Carlos Rittos dos Santos</h3>
+                <p className="text-sm text-yellow font-semibold">Designer Gráfico</p>
+                <p className="text-sm text-gray-dark">
+                  É especialista em design editorial, identidade visual e conteúdos digitais, com domínio avançado das ferramentas Adobe (Photoshop, Illustrator, InDesign, Premiere), além de experiência em marketing digital e design de interfaces web. Em ABIPTOM, lidera o desenvolvimento de soluções visuais que aliam criatividade, estratégia e funcionalidade.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center space-y-4">
+              <div className="overflow-hidden rounded-full">
+                <Image
+                  alt="Arianna Duarte"
+                  className="aspect-square object-cover w-40 h-40"
+                  src="/images/team/arianna.jfif"
+                  width={160}
+                  height={160}
+                  priority
+                />
+              </div>
+              <div className="space-y-2 text-center">
+                <h3 className="text-xl font-bold text-black font-bauhaus">Arianna Duarte</h3>
+                <p className="text-sm text-yellow font-semibold">Gestora de Marketing e B2B</p>
+                <p className="text-sm text-gray-dark">
+                  Com formação em Engenharia de Geociências e especialização em marketing e vendas, lidera a implementação de estratégias comerciais, gestão de redes sociais e captação de novos clientes. Atua no desenvolvimento de propostas, negociação de contratos e análise de métricas, garantindo uma comunicação eficaz e alinhada com os objetivos da empresa.
                 </p>
               </div>
             </div>
