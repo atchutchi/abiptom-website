@@ -33,7 +33,7 @@ export function HeroSection() {
             <img
               alt="ABIPTOM Hero Image"
               className="aspect-video object-cover w-full"
-              src="/placeholder.svg?height=400&width=600"
+              src="/images/abiptom.png"
             />
           </div>
         </div>
