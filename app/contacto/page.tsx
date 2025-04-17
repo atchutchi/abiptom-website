@@ -10,10 +10,10 @@ export default function ContactPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="bg-blue-600 py-16 md:py-24">
+      <section className="bg-black py-16 md:py-24">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-white">Contacto</h1>
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow-400 font-bauhaus">Contacto</h1>
             <p className="max-w-[700px] text-blue-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contacto conosco e descubra como podemos ajudar sua empresa a crescer.
             </p>
@@ -35,21 +35,21 @@ export default function ContactPage() {
               </div>
               <div className="space-y-4">
                 <div className="flex items-start">
-                  <MapPin className="h-5 w-5 mr-2 mt-0.5 text-blue-600" />
+                  <MapPin className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
                   <div>
                     <h3 className="font-bold">Endereço</h3>
                     <p className="text-gray-500">Bairro Ajuda IA Fase, Bissau, Guiné-Bissau</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Phone className="h-5 w-5 mr-2 mt-0.5 text-blue-600" />
+                  <Phone className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
                   <div>
                     <h3 className="font-bold">Telefone</h3>
                     <p className="text-gray-500">+245 955 949 429 | +245 966 865 331</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Mail className="h-5 w-5 mr-2 mt-0.5 text-blue-600" />
+                  <Mail className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
                   <div>
                     <h3 className="font-bold">Email</h3>
                     <p className="text-gray-500">info@abiptom.gw</p>
@@ -105,7 +105,7 @@ export default function ContactPage() {
                       <Label htmlFor="message">Mensagem</Label>
                       <Textarea className="min-h-[120px]" id="message" placeholder="Digite sua mensagem aqui" />
                     </div>
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Button type="submit" className="w-full bg-black text-yellow-400 hover:bg-gray-900 font-bauhaus">
                       Enviar Mensagem
                     </Button>
                   </form>
