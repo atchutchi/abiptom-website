@@ -2,6 +2,40 @@
 
 Um website moderno e responsivo para a ABIPTOM, uma agência criativa em Guiné-Bissau especializada em design, desenvolvimento web, produção de vídeo e marketing digital.
 
+## 🆕 Atualizações Recentes
+
+- **Assistente Virtual**: Implementação de um chatbot inteligente para atendimento 24/7
+- **Esquema de cores atualizado**: Implementação consistente do esquema de cores preto e amarelo em todas as páginas
+- **Fonte Bauhaus**: Adição da fonte Bauhaus para títulos e elementos de destaque
+- **Hero Section**: Atualização da imagem principal com o logo oficial da ABIPTOM
+- **Design System**: Padronização de componentes UI com estilo consistente 
+- **Páginas de Serviço**: Redesign completo das páginas de serviços com o novo esquema visual
+- **Página "Trabalhe Conosco"**: Reformulação com nova identidade visual
+- **Formulários**: Design modernizado com bordas amarelas e estilo coerente
+
+## 🤖 Assistente Virtual
+
+O site conta com um assistente virtual inteligente powered by Hugging Face que:
+
+- Fornece informações sobre a empresa e serviços
+- Responde dúvidas comuns dos visitantes
+- Encaminha solicitações de orçamento
+- Disponível 24/7 para atendimento inicial
+
+### Tecnologias do Assistente
+- Hugging Face Inference API
+- React Dialog para interface
+- Processamento de Linguagem Natural
+- Respostas contextualizadas
+
+### Funcionalidades do Chatbot
+- Chat em tempo real
+- Respostas personalizadas baseadas no contexto
+- Interface moderna e responsiva
+- Integração com informações da empresa
+- Redirecionamento inteligente para equipe comercial
+- Suporte a múltiplos tipos de consultas
+
 ## 🚀 Tecnologias Utilizadas
 
 - **Next.js 14** - Framework React com App Router
@@ -10,6 +44,8 @@ Um website moderno e responsivo para a ABIPTOM, uma agência criativa em Guiné-
 - **Shadcn/ui** - Componentes de UI reutilizáveis
 - **Lucide React** - Ícones modernos
 - **React** - Biblioteca JavaScript para UI
+- **Hugging Face** - API de Inteligência Artificial para o chatbot
+- **Radix UI** - Componentes acessíveis para o chat
 
 ## 📁 Estrutura do Projeto
 
@@ -18,34 +54,47 @@ abiptom-website/
 ├── app/
 │   ├── components/         # Componentes reutilizáveis
 │   ├── blog/              # Página do blog
-│   ├── contato/           # Página de contato
+│   ├── contacto/          # Página de contato
 │   ├── portfolio/         # Página de portfólio
-│   ├── servicos/         # Página de serviços
+│   ├── servicos/          # Páginas de serviços específicos
+│   │   ├── animacao-2d/   # Serviço de Animação 2D
+│   │   ├── design-grafico/ # Serviço de Design Gráfico
+│   │   ├── marketing-digital/ # Serviço de Marketing Digital
+│   │   └── ...            # Outras páginas de serviços
+│   ├── trabalhe-conosco/  # Página de carreiras
 │   ├── layout.tsx        # Layout principal
 │   └── page.tsx          # Página inicial
 ├── public/
 │   ├── fonts/            # Fontes locais (Bauhaus)
 │   └── images/           # Imagens do site
+│       └── abiptom.png   # Logo principal utilizado no hero
 └── components/
+    ├── hero-section.tsx  # Componente de hero da página inicial
     └── ui/               # Componentes UI do shadcn
 ```
 
 ## 🎨 Design System
 
 ### Cores
-- **Amarelo** (`#FFD700`) - Cor principal, usada em destaques e CTAs
-- **Preto** (`#000000`) - Backgrounds e títulos
-- **Cinza Escuro** (`#333333`) - Textos principais
-- **Cinza Claro** (`#666666`) - Textos secundários
+- **Amarelo** (`#FFD700`, `text-yellow`, `text-yellow-400`) - Cor principal, usada em destaques, títulos e CTAs
+- **Preto** (`#000000`, `bg-black`) - Backgrounds de seções e contraste com amarelo
+- **Cinza Escuro** (`#333333`, `text-gray-700`) - Textos principais
+- **Cinza Claro** (`#666666`, `text-gray-300`) - Textos secundários e sobre fundos escuros
 
 ### Tipografia
-- **Bauhaus** - Fonte principal para títulos (local)
+- **Bauhaus** (`font-bauhaus`) - Fonte principal para títulos e elementos de destaque
 - **Poppins** - Fonte secundária para textos (Google Fonts)
+
+### Componentes Estilizados
+- **Cards de Serviço**: Bordas esquerdas amarelas, fundo branco, hover com sombra
+- **Botões**: Fundo amarelo com texto preto ou fundo preto com texto amarelo
+- **Seções Numéricas**: Círculos amarelos com números em preto
+- **Ícones de Verificação**: Amarelos para listas de recursos e benefícios
 
 ## 📱 Páginas e Funcionalidades
 
 ### Home (/)
-- Hero section com animações
+- Hero section com logo oficial da ABIPTOM
 - Seção de serviços principais
 - Portfolio em destaque (6 projetos)
 - Seção "Sobre Nós"
@@ -69,7 +118,7 @@ abiptom-website/
 - Categorização de conteúdo
 - Data e tempo de leitura
 
-### Contato (/contato)
+### Contato (/contacto)
 - Formulário de contato
 - Informações de contato
 - Integração com redes sociais
@@ -82,11 +131,17 @@ abiptom-website/
 - Processo de trabalho
 - Cases de sucesso
 
+### Trabalhe Conosco (/trabalhe-conosco)
+- Informações sobre carreira na ABIPTOM
+- Formulário de candidatura
+- Áreas de atuação
+- Benefícios de trabalhar na empresa
+
 ## 🛠 Setup e Instalação
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/abiptom-website.git
+git clone https://github.com/atchutchi/abiptom-website.git
 ```
 
 2. Instale as dependências:
@@ -145,7 +200,9 @@ npm run dev
 
 ## 📝 Notas de Desenvolvimento
 
-- Manter consistência no uso das cores do design system
+- Manter consistência no uso das cores do design system (preto e amarelo)
+- Usar a fonte Bauhaus para títulos e elementos de destaque
+- Aplicar a borda amarela (border-yellow-400) em cards e elementos de destaque
 - Seguir padrões de componentes do shadcn/ui
 - Testar responsividade em múltiplos dispositivos
 - Otimizar imagens antes de commit
