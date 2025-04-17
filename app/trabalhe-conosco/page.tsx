@@ -12,7 +12,7 @@ export default function CareersPage() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow-400 font-bauhaus">Trabalhe Conosco</h1>
-            <p className="max-w-[700px] text-gray-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Junte-se à nossa equipe e faça parte de projetos inovadores.
             </p>
           </div>
@@ -69,8 +69,8 @@ export default function CareersPage() {
             </div>
             <div>
               <Card className="border-yellow-400 border-2">
-                <CardHeader className="bg-black text-white">
-                  <CardTitle className="font-bauhaus text-yellow-400">Candidate-se</CardTitle>
+                <CardHeader className="bg-yellow-400 text-white">
+                  <CardTitle className="font-bauhaus text-black">Candidate-se</CardTitle>
                   <CardDescription className="text-gray-300">
                     Preencha o formulário abaixo e envie seu currículo para se candidatar a uma vaga na ABIPTOM.
                   </CardDescription>
