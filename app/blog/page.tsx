@@ -16,126 +16,98 @@ export default function BlogPage() {
         </div>
       </section>
 
+      {/* Featured Post */}
+      <section className="py-12 md:py-16 bg-gray-50">
+        <div className="container px-4 md:px-6">
+          <div className="group">
+            <Link href="/blog/branding-unido-amae-guine-bissau">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="relative aspect-video overflow-hidden rounded-lg">
+                  <img
+                    alt="Projeto de Branding UNIDO e AMAE"
+                    className="object-cover w-full h-full transition-all group-hover:scale-105"
+                    src="/images/blog/reuniao-com-unido-e-amae-branding.jpg"
+                  />
+                </div>
+                <div>
+                  <span className="text-yellow font-semibold">Projeto em Destaque</span>
+                  <h2 className="text-2xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus mt-2">
+                    Concluímos com Sucesso o Projeto de Branding para 21 Marcas de Mulheres Empreendedoras na Guiné-Bissau
+                  </h2>
+                  <p className="text-sm text-gray-dark mt-2">15 Março, 2024</p>
+                  <p className="text-gray-dark mt-4">
+                    Em colaboração com a UNIDO e a AMAE, desenvolvemos identidades visuais e um catálogo completo para 21 marcas lideradas por mulheres empreendedoras em várias regiões da Guiné-Bissau.
+                  </p>
+                  <Button className="mt-4 bg-yellow text-black hover:bg-yellow-hover">
+                    Ler mais
+                  </Button>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Blog Posts Grid */}
       <section className="py-16 md:py-24">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Post 1 */}
+            {/* Post 1 - Nova Consultoria Digital */}
             <div className="group">
-              <Link href="/blog/post-1">
+              <Link href="/blog/consultoria-digital-banco-bdu">
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
                   <img
-                    alt="Como criar uma marca forte"
+                    alt="Consultoria Digital para o Banco BDU"
                     className="object-cover w-full h-full transition-all group-hover:scale-105"
-                    src="/images/blog/branding.jpg"
+                    src="/placeholder.svg?height=400&width=600"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                  Como criar uma marca forte
+                  ABIPTOM Lidera Transformação Digital do Banco BDU
                 </h3>
-                <p className="text-sm text-gray-dark mt-2">12 Março, 2024</p>
+                <p className="text-sm text-gray-dark mt-2">10 Março, 2024</p>
                 <p className="text-gray-dark mt-2">
-                  Descubra as estratégias essenciais para desenvolver uma marca memorável e impactante.
+                  Implementação bem-sucedida de estratégia digital completa, incluindo novo website, app mobile e presença nas redes sociais.
                 </p>
               </Link>
             </div>
 
-            {/* Post 2 */}
+            {/* Post 2 - Projeto de Marketing Digital */}
             <div className="group">
-              <Link href="/blog/post-2">
+              <Link href="/blog/campanha-digital-orange-bissau">
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
                   <img
-                    alt="Tendências de Design para 2024"
+                    alt="Campanha Digital Orange Bissau"
                     className="object-cover w-full h-full transition-all group-hover:scale-105"
-                    src="/images/blog/design-trends.jpg"
+                    src="/placeholder.svg?height=400&width=600"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                  Tendências de Design para 2024
+                  Campanha Digital de Sucesso para Orange Bissau
                 </h3>
                 <p className="text-sm text-gray-dark mt-2">5 Março, 2024</p>
                 <p className="text-gray-dark mt-2">
-                  As principais tendências de design que estão moldando o mercado criativo este ano.
+                  Estratégia integrada de marketing digital que alcançou mais de 100 mil pessoas e aumentou o engagement em 300%.
                 </p>
               </Link>
             </div>
 
-            {/* Post 3 */}
+            {/* Post 3 - Galeria UNIDO */}
             <div className="group">
-              <Link href="/blog/post-3">
+              <Link href="/blog/galeria-projeto-unido-amae">
                 <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
                   <img
-                    alt="Marketing Digital na Guiné-Bissau"
+                    alt="Galeria de Fotos - Projeto UNIDO e AMAE"
                     className="object-cover w-full h-full transition-all group-hover:scale-105"
-                    src="/images/blog/digital-marketing.jpg"
+                    src="/images/blog/visita-amuguimapa-bafata-branding.jpg"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                  Marketing Digital na Guiné-Bissau
+                  Galeria: Nos Bastidores do Projeto UNIDO e AMAE
                 </h3>
-                <p className="text-sm text-gray-dark mt-2">1 Março, 2024</p>
+                <p className="text-sm text-gray-dark mt-2">15 Março, 2024</p>
                 <p className="text-gray-dark mt-2">
-                  O panorama atual e as oportunidades do marketing digital no mercado guineense.
-                </p>
-              </Link>
-            </div>
-
-            {/* Post 4 */}
-            <div className="group">
-              <Link href="/blog/post-4">
-                <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                  <img
-                    alt="Produção de Vídeo: Do Conceito à Execução"
-                    className="object-cover w-full h-full transition-all group-hover:scale-105"
-                    src="/images/blog/video-production.jpg"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                  Produção de Vídeo: Do Conceito à Execução
-                </h3>
-                <p className="text-sm text-gray-dark mt-2">25 Fevereiro, 2024</p>
-                <p className="text-gray-dark mt-2">
-                  Um guia completo sobre o processo de produção de vídeos profissionais.
-                </p>
-              </Link>
-            </div>
-
-            {/* Post 5 */}
-            <div className="group">
-              <Link href="/blog/post-5">
-                <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                  <img
-                    alt="Redes Sociais para Negócios"
-                    className="object-cover w-full h-full transition-all group-hover:scale-105"
-                    src="/images/blog/social-media.jpg"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                  Redes Sociais para Negócios
-                </h3>
-                <p className="text-sm text-gray-dark mt-2">20 Fevereiro, 2024</p>
-                <p className="text-gray-dark mt-2">
-                  Como utilizar as redes sociais de forma estratégica para impulsionar seu negócio.
-                </p>
-              </Link>
-            </div>
-
-            {/* Post 6 */}
-            <div className="group">
-              <Link href="/blog/post-6">
-                <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                  <img
-                    alt="Web Design Responsivo"
-                    className="object-cover w-full h-full transition-all group-hover:scale-105"
-                    src="/images/blog/responsive-design.jpg"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                  Web Design Responsivo
-                </h3>
-                <p className="text-sm text-gray-dark mt-2">15 Fevereiro, 2024</p>
-                <p className="text-gray-dark mt-2">
-                  A importância do design responsivo no desenvolvimento de websites modernos.
+                  Uma jornada visual pelos momentos marcantes do projeto de branding com as empreendedoras da Guiné-Bissau.
                 </p>
               </Link>
             </div>
