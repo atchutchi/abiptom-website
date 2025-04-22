@@ -98,7 +98,7 @@ abiptom-website/
 - [x] Integração do chatbot
 - [x] Cases de sucesso iniciais
 - [x] Atualização das páginas de serviço restantes
-- [ ] Sistema de formulários com validação
+- [x] Sistema de formulários com validação
 
 ### Fase 2 - Próximos Passos
 - [ ] Sistema de blog avançado
