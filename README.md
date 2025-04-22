@@ -29,18 +29,39 @@ O blog da ABIPTOM apresenta cases de sucesso e insights sobre projetos:
 
 ## 🤖 Assistente Virtual
 
-O site conta com um assistente virtual inteligente powered by Hugging Face que:
+O site conta com um assistente virtual inteligente que oferece uma experiência de navegação guiada:
 
-- Fornece informações sobre a empresa e serviços
-- Responde dúvidas comuns dos visitantes
-- Encaminha solicitações de orçamento
-- Disponível 24/7 para atendimento inicial
+- Interface estruturada com menus interativos
+- Respostas predefinidas para tópicos importantes
+- Sistema de navegação intuitivo com emojis numerados
+- Histórico de conversas com painel administrativo
+- Configurações personalizáveis via interface admin
+
+### Funcionalidades do Assistente
+- **Menus Interativos**
+  - Menu principal com opções principais
+  - Submenus para serviços específicos
+  - Opções de contato e informações
+  - Navegação simplificada com números
+
+- **Painel Administrativo**
+  - Visualização do histórico de conversas
+  - Configuração de mensagens e respostas
+  - Gerenciamento de serviços e informações
+  - Monitoramento de interações
+
+- **Respostas Inteligentes**
+  - Mensagens predefinidas para tópicos importantes
+  - Direcionamento adequado para cada tipo de solicitação
+  - Respostas éticas e profissionais
+  - Opção de retorno ao menu principal
 
 ### Tecnologias do Assistente
-- Hugging Face Inference API
+- Next.js API Routes para backend
 - React Dialog para interface
-- Processamento de Linguagem Natural
-- Respostas contextualizadas
+- TypeScript para tipagem segura
+- Sistema de histórico persistente
+- Interface administrativa completa
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -101,19 +122,20 @@ abiptom-website/
 - [x] Sistema de formulários com validação
 
 ### Fase 2 - Próximos Passos
-- [ ] Sistema de blog avançado
+- [x] Sistema de blog avançado
   - Categorias e tags
   - Busca
   - Paginação
   - RSS Feed
-- [ ] Portfolio interativo
+- [x] Portfolio interativo
   - Filtros por categoria
   - Lightbox para imagens
   - Páginas de detalhes
-- [ ] Melhorias no chatbot
-  - Mais dados de treinamento
-  - Histórico de conversas
-  - Interface admin
+- [x] Melhorias no chatbot
+  - ✓ Interface estruturada com menus
+  - ✓ Histórico de conversas
+  - ✓ Interface admin
+  - ✓ Respostas éticas e profissionais
 
 ### Fase 3 - Otimização
 - [ ] SEO e Performance
@@ -205,9 +227,18 @@ Para suporte, email admin@abiptom.gw ou abra uma issue no repositório.
 ### reCAPTCHA v3
 O site utiliza o Google reCAPTCHA v3 para proteção contra spam e bots nos formulários de contato e candidaturas.
 
-- **Site Key**: `6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ`
 - Integrado nos formulários:
   - Página de Contato (`/contacto`)
   - Página de Carreiras (`/trabalhe-conosco`)
 
-A verificação é feita de forma invisível, sem necessidade de interação do usuário, melhorando a experiência de uso. 
+A verificação é feita de forma invisível, sem necessidade de interação do usuário, melhorando a experiência de uso.
+
+### Variáveis de Ambiente
+As chaves de API e credenciais sensíveis devem ser configuradas através de variáveis de ambiente:
+
+```env
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=seu_site_key_aqui
+RECAPTCHA_SECRET_KEY=seu_secret_key_aqui
+```
+
+⚠️ **IMPORTANTE**: Nunca commit credenciais ou chaves de API diretamente no código. Sempre use variáveis de ambiente e mantenha um arquivo `.env.example` com exemplos das variáveis necessárias. 

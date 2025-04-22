@@ -1,444 +1,349 @@
+"use client"
+
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ImageLightbox } from "./image-lightbox"
 import { PDFPreview } from "@/app/components/pdf-preview"
 
+interface PortfolioItem {
+  id: string
+  title: string
+  description: string
+  image: string
+  category: string[]
+  tags: string[]
+}
+
+const portfolioItems: PortfolioItem[] = [
+  // Websites
+  {
+    id: 'website-arn',
+    title: 'Website ARN',
+    description: 'Desenvolvimento de website institucional com sistema de gestão de conteúdo.',
+    image: '/images/portfolio/websites/arn.png',
+    category: ['websites'],
+    tags: ['Next.js', 'React', 'CMS']
+  },
+  {
+    id: 'website-apbef',
+    title: 'Website APBEF',
+    description: 'Portal institucional para Associação Profissional dos Bancos.',
+    image: '/images/portfolio/websites/apbef.png',
+    category: ['websites'],
+    tags: ['WordPress', 'PHP', 'MySQL']
+  },
+  {
+    id: 'website-ndjar',
+    title: 'Website NDJAR',
+    description: 'Site institucional com catálogo de produtos e serviços.',
+    image: '/images/portfolio/websites/ndjar.png',
+    category: ['websites'],
+    tags: ['Next.js', 'React', 'E-commerce']
+  },
+  {
+    id: 'website-abiptom',
+    title: 'Website ABIPTOM',
+    description: 'Desenvolvimento do nosso próprio website institucional.',
+    image: '/images/portfolio/websites/abiptom.png',
+    category: ['websites'],
+    tags: ['Next.js', 'React', 'TypeScript']
+  },
+  {
+    id: 'hotel-uque',
+    title: 'Website Hotel Uque',
+    description: 'Site com sistema de reservas e gestão hoteleira.',
+    image: '/images/portfolio/websites/hotel-uque.png',
+    category: ['websites'],
+    tags: ['WordPress', 'PHP', 'Hotelaria']
+  },
+  {
+    id: 'fundei',
+    title: 'Website FUNDEI',
+    description: 'Portal institucional com área de projetos e notícias.',
+    image: '/images/portfolio/websites/fundei.png',
+    category: ['websites'],
+    tags: ['WordPress', 'PHP', 'CMS']
+  },
+  {
+    id: 'magui',
+    title: 'Website Magui',
+    description: 'Site de comércio eletrônico com catálogo de produtos.',
+    image: '/images/portfolio/websites/magui.png',
+    category: ['websites'],
+    tags: ['Next.js', 'React', 'E-commerce']
+  },
+
+  // Design Gráfico
+  {
+    id: 'bissau-rising',
+    title: 'Bissau Rising',
+    description: 'Design de banners e materiais para redes sociais do fórum de investimentos.',
+    image: '/images/portfolio/graphicdesign/bissaurising-banner.png',
+    category: ['design', 'social'],
+    tags: ['Branding', 'Social Media', 'Design']
+  },
+  {
+    id: 'mtn-boss',
+    title: 'Campanha MTN Boss',
+    description: 'Design para campanha publicitária da MTN Guiné-Bissau.',
+    image: '/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg',
+    category: ['design'],
+    tags: ['Publicidade', 'Design']
+  },
+  {
+    id: 'caiiro-tour',
+    title: 'Caiiro Tour',
+    description: 'Material promocional para turnê musical em redes sociais.',
+    image: '/images/portfolio/graphicdesign/Caiiro-tour-setembro-social-media.png',
+    category: ['design', 'social'],
+    tags: ['Design', 'Social Media', 'Eventos']
+  },
+  {
+    id: 'ysb-agenda',
+    title: 'YSB Agenda',
+    description: 'Design de materiais para Yunus Social Business.',
+    image: '/images/portfolio/graphicdesign/YSB_Agenda.png',
+    category: ['design'],
+    tags: ['Design', 'Branding']
+  },
+  {
+    id: 'gw-domain',
+    title: 'Campanha .GW',
+    description: 'Banner para campanha do domínio nacional .GW.',
+    image: '/images/portfolio/graphicdesign/.gw-banner.png',
+    category: ['design'],
+    tags: ['Design', 'Publicidade']
+  },
+  {
+    id: 'afrochic',
+    title: 'Ateliê Afrochic',
+    description: 'Material promocional para salão de beleza.',
+    image: '/images/portfolio/graphicdesign/atelie-afrochic-salao.png',
+    category: ['design', 'social'],
+    tags: ['Design', 'Social Media']
+  },
+  {
+    id: 'bioguine',
+    title: 'BioGuiné',
+    description: 'Design de uniforme corporativo.',
+    image: '/images/portfolio/graphicdesign/POLO-shirt_bioGuine.png',
+    category: ['design'],
+    tags: ['Design', 'Branding']
+  },
+  {
+    id: 'undp-doc',
+    title: 'UNDP',
+    description: 'Design de capa para documento institucional.',
+    image: '/images/portfolio/graphicdesign/capa-documento-UNDP.jpg',
+    category: ['design'],
+    tags: ['Design', 'Editorial']
+  },
+  {
+    id: 'creative-industry',
+    title: 'Creative Industry',
+    description: 'Flyer para evento da indústria criativa.',
+    image: '/images/portfolio/graphicdesign/flyer-evento-bissau-rising-criative-industry.png',
+    category: ['design'],
+    tags: ['Design', 'Eventos']
+  },
+
+  // Vídeos
+  {
+    id: 'bissau-rising-video',
+    title: 'BISSAU RISING',
+    description: 'Impact Investment & Trade Forum - Produção audiovisual do evento.',
+    image: '/images/portfolio/video/bissau-rising-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Eventos', 'Cobertura']
+  },
+  {
+    id: 'accelerator-lab-workshop',
+    title: 'Accelerator Lab Guinea-Bissau',
+    description: 'Stakeholder Workshop and Launch - Cobertura do evento.',
+    image: '/images/portfolio/video/accelerator-lab-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Eventos', 'Cobertura']
+  },
+  {
+    id: 'accelerator-lab-institucional',
+    title: 'Accelerator Lab Guiné-Bissau',
+    description: 'Vídeo institucional apresentando o Accelerator Lab.',
+    image: '/images/portfolio/video/accelerator-lab-inst-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Institucional']
+  },
+  {
+    id: 'darling',
+    title: 'DARLING Bissau',
+    description: 'Produção audiovisual promocional.',
+    image: '/images/portfolio/video/darling-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Publicidade']
+  },
+  {
+    id: 'gw-domain-video',
+    title: 'Domínio .gw',
+    description: 'Campanha de promoção do domínio nacional.',
+    image: '/images/portfolio/video/gw-domain-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Publicidade', 'Animação']
+  },
+  {
+    id: 'un-habitat',
+    title: 'UN-HABITAT',
+    description: 'Vídeo informativo em animação 2D para eventos.',
+    image: '/images/portfolio/video/un-habitat-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Animação', 'Motion Graphics']
+  },
+  {
+    id: 'aldeias-sos',
+    title: 'Aldeias SOS',
+    description: 'Animação 2D para campanha de regresso às aulas.',
+    image: '/images/portfolio/video/aldeias-sos-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Animação', 'Motion Graphics']
+  },
+  {
+    id: 'tabaski',
+    title: 'Tabaski AC Covid-19',
+    description: 'Animação 2D para campanha de conscientização.',
+    image: '/images/portfolio/video/tabaski-thumb.jpg',
+    category: ['video'],
+    tags: ['Vídeo', 'Animação', 'Motion Graphics']
+  },
+
+  // Social Media
+  {
+    id: 'ysb-social',
+    title: 'Yunus Social Business',
+    description: 'Gestão de redes sociais e criação de conteúdo para organização social.',
+    image: '/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg',
+    category: ['social', 'design'],
+    tags: ['Social Media', 'Design', 'Gestão de Conteúdo']
+  },
+  {
+    id: 'bissau-rising-social',
+    title: 'Bissau Rising',
+    description: 'Estratégia digital e gestão de redes sociais para evento de investimentos.',
+    image: '/images/portfolio/graphicdesign/flyer-bissau_rising_novembro_2022-07.jpg',
+    category: ['social', 'design'],
+    tags: ['Social Media', 'Design', 'Estratégia Digital']
+  }
+]
+
+const categories = [
+  { id: 'todos', name: 'Todos', count: portfolioItems.length },
+  { 
+    id: 'websites', 
+    name: 'Websites',
+    count: portfolioItems.filter(item => item.category.includes('websites')).length 
+  },
+  { 
+    id: 'design', 
+    name: 'Design Gráfico',
+    count: portfolioItems.filter(item => item.category.includes('design')).length 
+  },
+  { 
+    id: 'social', 
+    name: 'Social Media',
+    count: portfolioItems.filter(item => item.category.includes('social')).length 
+  },
+  { 
+    id: 'video', 
+    name: 'Vídeo',
+    count: portfolioItems.filter(item => item.category.includes('video')).length 
+  }
+]
+
 export function PortfolioGallery() {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(['todos'])
+  const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null)
+  
+  const handleCategoryClick = (category: string) => {
+    if (category === 'todos') {
+      setSelectedCategories(['todos'])
+    } else {
+      const newCategories = selectedCategories.includes('todos') 
+        ? [category]
+        : selectedCategories.includes(category)
+          ? selectedCategories.filter(c => c !== category)
+          : [...selectedCategories, category]
+      
+      setSelectedCategories(newCategories.length ? newCategories : ['todos'])
+    }
+  }
+
+  const filteredItems = selectedCategories.includes('todos')
+    ? portfolioItems
+    : portfolioItems.filter(item => 
+        item.category.some(cat => selectedCategories.includes(cat))
+      )
+
+  const lightboxImages = filteredItems.map(item => ({
+    src: item.image,
+    alt: item.title,
+    title: item.title,
+    description: item.description
+  }))
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {/* Websites */}
-      <div className="group overflow-hidden rounded-lg border">
+    <div className="space-y-8">
+      {/* Filtros */}
+      <div className="flex flex-wrap gap-2">
+        {categories.map(category => (
+          <Button
+            key={category.id}
+            variant={selectedCategories.includes(category.id) ? "default" : "outline"}
+            onClick={() => handleCategoryClick(category.id)}
+            className="transition-all"
+          >
+            {category.name}
+            <Badge variant="secondary" className="ml-2">
+              {category.count}
+            </Badge>
+          </Button>
+        ))}
+      </div>
+
+      {/* Grid de Projetos */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredItems.map((item, index) => (
+          <div
+            key={item.id}
+            className="group overflow-hidden rounded-lg border cursor-pointer hover:border-yellow-400 transition-colors"
+            onClick={() => setSelectedItem(item)}
+          >
         <div className="relative aspect-video overflow-hidden">
           <img
-            alt="Website ARN"
+                alt={item.title}
+                src={item.image}
             className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/arn.png"
           />
         </div>
         <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website ARN</h3>
-          <p className="text-sm text-gray-dark">
-            Desenvolvimento de website institucional com sistema de gestão de conteúdo.
-          </p>
+              <h3 className="font-bold font-bauhaus">{item.title}</h3>
+              <p className="text-sm text-gray-dark">{item.description}</p>
+              <div className="mt-2 flex flex-wrap gap-1">
+                {item.tags.map(tag => (
+                  <Badge key={tag} variant="secondary" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
         </div>
+      </div>
+        </div>
+        ))}
       </div>
 
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website APBEF"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/apbef.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website APBEF</h3>
-          <p className="text-sm text-gray-dark">
-            Portal institucional para Associação Profissional dos Bancos.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website NDJAR"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/ndjar.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website NDJAR</h3>
-          <p className="text-sm text-gray-dark">
-            Site institucional com catálogo de produtos e serviços.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website ABIPTOM"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/abiptom.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website ABIPTOM</h3>
-          <p className="text-sm text-gray-dark">
-            Desenvolvimento do nosso próprio website institucional.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website Hotel Uque"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/hotel-uque.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website Hotel Uque</h3>
-          <p className="text-sm text-gray-dark">
-            Site com sistema de reservas e gestão hoteleira.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website FUNDEI"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/fundei.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website FUNDEI</h3>
-          <p className="text-sm text-gray-dark">
-            Portal institucional com área de projetos e notícias.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website Magui"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/magui.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website Magui</h3>
-          <p className="text-sm text-gray-dark">
-            Site de comércio eletrônico com catálogo de produtos.
-          </p>
-        </div>
-      </div>
-
-      {/* Design Gráfico */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Bissau Rising - Banners"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/bissaurising-banner.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Bissau Rising</h3>
-          <p className="text-sm text-gray-dark">
-            Design de banners e materiais para redes sociais do fórum de investimentos.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Campanha MTN Boss"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Campanha MTN Boss</h3>
-          <p className="text-sm text-gray-dark">
-            Design para campanha publicitária da MTN Guiné-Bissau.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Caiiro Tour"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/Caiiro-tour-setembro-social-media.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Caiiro Tour</h3>
-          <p className="text-sm text-gray-dark">
-            Material promocional para turnê musical em redes sociais.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="YSB Agenda"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/YSB_Agenda.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">YSB Agenda</h3>
-          <p className="text-sm text-gray-dark">
-            Design de materiais para Yunus Social Business.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Domínio .GW"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/.gw-banner.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Campanha .GW</h3>
-          <p className="text-sm text-gray-dark">
-            Banner para campanha do domínio nacional .GW.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Ateliê Afrochic"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/atelie-afrochic-salao.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Ateliê Afrochic</h3>
-          <p className="text-sm text-gray-dark">
-            Material promocional para salão de beleza.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="BioGuiné"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/POLO-shirt_bioGuine.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">BioGuiné</h3>
-          <p className="text-sm text-gray-dark">
-            Design de uniforme corporativo.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="UNDP Documento"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/capa-documento-UNDP.jpg"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">UNDP</h3>
-          <p className="text-sm text-gray-dark">
-            Design de capa para documento institucional.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Bissau Rising Creative Industry"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/flyer-evento-bissau-rising-criative-industry.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Creative Industry</h3>
-          <p className="text-sm text-gray-dark">
-            Flyer para evento da indústria criativa.
-          </p>
-        </div>
-      </div>
-
-      {/* Vídeos */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/N_Oq4NavzGA"
-            title="BISSAU RISING - Impact Investment & Trade Forum"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">BISSAU RISING</h3>
-          <p className="text-sm text-gray-dark">
-            Impact Investment & Trade Forum - Produção audiovisual do evento.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/Rg8RjicC89Y"
-            title="Accelerator Lab Guinea-Bissau"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Accelerator Lab Guinea-Bissau</h3>
-          <p className="text-sm text-gray-dark">
-            Stakeholder Workshop and Launch - Cobertura do evento.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/H5W2LleZMF4"
-            title="Conheça o Accelerator Lab Guiné-Bissau"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Accelerator Lab Guiné-Bissau</h3>
-          <p className="text-sm text-gray-dark">
-            Vídeo institucional apresentando o Accelerator Lab.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/caVDyyjDCtA"
-            title="DARLING Bissau"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">DARLING Bissau</h3>
-          <p className="text-sm text-gray-dark">
-            Produção audiovisual promocional.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/rKKBUsQvJrQ"
-            title="Campanha de promoção do domínio .gw"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Domínio .gw</h3>
-          <p className="text-sm text-gray-dark">
-            Campanha de promoção do domínio nacional.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/IAuD98YppLQ"
-            title="VÍDEO INFORMATIVO PARA EVENTOS UN-HABITAT"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">UN-HABITAT</h3>
-          <p className="text-sm text-gray-dark">
-            Vídeo informativo em animação 2D para eventos.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/O45iNfSO4tQ"
-            title="ALDEIA DAS CRIANÇAS SOS Guiné-Bissau"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Aldeias SOS</h3>
-          <p className="text-sm text-gray-dark">
-            Animação 2D para campanha de regresso às aulas.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/i2sEd7MQ-ro"
-            title="Tabaski AC Covid-19"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Tabaski AC Covid-19</h3>
-          <p className="text-sm text-gray-dark">
-            Animação 2D para campanha de conscientização.
-          </p>
-        </div>
-      </div>
-
-      {/* Social Media */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Yunus Social Business"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Yunus Social Business</h3>
-          <p className="text-sm text-gray-dark">
-            Gestão de redes sociais e criação de conteúdo para organização social.
-          </p>
-        </div>
-      </div>
-
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Bissau Rising"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/flyer-bissau_rising_novembro_2022-07.jpg"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Bissau Rising</h3>
-          <p className="text-sm text-gray-dark">
-            Estratégia digital e gestão de redes sociais para evento de investimentos.
-          </p>
-        </div>
-      </div>
+      {/* Lightbox */}
+      <ImageLightbox
+        images={lightboxImages}
+        isOpen={!!selectedItem}
+        onClose={() => setSelectedItem(null)}
+        initialIndex={selectedItem ? filteredItems.findIndex(item => item.id === selectedItem.id) : 0}
+      />
 
       {/* PDFs */}
       <PDFPreview

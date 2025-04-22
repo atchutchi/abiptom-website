@@ -106,7 +106,8 @@ export default function BlogPage() {
       <section className="py-12">
         <div className="container px-4 md:px-6">
           {/* Search Bar - Moved to top */}
-          <div className="mb-12 max-w-xl mx-auto">
+          <div className="mb-12 max-w-3xl mx-auto">
+            <h2 className="text-2xl font-bold text-center mb-6">Encontre o conteúdo que procura</h2>
             <BlogSearch onSearch={handleSearch} />
           </div>
 
