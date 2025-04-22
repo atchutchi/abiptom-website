@@ -294,52 +294,54 @@ export default function DesenvolvimentoSoftwarePage() {
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Trabalhos</h2>
             <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça alguns dos projetos de software que desenvolvemos para nossos clientes.
+              Conheça alguns dos websites que desenvolvemos para nossos clientes.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Sistema de Gestão ARN"
+                  alt="Website NDJAR"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/websites/ndjar.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Sistema de Gestão ARN</h3>
+                <h3 className="font-bold font-bauhaus">Website NDJAR</h3>
                 <p className="text-sm text-gray-dark">
-                  Desenvolvimento de sistema integrado para gestão de processos internos.
+                  Site institucional com catálogo de produtos e serviços.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Aplicativo Móvel MTN"
+                  alt="Website ABIPTOM"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/websites/abiptom.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Aplicativo Móvel MTN</h3>
+                <h3 className="font-bold font-bauhaus">Website ABIPTOM</h3>
                 <p className="text-sm text-gray-dark">
-                  Desenvolvimento de aplicativo para consulta de serviços e pagamentos.
+                  Desenvolvimento do nosso próprio website institucional.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="E-commerce Mercaducasa"
+                  alt="Website Hotel Uque"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/websites/hotel-uque.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">E-commerce Mercaducasa</h3>
+                <h3 className="font-bold font-bauhaus">Website Hotel Uque</h3>
                 <p className="text-sm text-gray-dark">
-                  Desenvolvimento de plataforma de comércio eletrônico com sistema de pagamento integrado.
+                  Website com sistema de reservas para hotel.
                 </p>
               </div>
             </div>
@@ -348,13 +350,13 @@ export default function DesenvolvimentoSoftwarePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-gray-light">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para transformar sua ideia em software?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como nossos serviços de desenvolvimento de software podem ajudar sua
               empresa a crescer e se tornar mais eficiente.
             </p>

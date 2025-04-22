@@ -153,7 +153,7 @@ export default function ServicesPage() {
               </ul>
               <Button className="mt-auto bg-yellow text-black hover:bg-yellow-hover">Escolher Plano</Button>
             </div>
-            <div className="flex flex-col p-6 bg-black shadow-lg rounded-lg text-white relative">
+            <div className="flex flex-col p-6 bg-grey shadow-lg rounded-lg text-white relative">
               <div className="absolute top-0 right-0 -mt-4 mr-4 bg-yellow text-black font-bold py-1 px-4 rounded-full text-xs uppercase">
                 Popular
               </div>
@@ -233,13 +233,13 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para transformar suas ideias em realidade?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como podemos ajudar sua empresa a crescer.
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">

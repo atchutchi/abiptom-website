@@ -27,6 +27,10 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  allowedDevOrigins: [
+    'http://192.168.17.16',
+    'https://192.168.17.16',
+  ],
 }
 
 if (userConfig) {

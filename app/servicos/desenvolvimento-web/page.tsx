@@ -290,43 +290,47 @@ export default function DesenvolvimentoWebPage() {
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Website ARN"
+                  alt="Website NDJAR"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/websites/ndjar.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Website ARN</h3>
+                <h3 className="font-bold font-bauhaus">Website NDJAR</h3>
                 <p className="text-sm text-gray-dark">
-                  Desenvolvimento de website institucional com sistema de gestão de conteúdo.
+                  Site institucional com catálogo de produtos e serviços.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Portal UCB"
+                  alt="Website ABIPTOM"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/websites/abiptom.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Portal UCB</h3>
-                <p className="text-sm text-gray-dark">Criação de portal educacional com área de alunos e professores.</p>
+                <h3 className="font-bold font-bauhaus">Website ABIPTOM</h3>
+                <p className="text-sm text-gray-dark">
+                  Desenvolvimento do nosso próprio website institucional.
+                </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="E-commerce Mercaducasa"
+                  alt="Website Hotel Uque"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/websites/hotel-uque.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">E-commerce Mercaducasa</h3>
+                <h3 className="font-bold font-bauhaus">Website Hotel Uque</h3>
                 <p className="text-sm text-gray-dark">
-                  Desenvolvimento de loja virtual com sistema de pagamento integrado.
+                  Website com sistema de reservas para hotel.
                 </p>
               </div>
             </div>
@@ -385,13 +389,13 @@ export default function DesenvolvimentoWebPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para criar ou renovar seu website?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como nossos serviços de desenvolvimento web podem ajudar sua empresa a
               crescer online.
             </p>

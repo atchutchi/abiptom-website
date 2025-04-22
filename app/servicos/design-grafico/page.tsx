@@ -253,43 +253,47 @@ export default function DesignGraficoPage() {
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Design Gráfico para PNUD"
+                  alt="BioGuiné"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/graphicdesign/POLO-shirt_bioGuine.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Design Gráfico para PNUD</h3>
-                <p className="text-sm text-gray-dark">Criação de materiais visuais para campanha de conscientização.</p>
-              </div>
-            </div>
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Identidade Visual MTN"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">Identidade Visual MTN</h3>
+                <h3 className="font-bold font-bauhaus">BioGuiné</h3>
                 <p className="text-sm text-gray-dark">
-                  Desenvolvimento de materiais promocionais para campanha de marketing.
+                  Design de uniforme corporativo.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Brochura UNICEF"
+                  alt="UNDP Documento"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/graphicdesign/capa-documento-UNDP.jpg"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Brochura UNICEF</h3>
+                <h3 className="font-bold font-bauhaus">UNDP</h3>
                 <p className="text-sm text-gray-dark">
-                  Design e diagramação de brochura informativa sobre direitos das crianças.
+                  Design de capa para documento institucional.
+                </p>
+              </div>
+            </div>
+
+            <div className="group overflow-hidden rounded-lg border">
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  alt="Bissau Rising Creative Industry"
+                  className="object-cover w-full h-full transition-all group-hover:scale-105"
+                  src="/images/portfolio/graphicdesign/flyer-evento-bissau-rising-criative-industry.png"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-bold font-bauhaus">Creative Industry</h3>
+                <p className="text-sm text-gray-dark">
+                  Flyer para evento da indústria criativa.
                 </p>
               </div>
             </div>
@@ -348,13 +352,13 @@ export default function DesignGraficoPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para transformar a identidade visual da sua empresa?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como nossos serviços de design gráfico podem ajudar sua empresa a se
               destacar.
             </p>

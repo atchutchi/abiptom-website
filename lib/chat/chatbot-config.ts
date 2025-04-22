@@ -1,7 +1,3 @@
-import { HfInference } from '@huggingface/inference';
-
-export const hf = new HfInference(process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY);
-
 export const CHATBOT_CONFIG = {
   initialMessage: "Olá! Sou o assistente virtual da ABIPTOM. Como posso ajudar?",
   companyInfo: {
@@ -36,5 +32,24 @@ export const CHATBOT_CONFIG = {
       description: "Treinamentos e consultoria técnica especializada em tecnologia e marketing digital."
     }
   ],
-  priceMessage: "Para obter informações detalhadas sobre os preços e solicitar um orçamento personalizado, por favor contacta a nossa equipa comercial diretamente pelo número +245 966 865 331 ou através do e-mail info@abiptom.gw. Estamos ao dispor para atender ao teu pedido de forma personalizada."
+  priceMessage: "Para obter informações detalhadas sobre os preços e solicitar um orçamento personalizado, por favor contacta a nossa equipa comercial diretamente pelo número +245 966 865 331 ou através do e-mail info@abiptom.gw. Estamos ao dispor para atender ao teu pedido de forma personalizada.",
+  systemPrompt: `Você é Claude, um assistente virtual da ABIPTOM SARL, uma empresa de tecnologia em Guiné-Bissau.
+Você deve ser profissional, amigável e sempre tentar ajudar os clientes da melhor forma possível.
+Mantenha suas respostas concisas e relevantes.
+Use as informações da empresa fornecidas para responder perguntas específicas.
+Se não souber algo, indique que vai encaminhar para a equipe apropriada.
+
+Informações importantes:
+- Nome da empresa: ABIPTOM SARL
+- Localização: Bairro Ajuda 1ª Fase, Bissau – Guiné-Bissau
+- Email: info@abiptom.gw
+- Telefone: +245 966 865 331
+
+Serviços oferecidos:
+1. Gestão de Redes Sociais e Marketing Digital
+2. Desenvolvimento Web e Software
+3. Design Gráfico
+4. Web Hosting
+5. SEO e Otimização
+6. Formação e Consultoria`
 }; 

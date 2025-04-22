@@ -5,9 +5,12 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Send, X } from 'lucide-react';
 import { CHATBOT_CONFIG } from '@/lib/chat/chatbot-config';
 
+type MessageCategory = 'service' | 'price' | 'contact' | 'general';
+
 interface Message {
   type: 'user' | 'bot';
   content: string;
+  category?: MessageCategory;
 }
 
 interface ChatBotWindowProps {
@@ -15,11 +18,17 @@ interface ChatBotWindowProps {
   onClose: () => void;
 }
 
+interface BotResponse {
+  content: string;
+  category: MessageCategory;
+}
+
 export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
   const [messages, setMessages] = useState<Message[]>([
-    { type: 'bot', content: CHATBOT_CONFIG.initialMessage }
+    { type: 'bot', content: CHATBOT_CONFIG.initialMessage, category: 'general' }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -30,33 +39,83 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
     scrollToBottom();
   }, [messages]);
 
+  const findServiceMatch = (text: string) => {
+    return CHATBOT_CONFIG.services.find(service => 
+      text.toLowerCase().includes(service.name.toLowerCase()) ||
+      text.toLowerCase().includes(service.description.toLowerCase())
+    );
+  };
+
+  const isContactQuery = (text: string) => {
+    const contactKeywords = ['contacto', 'contato', 'email', 'telefone', 'ligar', 'falar', 'endereço', 'localização'];
+    return contactKeywords.some(keyword => text.toLowerCase().includes(keyword));
+  };
+
+  const isPriceQuery = (text: string) => {
+    const priceKeywords = ['preço', 'preco', 'valor', 'custo', 'orçamento', 'investimento'];
+    return priceKeywords.some(keyword => text.toLowerCase().includes(keyword));
+  };
+
+  const generateResponse = async (userMessage: string): Promise<BotResponse> => {
+    try {
+      // Get context from previous messages
+      const lastMessages = messages.slice(-3);
+      const context = lastMessages.map(m => m.content).join('\n');
+
+      // Call our API route
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          context: context
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      return await response.json();
+
+    } catch (error) {
+      console.error('Error in generateResponse:', error);
+      return {
+        content: "Desculpe, estou tendo dificuldades técnicas. Por favor, tente novamente em alguns instantes.",
+        category: 'general'
+      };
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
     const userMessage = inputValue.trim();
     setInputValue('');
+    setIsTyping(true);
     
-    // Adiciona a mensagem do usuário
+    // Add user message
     setMessages(prev => [...prev, { type: 'user', content: userMessage }]);
 
-    // Simula processamento da mensagem (aqui você implementará a lógica com Hugging Face)
-    // Por enquanto, vamos apenas dar uma resposta padrão
-    setTimeout(() => {
-      let response = "Entendi sua mensagem. ";
-      
-      // Verifica se é uma pergunta sobre preços
-      if (userMessage.toLowerCase().includes('preço') || 
-          userMessage.toLowerCase().includes('preco') || 
-          userMessage.toLowerCase().includes('valor') ||
-          userMessage.toLowerCase().includes('custo')) {
-        response = CHATBOT_CONFIG.priceMessage;
-      } else {
-        response += "Como posso ajudar mais?";
-      }
-
-      setMessages(prev => [...prev, { type: 'bot', content: response }]);
-    }, 1000);
+    try {
+      const response = await generateResponse(userMessage);
+      setMessages(prev => [...prev, { 
+        type: 'bot', 
+        content: response.content,
+        category: response.category
+      }]);
+    } catch (error) {
+      setMessages(prev => [...prev, { 
+        type: 'bot', 
+        content: "Desculpe, ocorreu um erro. Por favor, tente novamente.",
+        category: 'general'
+      }]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -88,6 +147,13 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
                 </div>
               </div>
             ))}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 rounded-lg px-4 py-2">
+                  <span className="animate-pulse">...</span>
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
@@ -101,7 +167,8 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
             />
             <button
               type="submit"
-              className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors"
+              disabled={isTyping}
+              className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors disabled:opacity-50"
             >
               <Send className="w-5 h-5" />
             </button>
@@ -110,4 +177,4 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
       </Dialog.Portal>
     </Dialog.Root>
   );
-} 
+}
