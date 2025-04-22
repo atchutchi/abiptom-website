@@ -253,118 +253,90 @@ export default function RedesCablagemHelpdeskPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">1</span>
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow text-black mb-4">
+                <span className="text-2xl font-bold">1</span>
               </div>
-              <h3 className="text-xl font-bauhaus mb-2">Avaliação</h3>
+              <h3 className="text-xl font-bauhaus mb-2">Diagnóstico</h3>
               <p className="text-gray-dark">
-                Analisamos sua infraestrutura atual e identificamos necessidades e pontos de melhoria.
+                Avaliação detalhada das necessidades e infraestrutura existente.
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">2</span>
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow text-black mb-4">
+                <span className="text-2xl font-bold">2</span>
               </div>
               <h3 className="text-xl font-bauhaus mb-2">Planejamento</h3>
               <p className="text-gray-dark">
-                Desenvolvemos um plano detalhado que atende às suas necessidades específicas e orçamento.
+                Desenvolvimento de soluções personalizadas e cronograma de implementação.
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">3</span>
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow text-black mb-4">
+                <span className="text-2xl font-bold">3</span>
               </div>
               <h3 className="text-xl font-bauhaus mb-2">Implementação</h3>
               <p className="text-gray-dark">
-                Executamos o projeto com profissionalismo, minimizando interrupções nas suas operações.
+                Execução dos serviços com mínimo impacto nas operações.
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">4</span>
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow text-black mb-4">
+                <span className="text-2xl font-bold">4</span>
               </div>
-              <h3 className="text-xl font-bauhaus mb-2">Suporte Contínuo</h3>
+              <h3 className="text-xl font-bauhaus mb-2">Monitoramento</h3>
               <p className="text-gray-dark">
-                Oferecemos suporte técnico e manutenção para garantir o funcionamento ideal da sua infraestrutura.
+                Acompanhamento contínuo e suporte pós-implementação.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Portfolio */}
+      {/* Testimonials Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Projetos</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça alguns dos projetos de redes e infraestrutura que implementamos para nossos clientes.
+            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl text-yellow">Por Que Escolher a ABIPTOM?</h2>
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Nossa experiência e compromisso com a excelência nos tornam a escolha ideal para suas necessidades de TI.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Infraestrutura de Rede Banco BDU"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">Infraestrutura de Rede Banco BDU</h3>
-                <p className="text-sm text-gray-dark">
-                  Implementação de rede corporativa com alta disponibilidade e segurança.
-                </p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-yellow-400 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-bauhaus mb-4 text-black">Experiência Comprovada</h3>
+              <p className="text-gray-dark">
+                Nossa equipe possui vasta experiência em projetos de infraestrutura de TI, garantindo soluções robustas e confiáveis.
+              </p>
             </div>
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Cablagem Estruturada UNICEF"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">Cablagem Estruturada UNICEF</h3>
-                <p className="text-sm text-gray-dark">
-                  Projeto e instalação de cablagem estruturada para novo escritório.
-                </p>
-              </div>
+            <div className="bg-yellow-400 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-bauhaus mb-4 text-black">Suporte 24/7</h3>
+              <p className="text-gray-dark">
+                Oferecemos suporte técnico disponível 24 horas por dia, 7 dias por semana, para garantir a continuidade dos seus negócios.
+              </p>
             </div>
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="HelpDesk MTN"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">HelpDesk MTN</h3>
-                <p className="text-sm text-gray-dark">
-                  Serviço de suporte técnico contínuo para mais de 200 colaboradores.
-                </p>
-              </div>
+            <div className="bg-yellow-400 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-bauhaus mb-4 text-black">Tecnologia de Ponta</h3>
+              <p className="text-gray-dark">
+                Utilizamos as mais recentes tecnologias e melhores práticas do mercado para entregar soluções de alta performance.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-gray-light">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
-              Pronto para melhorar a infraestrutura da sua empresa?
+            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow-400">
+              Pronto para melhorar sua infraestrutura de TI?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Entre em contato conosco e descubra como nossos serviços de redes, cablagem e HelpDesk podem ajudar sua
-              empresa a operar com mais eficiência e segurança.
+            <p className="max-w-[700px] text-gray-800 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Entre em contato conosco para uma avaliação gratuita das suas necessidades.
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Fale conosco</Link>
+              <Button asChild className="bg-yellow-400 text-black hover:bg-gray-900 font-bauhaus">
+                <Link href="/contacto">Fale Conosco</Link>
               </Button>
             </div>
           </div>

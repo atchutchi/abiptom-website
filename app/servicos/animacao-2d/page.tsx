@@ -245,39 +245,64 @@ export default function Animacao2DPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="overflow-hidden rounded-lg shadow-sm border-4 border-yellow-400">
-              <img
-                alt="Projeto de Animação 1"
-                className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=200&width=300"
-              />
+            <div className="group overflow-hidden rounded-lg border">
+              <div className="relative aspect-video overflow-hidden">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/IAuD98YppLQ"
+                  title="VÍDEO INFORMATIVO PARA EVENTOS UN-HABITAT"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
               <div className="p-4">
-                <h3 className="text-lg font-bold font-bauhaus">Vídeo Explicativo Empresa X</h3>
-                <p className="text-gray-700">Animação explicativa sobre produto inovador.</p>
+                <h3 className="font-bold font-bauhaus">UN-HABITAT</h3>
+                <p className="text-sm text-gray-dark">
+                  Vídeo informativo em animação 2D para eventos.
+                </p>
               </div>
             </div>
-            <div className="overflow-hidden rounded-lg shadow-sm border-4 border-yellow-400">
-              <img
-                alt="Projeto de Animação 2"
-                className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=200&width=300"
-              />
+
+            <div className="group overflow-hidden rounded-lg border">
+              <div className="relative aspect-video overflow-hidden">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/O45iNfSO4tQ"
+                  title="ALDEIA DAS CRIANÇAS SOS Guiné-Bissau"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
               <div className="p-4">
-                <h3 className="text-lg font-bold font-bauhaus">Motion Graphics Empresa Y</h3>
-                <p className="text-gray-700">Animação de dados para relatório anual.</p>
+                <h3 className="font-bold font-bauhaus">Aldeias SOS</h3>
+                <p className="text-sm text-gray-dark">
+                  Animação 2D para campanha de regresso às aulas.
+                </p>
               </div>
             </div>
-            <div className="overflow-hidden rounded-lg shadow-sm border-4 border-yellow-400">
-              <img
-                alt="Projeto de Animação 3"
-                className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=200&width=300"
-              />
+
+            <div className="group overflow-hidden rounded-lg border">
+              <div className="relative aspect-video overflow-hidden">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/i2sEd7MQ-ro"
+                  title="Tabaski AC Covid"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
               <div className="p-4">
-                <h3 className="text-lg font-bold font-bauhaus">Personagem Empresa Z</h3>
-                <p className="text-gray-700">Mascote animado para campanha de marketing.</p>
+                <h3 className="font-bold font-bauhaus">Tabaski AC Covid</h3>
+                <p className="text-sm text-gray-dark">
+                  Animação 2D educativa sobre prevenção Covid-19.
+                </p>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center mt-8">
+            <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
+              <Link href="/portfolio">Ver mais trabalhos</Link>
+            </Button>
           </div>
         </div>
       </section>

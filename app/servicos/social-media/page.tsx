@@ -198,8 +198,7 @@ export default function SocialMediaPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Básico</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">150.000 XOF</span>
-                  <span className="text-sm text-gray-dark">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -228,8 +227,7 @@ export default function SocialMediaPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Silver</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">250.000 XOF</span>
-                  <span className="text-sm text-gray-dark">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -258,15 +256,14 @@ export default function SocialMediaPage() {
                 <Link href="/contacto">Escolher Plano</Link>
               </Button>
             </div>
-            <div className="flex flex-col p-6 bg-black shadow-lg rounded-lg text-white relative">
+            <div className="flex flex-col p-6 bg-gray-light shadow-lg rounded-lg text-white relative">
               <div className="absolute top-0 right-0 -mt-4 mr-4 bg-yellow text-black font-bold py-1 px-4 rounded-full text-xs uppercase">
                 Popular
               </div>
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Gold</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">300.000 XOF</span>
-                  <span className="text-sm text-gray-300">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -303,8 +300,7 @@ export default function SocialMediaPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Premium+</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">400.000 XOF</span>
-                  <span className="text-sm text-gray-dark">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -354,60 +350,67 @@ export default function SocialMediaPage() {
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Campanha MTN"
+                  alt="Campanha MTN Boss"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Campanha MTN</h3>
+                <h3 className="font-bold font-bauhaus text-yellow">Campanha MTN Boss</h3>
                 <p className="text-sm text-gray-dark">
                   Gestão de redes sociais e criação de conteúdo para campanha promocional.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Conteúdo Modas Brazil"
+                  alt="Caiiro Tour"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/graphicdesign/Caiiro-tour-setembro-social-media.png"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Conteúdo Modas Brazil</h3>
+                <h3 className="font-bold font-bauhaus text-yellow">Caiiro Tour</h3>
                 <p className="text-sm text-gray-dark">
-                  Estratégia de conteúdo e gestão de mídias sociais para loja de moda.
+                  Estratégia de conteúdo e gestão de mídias sociais para evento musical.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  alt="Marketing Digital Restaurante Ná Tábua"
+                  alt="Yunus Social Business"
                   className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Marketing Digital Restaurante Ná Tábua</h3>
+                <h3 className="font-bold font-bauhaus text-yellow">Yunus Social Business</h3>
                 <p className="text-sm text-gray-dark">
-                  Estratégia de marketing digital e gestão de redes sociais para restaurante.
+                  Gestão de redes sociais e criação de conteúdo para organização social.
                 </p>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center mt-8">
+            <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
+              <Link href="/portfolio">Ver mais trabalhos</Link>
+            </Button>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para potencializar sua presença nas redes sociais?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como nossos serviços de social media podem ajudar sua empresa a
               crescer e se conectar com seu público de forma eficaz.
             </p>

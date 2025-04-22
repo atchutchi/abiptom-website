@@ -346,6 +346,11 @@ export default function DesenvolvimentoSoftwarePage() {
               </div>
             </div>
           </div>
+          <div className="flex justify-center mt-8">
+            <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
+              <Link href="/portfolio">Ver mais trabalhos</Link>
+            </Button>
+          </div>
         </div>
       </section>
 

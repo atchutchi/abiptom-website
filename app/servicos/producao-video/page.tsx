@@ -246,57 +246,74 @@ export default function ProducaoVideoPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Vídeo Institucional PNUD"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/N_Oq4NavzGA"
+                  title="BISSAU RISING - Impact Investment & Trade Forum"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Vídeo Institucional PNUD</h3>
+                <h3 className="font-bold font-bauhaus">BISSAU RISING</h3>
                 <p className="text-sm text-gray-dark">
-                  Produção de vídeo institucional para programa de desenvolvimento.
+                  Impact Investment & Trade Forum - Produção audiovisual do evento.
                 </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Spot Publicitário MTN"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/Rg8RjicC89Y"
+                  title="Accelerator Lab Guinea-Bissau"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Spot Publicitário MTN</h3>
-                <p className="text-sm text-gray-dark">Criação de spot publicitário para campanha de marketing.</p>
+                <h3 className="font-bold font-bauhaus">Accelerator Lab Guinea-Bissau</h3>
+                <p className="text-sm text-gray-dark">
+                  Stakeholder Workshop and Launch - Cobertura do evento.
+                </p>
               </div>
             </div>
+
             <div className="group overflow-hidden rounded-lg border">
               <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Animação 2D Aldeias Infantis SOS"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/H5W2LleZMF4"
+                  title="Conheça o Accelerator Lab Guiné-Bissau"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bauhaus">Animação 2D Aldeias Infantis SOS</h3>
-                <p className="text-sm text-gray-dark">Produção de animação 2D para campanha de conscientização.</p>
+                <h3 className="font-bold font-bauhaus">Accelerator Lab Guiné-Bissau</h3>
+                <p className="text-sm text-gray-dark">
+                  Vídeo institucional apresentando o Accelerator Lab.
+                </p>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center mt-8">
+            <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
+              <Link href="/portfolio">Ver mais trabalhos</Link>
+            </Button>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para criar vídeos impactantes para sua marca?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como nossos serviços de produção de vídeo podem ajudar sua empresa a
               se comunicar de forma mais eficaz.
             </p>

@@ -231,67 +231,95 @@ export default function FotografiaPage() {
         </div>
       </section>
 
-      {/* Portfolio */}
-      <section className="py-16 md:py-24 bg-gray-light">
+      {/* Expertise & Quality */}
+      <section className="py-16 md:py-24 bg-gray-100">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Trabalhos</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça alguns dos projetos fotográficos que desenvolvemos para nossos clientes.
+          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
+            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl text-black">Nossa Expertise</h2>
+            <p className="max-w-[700px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Combinamos técnica, criatividade e experiência para entregar resultados excepcionais.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Fotografia de Produtos MTN"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">Fotografia de Produtos MTN</h3>
-                <p className="text-sm text-gray-dark">Ensaio fotográfico de produtos para catálogo e e-commerce.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="group relative bg-white p-8 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+              <div className="absolute top-0 left-0 w-2 h-full bg-yellow transform origin-left transition-transform group-hover:scale-y-110"></div>
+              <div className="pl-6">
+                <h3 className="text-xl font-bauhaus mb-4 text-black relative">Equipamentos Profissionais</h3>
+                <p className="text-gray-600 relative">
+                  Utilizamos câmeras e lentes de última geração, sistemas de iluminação avançados e equipamentos especializados para garantir a mais alta qualidade em cada projeto.
+                </p>
               </div>
             </div>
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Evento Corporativo PNUD"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">Evento Corporativo PNUD</h3>
-                <p className="text-sm text-gray-dark">Cobertura fotográfica de conferência internacional.</p>
+            <div className="group relative bg-white p-8 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+              <div className="absolute top-0 left-0 w-2 h-full bg-yellow transform origin-left transition-transform group-hover:scale-y-110"></div>
+              <div className="pl-6">
+                <h3 className="text-xl font-bauhaus mb-4 text-black relative">Equipe Especializada</h3>
+                <p className="text-gray-600 relative">
+                  Nossa equipe é formada por fotógrafos experientes com formação técnica e artística, garantindo um olhar profissional em cada captura.
+                </p>
               </div>
             </div>
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Retratos Corporativos ARN"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=300&width=400"
-                />
+            <div className="group relative bg-white p-8 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+              <div className="absolute top-0 left-0 w-2 h-full bg-yellow transform origin-left transition-transform group-hover:scale-y-110"></div>
+              <div className="pl-6">
+                <h3 className="text-xl font-bauhaus mb-4 text-black relative">Pós-produção Profissional</h3>
+                <p className="text-gray-600 relative">
+                  Processo de edição meticuloso com softwares profissionais, garantindo o melhor resultado em cada imagem entregue.
+                </p>
               </div>
-              <div className="p-4">
-                <h3 className="font-bauhaus">Retratos Corporativos ARN</h3>
-                <p className="text-sm text-gray-dark">Sessão de fotos para equipe executiva e colaboradores.</p>
+            </div>
+          </div>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+              <div className="flex items-center mb-6 pl-6">
+                <div className="w-12 h-12 rounded-full bg-yellow/10 flex items-center justify-center mr-4">
+                  <CheckCircle className="h-6 w-6 text-yellow" />
+                </div>
+                <h3 className="text-xl font-bauhaus text-black">Garantia de Qualidade</h3>
               </div>
+              <ul className="space-y-4 pl-24">
+                <li className="text-gray-600">
+                  • Backup seguro de todas as imagens
+                </li>
+                <li className="text-gray-600">
+                  • Entrega em múltiplos formatos e resoluções
+                </li>
+                <li className="text-gray-600">
+                  • Prazo de entrega garantido
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+              <div className="flex items-center mb-6 pl-6">
+                <div className="w-12 h-12 rounded-full bg-yellow/10 flex items-center justify-center mr-4">
+                  <CheckCircle className="h-6 w-6 text-yellow" />
+                </div>
+                <h3 className="text-xl font-bauhaus text-black">Diferenciais</h3>
+              </div>
+              <ul className="space-y-4 pl-24">
+                <li className="text-gray-600">
+                  • Atendimento personalizado e consultivo
+                </li>
+                <li className="text-gray-600">
+                  • Flexibilidade para projetos de qualquer escala
+                </li>
+                <li className="text-gray-600">
+                  • Suporte pós-entrega
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
               Pronto para elevar a qualidade visual da sua comunicação?
             </h2>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contato conosco e descubra como nossos serviços de fotografia podem ajudar sua empresa a se
               destacar.
             </p>

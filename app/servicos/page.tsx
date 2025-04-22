@@ -97,8 +97,7 @@ export default function ServicesPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Básico</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">150.000 XOF</span>
-                  <span className="text-sm text-gray-dark">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -125,8 +124,7 @@ export default function ServicesPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Silver</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">250.000 XOF</span>
-                  <span className="text-sm text-gray-dark">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -160,8 +158,7 @@ export default function ServicesPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus text-yellow">Gold</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">300.000 XOF</span>
-                  <span className="text-sm text-white">/mês</span>
+                  <span className="text-sm text-black">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
@@ -196,8 +193,7 @@ export default function ServicesPage() {
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bauhaus">Premium+</h3>
                 <div className="mt-4 text-center">
-                  <span className="text-4xl font-bold">400.000 XOF</span>
-                  <span className="text-sm text-gray-dark">/mês</span>
+                  <span className="text-sm text-gray-dark">Consultar preço</span>
                 </div>
               </div>
               <ul className="space-y-3 mb-6 flex-1">
