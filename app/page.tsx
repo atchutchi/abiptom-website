@@ -119,7 +119,7 @@ export default function Home() {
               <img
                 alt="Equipe Abiptom"
                 className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/foto-quem-somos.png"
               />
             </div>
           </div>
@@ -207,68 +207,62 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Link href="/blog/post-1" className="group">
+            <Link href="/blog/branding-unido-amae-guine-bissau" className="group">
               <div className="space-y-3">
                 <img
-                  alt="Blog post thumbnail"
+                  alt="Projeto de Branding UNIDO e AMAE"
                   className="aspect-video overflow-hidden rounded-lg object-cover transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=200&width=300"
+                  src="/images/blog/reuniao-com-unido-e-amae-branding.jpg"
                 />
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                    Como o design gráfico pode impulsionar sua marca
+                    Concluímos com Sucesso o Projeto de Branding para 21 Marcas de Mulheres Empreendedoras
                   </h3>
                   <p className="text-gray-dark">
-                    Descubra como um bom design pode transformar a percepção da sua marca no mercado.
+                    Em colaboração com a UNIDO e a AMAE, desenvolvemos identidades visuais e um catálogo completo para 21 marcas lideradas por mulheres empreendedoras.
                   </p>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-400">12 Abril, 2025</span>
-                    <span className="text-sm text-gray-400">•</span>
-                    <span className="text-sm text-gray-400">5 min de leitura</span>
+                    <span className="text-sm text-gray-400">15 Março, 2024</span>
                   </div>
                 </div>
               </div>
             </Link>
-            <Link href="/blog/post-2" className="group">
+            <Link href="/blog/consultoria-digital-banco-bdu" className="group">
               <div className="space-y-3">
                 <img
-                  alt="Blog post thumbnail"
+                  alt="Consultoria Digital para o Banco BDU"
                   className="aspect-video overflow-hidden rounded-lg object-cover transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=200&width=300"
+                  src="/images/blog/consultoria-banco-bdu.jpg"
                 />
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                    Estratégias de marketing digital para pequenas empresas
+                    ABIPTOM Lidera Transformação Digital do Banco BDU
                   </h3>
                   <p className="text-gray-dark">
-                    Conheça as melhores práticas para promover seu negócio online com orçamento limitado.
+                    Implementação bem-sucedida de estratégia digital completa, incluindo novo website, app mobile e presença nas redes sociais.
                   </p>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-400">5 Abril, 2025</span>
-                    <span className="text-sm text-gray-400">•</span>
-                    <span className="text-sm text-gray-400">8 min de leitura</span>
+                    <span className="text-sm text-gray-400">10 Março, 2024</span>
                   </div>
                 </div>
               </div>
             </Link>
-            <Link href="/blog/post-3" className="group">
+            <Link href="/blog/galeria-projeto-unido-amae" className="group">
               <div className="space-y-3">
                 <img
-                  alt="Blog post thumbnail"
+                  alt="Galeria de Fotos - Projeto UNIDO e AMAE"
                   className="aspect-video overflow-hidden rounded-lg object-cover transition-all group-hover:scale-105"
-                  src="/placeholder.svg?height=200&width=300"
+                  src="/images/blog/visita-amuguimapa-bafata-branding.jpg"
                 />
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">
-                    A importância de um website responsivo
+                    Galeria: Nos Bastidores do Projeto UNIDO e AMAE
                   </h3>
                   <p className="text-gray-dark">
-                    Por que seu site precisa funcionar perfeitamente em todos os dispositivos.
+                    Uma jornada visual pelos momentos marcantes do projeto de branding com as empreendedoras da Guiné-Bissau.
                   </p>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-400">28 Março, 2025</span>
-                    <span className="text-sm text-gray-400">•</span>
-                    <span className="text-sm text-gray-400">6 min de leitura</span>
+                    <span className="text-sm text-gray-400">15 Março, 2024</span>
                   </div>
                 </div>
               </div>

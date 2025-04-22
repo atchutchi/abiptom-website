@@ -71,7 +71,7 @@ export default function CareersPage() {
               <Card className="border-yellow-400 border-2">
                 <CardHeader className="bg-yellow-400 text-white">
                   <CardTitle className="font-bauhaus text-black">Candidate-se</CardTitle>
-                  <CardDescription className="text-gray-300">
+                  <CardDescription className="text-black">
                     Preencha o formulário abaixo e envie seu currículo para se candidatar a uma vaga na ABIPTOM.
                   </CardDescription>
                 </CardHeader>
