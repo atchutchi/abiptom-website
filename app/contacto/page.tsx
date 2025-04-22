@@ -1,12 +1,74 @@
+"use client"
+
 import { Mail, MapPin, Phone } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { ReloadIcon } from "@radix-ui/react-icons"
+
+// Form validation schema
+const formSchema = z.object({
+  firstName: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
+  lastName: z.string().min(2, "Sobrenome deve ter pelo menos 2 caracteres"),
+  email: z.string().email("Email inválido"),
+  phone: z.string().min(9, "Telefone deve ter pelo menos 9 dígitos"),
+  subject: z.string().min(5, "Assunto deve ter pelo menos 5 caracteres"),
+  message: z.string().min(10, "Mensagem deve ter pelo menos 10 caracteres"),
+})
+
+type FormData = z.infer<typeof formSchema>
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const { toast } = useToast()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  })
+
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true)
+    setSubmitError(null)
+    
+    try {
+      // Here you would typically send the data to your API
+      await new Promise((resolve) => setTimeout(resolve, 2000)) // Simulating API call
+      
+      setSubmitSuccess(true)
+      toast({
+        title: "Mensagem enviada!",
+        description: "Entraremos em contacto em breve.",
+        duration: 5000,
+      })
+      reset()
+    } catch (error) {
+      setSubmitError("Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.")
+      toast({
+        title: "Erro",
+        description: "Não foi possível enviar sua mensagem. Tente novamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -78,35 +140,112 @@ export default function ContactPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form className="space-y-4">
+                  {submitSuccess && (
+                    <Alert className="mb-4 bg-green-50 text-green-900 border-green-200">
+                      <AlertTitle>Mensagem enviada com sucesso!</AlertTitle>
+                      <AlertDescription>
+                        Agradecemos seu contacto. Nossa equipe responderá em breve.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  {submitError && (
+                    <Alert className="mb-4 bg-red-50 text-red-900 border-red-200">
+                      <AlertTitle>Erro ao enviar mensagem</AlertTitle>
+                      <AlertDescription>{submitError}</AlertDescription>
+                    </Alert>
+                  )}
+
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="first-name">Nome</Label>
-                        <Input id="first-name" placeholder="Seu nome" />
+                        <Label htmlFor="firstName">Nome</Label>
+                        <Input
+                          id="firstName"
+                          placeholder="Seu nome"
+                          {...register("firstName")}
+                          className={errors.firstName ? "border-red-500" : ""}
+                        />
+                        {errors.firstName && (
+                          <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                        )}
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="last-name">Sobrenome</Label>
-                        <Input id="last-name" placeholder="Seu sobrenome" />
+                        <Label htmlFor="lastName">Sobrenome</Label>
+                        <Input
+                          id="lastName"
+                          placeholder="Seu sobrenome"
+                          {...register("lastName")}
+                          className={errors.lastName ? "border-red-500" : ""}
+                        />
+                        {errors.lastName && (
+                          <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                        )}
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" placeholder="Seu email" type="email" />
+                      <Input
+                        id="email"
+                        placeholder="Seu email"
+                        type="email"
+                        {...register("email")}
+                        className={errors.email ? "border-red-500" : ""}
+                      />
+                      {errors.email && (
+                        <p className="text-red-500 text-sm">{errors.email.message}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Telefone</Label>
-                      <Input id="phone" placeholder="Seu telefone" type="tel" />
+                      <Input
+                        id="phone"
+                        placeholder="Seu telefone"
+                        type="tel"
+                        {...register("phone")}
+                        className={errors.phone ? "border-red-500" : ""}
+                      />
+                      {errors.phone && (
+                        <p className="text-red-500 text-sm">{errors.phone.message}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="subject">Assunto</Label>
-                      <Input id="subject" placeholder="Assunto da mensagem" />
+                      <Input
+                        id="subject"
+                        placeholder="Assunto da mensagem"
+                        {...register("subject")}
+                        className={errors.subject ? "border-red-500" : ""}
+                      />
+                      {errors.subject && (
+                        <p className="text-red-500 text-sm">{errors.subject.message}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="message">Mensagem</Label>
-                      <Textarea className="min-h-[120px]" id="message" placeholder="Digite sua mensagem aqui" />
+                      <Textarea
+                        className={`min-h-[120px] ${errors.message ? "border-red-500" : ""}`}
+                        id="message"
+                        placeholder="Digite sua mensagem aqui"
+                        {...register("message")}
+                      />
+                      {errors.message && (
+                        <p className="text-red-500 text-sm">{errors.message.message}</p>
+                      )}
                     </div>
-                    <Button type="submit" className="w-full bg-black text-yellow-400 hover:bg-gray-900 font-bauhaus">
-                      Enviar Mensagem
+                    <Button
+                      type="submit"
+                      className="w-full bg-black text-yellow-400 hover:bg-gray-900 font-bauhaus"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                          Enviando...
+                        </>
+                      ) : (
+                        "Enviar Mensagem"
+                      )}
                     </Button>
                   </form>
                 </CardContent>
