@@ -4,7 +4,8 @@ import { Mail, MapPin, Phone } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import Script from 'next/script'
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,6 +28,15 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -47,8 +57,26 @@ export default function ContactPage() {
     setSubmitError(null)
     
     try {
-      // Here you would typically send the data to your API
-      await new Promise((resolve) => setTimeout(resolve, 2000)) // Simulating API call
+      // Execute reCAPTCHA
+      const token = await window.grecaptcha.execute('6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ', { action: 'contact_submit' });
+
+      // Send data to API with reCAPTCHA token
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          recaptchaToken: token,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Erro ao enviar mensagem');
+      }
       
       setSubmitSuccess(true)
       toast({
@@ -69,8 +97,20 @@ export default function ContactPage() {
     }
   }
 
+  useEffect(() => {
+    // Load reCAPTCHA when component mounts
+    window.grecaptcha?.ready(() => {
+      console.log('reCAPTCHA is ready');
+    });
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ`}
+        strategy="afterInteractive"
+      />
+
       {/* Hero Section */}
       <section className="bg-black py-16 md:py-24">
         <div className="container px-4 md:px-6">

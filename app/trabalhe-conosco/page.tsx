@@ -8,10 +8,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useToast } from "@/components/ui/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import Script from 'next/script'
 
 // Form validation schema
 const formSchema = z.object({
@@ -27,6 +28,15 @@ const formSchema = z.object({
 })
 
 type FormData = z.infer<typeof formSchema>
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
 
 export default function CareersPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -48,9 +58,31 @@ export default function CareersPage() {
     setSubmitError(null)
     
     try {
-      // Here you would typically send the data to your API
-      // Including file upload handling
-      await new Promise((resolve) => setTimeout(resolve, 2000)) // Simulating API call
+      // Execute reCAPTCHA
+      const token = await window.grecaptcha.execute('6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ', { action: 'careers_submit' });
+
+      // Create FormData object for file upload
+      const formData = new FormData();
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('position', data.position);
+      formData.append('message', data.message);
+      formData.append('cv', data.cv[0]);
+      formData.append('recaptchaToken', token);
+
+      // Send data to API with reCAPTCHA token
+      const response = await fetch('/api/careers', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Erro ao enviar candidatura');
+      }
       
       setSubmitSuccess(true)
       toast({
@@ -71,8 +103,20 @@ export default function CareersPage() {
     }
   }
 
+  useEffect(() => {
+    // Load reCAPTCHA when component mounts
+    window.grecaptcha?.ready(() => {
+      console.log('reCAPTCHA is ready');
+    });
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ`}
+        strategy="afterInteractive"
+      />
+
       {/* Hero Section */}
       <section className="bg-black py-16 md:py-24">
         <div className="container px-4 md:px-6">

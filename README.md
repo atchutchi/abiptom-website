@@ -198,4 +198,16 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 📞 Suporte
 
-Para suporte, email contato@abiptom.com ou abra uma issue no repositório. 
+Para suporte, email admin@abiptom.gw ou abra uma issue no repositório.
+
+## Segurança
+
+### reCAPTCHA v3
+O site utiliza o Google reCAPTCHA v3 para proteção contra spam e bots nos formulários de contato e candidaturas.
+
+- **Site Key**: `6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ`
+- Integrado nos formulários:
+  - Página de Contato (`/contacto`)
+  - Página de Carreiras (`/trabalhe-conosco`)
+
+A verificação é feita de forma invisível, sem necessidade de interação do usuário, melhorando a experiência de uso. 
