@@ -15,14 +15,13 @@ import {
   getAllCategories,
   getAllTags,
 } from "@/lib/utils/blog";
+import { blogPosts } from "@/lib/data/blog-posts";
 import Link from "next/link";
 import Image from "next/image";
 
-// This would typically come from your database or CMS
+// Get posts from our data file
 const getPosts = async (): Promise<BlogPost[]> => {
-  // For now, return an empty array
-  // You'll need to implement this to fetch your actual blog posts
-  return [];
+  return blogPosts;
 };
 
 export default function BlogPage() {
@@ -106,13 +105,14 @@ export default function BlogPage() {
       {/* Blog Content */}
       <section className="py-12">
         <div className="container px-4 md:px-6">
+          {/* Search Bar - Moved to top */}
+          <div className="mb-12 max-w-xl mx-auto">
+            <BlogSearch onSearch={handleSearch} />
+          </div>
+
           <div className="grid gap-8 md:grid-cols-4">
             {/* Sidebar */}
             <div className="space-y-8">
-              <div>
-                <BlogSearch onSearch={handleSearch} />
-              </div>
-              
               <div>
                 <h3 className="font-bauhaus text-lg mb-4">Categorias</h3>
                 <div className="space-y-2">
@@ -134,36 +134,44 @@ export default function BlogPage() {
 
             {/* Posts Grid */}
             <div className="md:col-span-3">
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {paginatedPosts.map((post) => (
-                  <article key={post.id} className="group">
-                    <Link href={`/blog/${post.slug}`}>
-                      <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                        <Image
-                          src={post.coverImage}
-                          alt={post.title}
-                          fill
-                          className="object-cover transition-transform group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="space-y-3">
-                        <div className="space-x-2">
-                          {post.categories.map((cat) => (
-                            <CategoryBadge key={cat.id} category={cat} className="mr-2" />
-                          ))}
+              {filteredPosts.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-500">Nenhum post encontrado.</p>
+                </div>
+              ) : (
+                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                  {paginatedPosts.map((post) => (
+                    <article key={post.id} className="group">
+                      <Link href={`/blog/${post.slug}`}>
+                        <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
+                          <Image
+                            src={post.coverImage}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform group-hover:scale-105"
+                          />
                         </div>
-                        <h2 className="text-xl font-bold font-bauhaus">{post.title}</h2>
-                        <p className="text-gray-600 line-clamp-2">{post.excerpt}</p>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <span>{post.readingTime}</span>
-                          <span className="mx-2">•</span>
-                          <span>{new Date(post.date).toLocaleDateString("pt-BR")}</span>
+                        <div className="space-y-3">
+                          <div className="space-x-2">
+                            {post.categories.map((cat) => (
+                              <CategoryBadge key={cat.id} category={cat} className="mr-2" />
+                            ))}
+                          </div>
+                          <h2 className="text-xl font-bold font-bauhaus group-hover:text-yellow-600 transition-colors">
+                            {post.title}
+                          </h2>
+                          <p className="text-gray-600 line-clamp-2">{post.excerpt}</p>
+                          <div className="flex items-center text-sm text-gray-500">
+                            <span>{post.readingTime}</span>
+                            <span className="mx-2">•</span>
+                            <span>{new Date(post.date).toLocaleDateString("pt-BR")}</span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </article>
-                ))}
-              </div>
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              )}
 
               {pagination.totalPages > 1 && (
                 <Pagination
