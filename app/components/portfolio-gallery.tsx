@@ -153,7 +153,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'bissau-rising-video',
     title: 'BISSAU RISING',
     description: 'Impact Investment & Trade Forum - Produção audiovisual do evento.',
-    image: '/images/portfolio/video/bissau-rising-thumb.jpg',
+    image: 'https://www.youtube.com/embed/N_Oq4NavzGA',
     category: ['video'],
     tags: ['Vídeo', 'Eventos', 'Cobertura']
   },
@@ -161,7 +161,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'accelerator-lab-workshop',
     title: 'Accelerator Lab Guinea-Bissau',
     description: 'Stakeholder Workshop and Launch - Cobertura do evento.',
-    image: '/images/portfolio/video/accelerator-lab-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_1',
     category: ['video'],
     tags: ['Vídeo', 'Eventos', 'Cobertura']
   },
@@ -169,7 +169,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'accelerator-lab-institucional',
     title: 'Accelerator Lab Guiné-Bissau',
     description: 'Vídeo institucional apresentando o Accelerator Lab.',
-    image: '/images/portfolio/video/accelerator-lab-inst-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_2',
     category: ['video'],
     tags: ['Vídeo', 'Institucional']
   },
@@ -177,7 +177,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'darling',
     title: 'DARLING Bissau',
     description: 'Produção audiovisual promocional.',
-    image: '/images/portfolio/video/darling-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_3',
     category: ['video'],
     tags: ['Vídeo', 'Publicidade']
   },
@@ -185,7 +185,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'gw-domain-video',
     title: 'Domínio .gw',
     description: 'Campanha de promoção do domínio nacional.',
-    image: '/images/portfolio/video/gw-domain-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_4',
     category: ['video'],
     tags: ['Vídeo', 'Publicidade', 'Animação']
   },
@@ -193,7 +193,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'un-habitat',
     title: 'UN-HABITAT',
     description: 'Vídeo informativo em animação 2D para eventos.',
-    image: '/images/portfolio/video/un-habitat-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_5',
     category: ['video'],
     tags: ['Vídeo', 'Animação', 'Motion Graphics']
   },
@@ -201,7 +201,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'aldeias-sos',
     title: 'Aldeias SOS',
     description: 'Animação 2D para campanha de regresso às aulas.',
-    image: '/images/portfolio/video/aldeias-sos-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_6',
     category: ['video'],
     tags: ['Vídeo', 'Animação', 'Motion Graphics']
   },
@@ -209,7 +209,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'tabaski',
     title: 'Tabaski AC Covid-19',
     description: 'Animação 2D para campanha de conscientização.',
-    image: '/images/portfolio/video/tabaski-thumb.jpg',
+    image: 'https://www.youtube.com/embed/VIDEO_ID_7',
     category: ['video'],
     tags: ['Vídeo', 'Animação', 'Motion Graphics']
   },
@@ -315,14 +315,24 @@ export function PortfolioGallery() {
             className="group overflow-hidden rounded-lg border cursor-pointer hover:border-yellow-400 transition-colors"
             onClick={() => setSelectedItem(item)}
           >
-        <div className="relative aspect-video overflow-hidden">
-          <img
-                alt={item.title}
-                src={item.image}
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-          />
-        </div>
-        <div className="p-4">
+            <div className="relative aspect-video overflow-hidden">
+              {item.category.includes('video') ? (
+                <iframe
+                  className="w-full h-full"
+                  src={item.image}
+                  title={item.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <img
+                  alt={item.title}
+                  src={item.image}
+                  className="object-cover w-full h-full transition-all group-hover:scale-105"
+                />
+              )}
+            </div>
+            <div className="p-4">
               <h3 className="font-bold font-bauhaus">{item.title}</h3>
               <p className="text-sm text-gray-dark">{item.description}</p>
               <div className="mt-2 flex flex-wrap gap-1">
@@ -331,9 +341,9 @@ export function PortfolioGallery() {
                     {tag}
                   </Badge>
                 ))}
-        </div>
-      </div>
-        </div>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
 

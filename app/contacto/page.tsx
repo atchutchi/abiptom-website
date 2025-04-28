@@ -4,8 +4,9 @@ import { Mail, MapPin, Phone } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Script from 'next/script'
+import emailjs from '@emailjs/browser'
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -42,6 +43,7 @@ export default function ContactPage() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
+  const formRef = useRef<HTMLFormElement>(null)
 
   const {
     register,
@@ -55,29 +57,22 @@ export default function ContactPage() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     setSubmitError(null)
-    
     try {
-      // Execute reCAPTCHA
-      const token = await window.grecaptcha.execute('6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ', { action: 'contact_submit' });
+      // Verificar se as variáveis de ambiente estão carregadas
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT || 'template_1hp9d3k';
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      // Send data to API with reCAPTCHA token
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...data,
-          recaptchaToken: token,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Erro ao enviar mensagem');
+      if (!serviceId || !publicKey) {
+        throw new Error('Variáveis de ambiente do EmailJS não configuradas corretamente.');
       }
-      
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        data,
+        publicKey
+      )
       setSubmitSuccess(true)
       toast({
         title: "Mensagem enviada!",
@@ -85,7 +80,7 @@ export default function ContactPage() {
         duration: 5000,
       })
       reset()
-    } catch (error) {
+    } catch (error: any) {
       setSubmitError("Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.")
       toast({
         title: "Erro",
@@ -107,7 +102,7 @@ export default function ContactPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Script
-        src={`https://www.google.com/recaptcha/api.js?render=6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ`}
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="afterInteractive"
       />
 
@@ -196,7 +191,7 @@ export default function ContactPage() {
                     </Alert>
                   )}
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" ref={formRef}>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">Nome</Label>

@@ -8,11 +8,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useToast } from "@/components/ui/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import Script from 'next/script'
+import emailjs from '@emailjs/browser'
 
 // Form validation schema
 const formSchema = z.object({
@@ -21,10 +22,7 @@ const formSchema = z.object({
   email: z.string().email("Email inválido"),
   phone: z.string().min(9, "Telefone deve ter pelo menos 9 dígitos"),
   position: z.string().min(3, "Por favor, especifique a área de interesse"),
-  message: z.string().min(50, "Por favor, forneça mais detalhes sobre sua experiência (mínimo 50 caracteres)"),
-  cv: z.instanceof(FileList).refine((files) => {
-    return files?.length === 1 && files[0]?.type === "application/pdf"
-  }, "Por favor, envie um arquivo PDF")
+  message: z.string().min(50, "Por favor, forneça mais detalhes sobre sua experiência (mínimo 50 caracteres)")
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -43,6 +41,7 @@ export default function CareersPage() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
+  const formRef = useRef<HTMLFormElement>(null)
 
   const {
     register,
@@ -56,34 +55,29 @@ export default function CareersPage() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     setSubmitError(null)
-    
     try {
-      // Execute reCAPTCHA
-      const token = await window.grecaptcha.execute('6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ', { action: 'careers_submit' });
+      // Verificar se as variáveis de ambiente estão carregadas
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CAREERS || 'template_07ea88j';
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      // Create FormData object for file upload
-      const formData = new FormData();
-      formData.append('firstName', data.firstName);
-      formData.append('lastName', data.lastName);
-      formData.append('email', data.email);
-      formData.append('phone', data.phone);
-      formData.append('position', data.position);
-      formData.append('message', data.message);
-      formData.append('cv', data.cv[0]);
-      formData.append('recaptchaToken', token);
-
-      // Send data to API with reCAPTCHA token
-      const response = await fetch('/api/careers', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Erro ao enviar candidatura');
+      if (!serviceId || !publicKey) {
+        throw new Error('Variáveis de ambiente do EmailJS não configuradas corretamente.');
       }
       
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          position: data.position,
+          message: data.message,
+        },
+        publicKey
+      )
       setSubmitSuccess(true)
       toast({
         title: "Candidatura enviada!",
@@ -91,7 +85,7 @@ export default function CareersPage() {
         duration: 5000,
       })
       reset()
-    } catch (error) {
+    } catch (error: any) {
       setSubmitError("Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente.")
       toast({
         title: "Erro",
@@ -113,7 +107,7 @@ export default function CareersPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Script
-        src={`https://www.google.com/recaptcha/api.js?render=6LdGkSArAAAAAPguNXAQXsetquwLNu7ArGdwMdUZ`}
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="afterInteractive"
       />
 
@@ -190,7 +184,7 @@ export default function CareersPage() {
                     <Alert className="mb-4 bg-green-50 text-green-900 border-green-200">
                       <AlertTitle>Candidatura enviada com sucesso!</AlertTitle>
                       <AlertDescription>
-                        Agradecemos seu interesse. Nossa equipe analisará seu currículo e entrará em contacto em breve.
+                        Agradecemos seu interesse. Nossa equipe solicite que envies o currículo via email info@abiptom.gw e entrará em contacto em breve.
                       </AlertDescription>
                     </Alert>
                   )}
@@ -202,7 +196,7 @@ export default function CareersPage() {
                     </Alert>
                   )}
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" ref={formRef}>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">Nome</Label>
@@ -277,19 +271,6 @@ export default function CareersPage() {
                       />
                       {errors.message && (
                         <p className="text-red-500 text-sm">{errors.message.message}</p>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="cv">Currículo (PDF)</Label>
-                      <Input
-                        id="cv"
-                        type="file"
-                        accept=".pdf"
-                        {...register("cv")}
-                        className={errors.cv ? "border-red-500" : ""}
-                      />
-                      {errors.cv && (
-                        <p className="text-red-500 text-sm">{errors.cv.message}</p>
                       )}
                     </div>
                     <Button

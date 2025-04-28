@@ -103,7 +103,7 @@ export const CHATBOT_CONFIG = {
         "0️⃣ Voltar ao menu principal",
       options: {
         "1": "Somos uma empresa de referência na Guiné-Bissau nas áreas de tecnologia, design e marketing digital.",
-        "2": "Consulta exemplos reais em: https://abiptom.com/portfolio",
+        "2": "Consulta exemplos reais em: https://abiptom.gw/portfolio",
         "3": "Seguimos estas etapas: 1) Planeamento, 2) Execução, 3) Testes, 4) Entrega e 5) Suporte.",
         "4": "Utilizamos React, Django, WordPress, Node.js, Adobe Suite, entre outras tecnologias."
       }

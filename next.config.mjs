@@ -30,6 +30,8 @@ const nextConfig = {
   allowedDevOrigins: [
     'http://192.168.17.16',
     'https://192.168.17.16',
+    'http://localhost',
+    'http://192.168.17.16:3000',
   ],
 }
 
