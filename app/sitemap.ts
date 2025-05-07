@@ -70,5 +70,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [...routes, ...serviceRoutes, ...blogPosts]
   */
 
-  return [...routes, ...serviceRoutes]
+  return [...routes, ...serviceRoutes] as MetadataRoute.Sitemap
 } 

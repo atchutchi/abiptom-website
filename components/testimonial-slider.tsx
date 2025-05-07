@@ -10,22 +10,22 @@ const testimonials = [
   {
     quote:
       "A ABIPTOM transformou completamente nossa presença online. O design do nosso website e a estratégia de marketing digital superaram todas as nossas expectativas.",
-    author: "Maria Silva",
-    position: "Diretora de Marketing, MTN",
+    author: "Hotel Uaque",
+    position: "Administração",
     image: "/placeholder.svg?height=100&width=100",
   },
   {
     quote:
       "Trabalhar com a equipe da ABIPTOM foi uma experiência incrível. Profissionais talentosos e dedicados que entregam resultados excepcionais.",
-    author: "João Mendes",
-    position: "CEO, Modas Brazil",
+    author: "Chef Aladje",
+    position: "Gerente",
     image: "/placeholder.svg?height=100&width=100",
   },
   {
     quote:
       "A qualidade do trabalho e o compromisso com prazos fazem da ABIPTOM um parceiro confiável para qualquer projeto digital.",
-    author: "Ana Pereira",
-    position: "Coordenadora de Projetos, PNUD",
+    author: "Ana Djú",
+    position: "Acclab PNUD",
     image: "/placeholder.svg?height=100&width=100",
   },
 ]

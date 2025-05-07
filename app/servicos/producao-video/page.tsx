@@ -38,10 +38,12 @@ export default function ProducaoVideoPage() {
               </p>
             </div>
             <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
-              <img
-                alt="Produção de Vídeo"
-                className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/Rg8RjicC89Y"
+                title="Produção de Vídeo ABIPTOM"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               />
             </div>
           </div>

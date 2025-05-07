@@ -32,10 +32,12 @@ export default function Animacao2DPage() {
               </p>
             </div>
             <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover border-4 border-yellow-400">
-              <img
-                alt="Animação 2D"
-                className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/O45iNfSO4tQ"
+                title="Animação 2D ABIPTOM"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               />
             </div>
           </div>
