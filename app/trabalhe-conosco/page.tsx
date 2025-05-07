@@ -22,7 +22,13 @@ const formSchema = z.object({
   email: z.string().email("Email inválido"),
   phone: z.string().min(9, "Telefone deve ter pelo menos 9 dígitos"),
   position: z.string().min(3, "Por favor, especifique a área de interesse"),
-  message: z.string().min(50, "Por favor, forneça mais detalhes sobre sua experiência (mínimo 50 caracteres)")
+  message: z.string().min(50, "Por favor, forneça mais detalhes sobre sua experiência (mínimo 50 caracteres)"),
+  captcha: z.string().refine((val) => {
+    // A validação real será feita dinamicamente baseada no valor esperado do state
+    return true;
+  }, {
+    message: "Resposta incorreta. Por favor resolva a operação matemática."
+  })
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -42,6 +48,58 @@ export default function CareersPage() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
+  
+  // Estados para o CAPTCHA
+  const [num1, setNum1] = useState(0)
+  const [num2, setNum2] = useState(0)
+  const [operator, setOperator] = useState('+')
+  const [captchaResult, setCaptchaResult] = useState(0)
+  
+  // Gerar nova operação matemática
+  useEffect(() => {
+    generateMathProblem()
+  }, [])
+  
+  // Função para gerar um novo problema matemático
+  const generateMathProblem = () => {
+    // Gerar números aleatórios entre 1 e 20
+    const randomNum1 = Math.floor(Math.random() * 20) + 1
+    const randomNum2 = Math.floor(Math.random() * 10) + 1
+    
+    // Escolher um operador aleatório (+ ou -)
+    const operators = ['+', '-', 'x']
+    const randomOp = operators[Math.floor(Math.random() * operators.length)]
+    
+    setNum1(randomNum1)
+    setNum2(randomNum2)
+    setOperator(randomOp)
+    
+    // Calcular resultado com base no operador
+    let result
+    switch (randomOp) {
+      case '+':
+        result = randomNum1 + randomNum2
+        break
+      case '-':
+        // Garantir que o resultado seja positivo
+        if (randomNum1 >= randomNum2) {
+          result = randomNum1 - randomNum2
+        } else {
+          // Trocar os números para evitar resultado negativo
+          setNum1(randomNum2)
+          setNum2(randomNum1)
+          result = randomNum2 - randomNum1
+        }
+        break
+      case 'x':
+        result = randomNum1 * randomNum2
+        break
+      default:
+        result = randomNum1 + randomNum2
+    }
+    
+    setCaptchaResult(result)
+  }
 
   const {
     register,
@@ -53,6 +111,16 @@ export default function CareersPage() {
   })
 
   const onSubmit = async (data: FormData) => {
+    // Verificar o CAPTCHA manualmente
+    if (parseInt(data.captcha) !== captchaResult) {
+      toast({
+        title: "Erro",
+        description: "A resposta do cálculo está incorreta. Por favor, tente novamente.",
+        variant: "destructive",
+      })
+      return
+    }
+    
     setIsSubmitting(true)
     setSubmitError(null)
     setSubmitSuccess(false)
@@ -109,6 +177,9 @@ export default function CareersPage() {
         duration: 5000,
       })
       reset()
+      
+      // Gerar novo CAPTCHA após envio bem-sucedido
+      generateMathProblem()
 
     } catch (error: any) {
       console.error("Erro no onSubmit (careers):", error);
@@ -299,6 +370,21 @@ export default function CareersPage() {
                         <p className="text-red-500 text-sm">{errors.message.message}</p>
                       )}
                     </div>
+                    
+                    {/* CAPTCHA */}
+                    <div className="space-y-2">
+                      <Label htmlFor="captcha">Proteção anti-spam: Quanto é {num1} {operator} {num2}?</Label>
+                      <Input
+                        id="captcha"
+                        placeholder="Digite a resposta"
+                        {...register("captcha")}
+                        className={errors.captcha ? "border-red-500" : ""}
+                      />
+                      {errors.captcha && (
+                        <p className="text-red-500 text-sm">{errors.captcha.message}</p>
+                      )}
+                    </div>
+                    
                     <Button
                       type="submit"
                       className="w-full bg-black text-yellow-400 hover:bg-gray-900 font-bauhaus"
