@@ -41,7 +41,7 @@ export default function DesignGraficoPage() {
               <img
                 alt="Design Gráfico"
                 className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/servicos/design-grafico-img.png"
               />
             </div>
           </div>

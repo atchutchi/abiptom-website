@@ -42,7 +42,7 @@ export default function DesenvolvimentoSoftwarePage() {
               <img
                 alt="Desenvolvimento de Software"
                 className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/servicos/desenvolvimento-web.png"
               />
             </div>
           </div>

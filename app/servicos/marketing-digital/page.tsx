@@ -35,7 +35,7 @@ export default function MarketingDigitalPage() {
               <img
                 alt="Marketing Digital"
                 className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/servicos/marketing.png"
               />
             </div>
           </div>

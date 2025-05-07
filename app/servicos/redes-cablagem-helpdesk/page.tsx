@@ -41,7 +41,7 @@ export default function RedesCablagemHelpdeskPage() {
               <img
                 alt="Redes e Cablagem"
                 className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/servicos/redes.png"
               />
             </div>
           </div>
