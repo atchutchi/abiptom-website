@@ -143,6 +143,11 @@ export default function BlogPage() {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {paginatedPosts.map((post) => (
                     <article key={post.id} className="group">
+                      <div className="space-x-2 mb-3">
+                        {post.categories.map((cat) => (
+                          <CategoryBadge key={cat.id} category={cat} className="mr-2" />
+                        ))}
+                      </div>
                       <Link href={`/blog/${post.slug}`}>
                         <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
                           <Image
@@ -150,14 +155,10 @@ export default function BlogPage() {
                             alt={post.title}
                             fill
                             className="object-cover transition-transform group-hover:scale-105"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         </div>
                         <div className="space-y-3">
-                          <div className="space-x-2">
-                            {post.categories.map((cat) => (
-                              <CategoryBadge key={cat.id} category={cat} className="mr-2" />
-                            ))}
-                          </div>
                           <h2 className="text-xl font-bold font-bauhaus group-hover:text-yellow-600 transition-colors">
                             {post.title}
                           </h2>

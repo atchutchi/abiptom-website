@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useState, useEffect, useRef } from "react"
-import Script from 'next/script'
-import emailjs from '@emailjs/browser'
+import emailjs from '@emailjs/browser' // Importar o SDK do EmailJS
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import CSRFToken from "@/components/csrf-token"
+import MapEmbed from "@/components/MapEmbed"
 
 // Form validation schema
 const formSchema = z.object({
@@ -29,21 +30,21 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-    };
-  }
-}
+// Remover declaração global do grecaptcha
+// declare global {
+//   interface Window {
+//     grecaptcha: {
+//       ready: (callback: () => void) => void;
+//       execute: (siteKey: string, options: { action: string }) => Promise<string>;
+//     };
+//   }
+// }
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
-  const formRef = useRef<HTMLFormElement>(null)
 
   const {
     register,
@@ -57,22 +58,53 @@ export default function ContactPage() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     setSubmitError(null)
-    try {
-      // Verificar se as variáveis de ambiente estão carregadas
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT || 'template_1hp9d3k';
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    setSubmitSuccess(false)
 
-      if (!serviceId || !publicKey) {
-        throw new Error('Variáveis de ambiente do EmailJS não configuradas corretamente.');
+    try {
+      // 1. Primeiro, validar dados no servidor e obter token
+      console.log("Validando dados no servidor...");
+      const validationResponse = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // O header X-CSRF-Token será adicionado automaticamente pelo componente CSRFToken
+        },
+        body: JSON.stringify(data),
+      });
+
+      const validationResult = await validationResponse.json();
+
+      if (!validationResponse.ok) {
+        throw new Error(validationResult.error || 'Erro desconhecido ao validar formulário');
       }
 
-      await emailjs.send(
+      // 2. Agora, enviar o email diretamente via EmailJS SDK do cliente
+      console.log("Enviando email via EmailJS (cliente)...");
+      
+      // Obter os dados do EmailJS da resposta do servidor
+      const { serviceId, templateId, publicKey, templateParams } = validationResult.emailjs;
+      
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("Configuração do EmailJS ausente na resposta do servidor");
+      }
+
+      // Inicializar EmailJS com a chave pública
+      emailjs.init(publicKey);
+      
+      // Enviar email usando EmailJS do lado do cliente
+      const emailResponse = await emailjs.send(
         serviceId,
         templateId,
-        data,
-        publicKey
-      )
+        templateParams,
+        publicKey // User ID (chave pública)
+      );
+
+      if (emailResponse.status !== 200) {
+        console.error("Erro ao enviar email via EmailJS cliente:", emailResponse);
+        throw new Error("Falha ao enviar email. Por favor, tente novamente.");
+      }
+
+      // Sucesso
       setSubmitSuccess(true)
       toast({
         title: "Mensagem enviada!",
@@ -80,11 +112,13 @@ export default function ContactPage() {
         duration: 5000,
       })
       reset()
+
     } catch (error: any) {
-      setSubmitError("Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.")
+      console.error("Erro no onSubmit:", error);
+      setSubmitError(error.message || "Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.")
       toast({
         title: "Erro",
-        description: "Não foi possível enviar sua mensagem. Tente novamente.",
+        description: error.message || "Não foi possível enviar sua mensagem. Tente novamente.",
         variant: "destructive",
       })
     } finally {
@@ -92,79 +126,71 @@ export default function ContactPage() {
     }
   }
 
-  useEffect(() => {
-    // Load reCAPTCHA when component mounts
-    window.grecaptcha?.ready(() => {
-      console.log('reCAPTCHA is ready');
-    });
-  }, []);
+  // Remover useEffect do grecaptcha
+  // useEffect(() => {
+  //   window.grecaptcha?.ready(() => {
+  //   });
+  // }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="afterInteractive"
-      />
+      {/* Remover Script tag do reCAPTCHA */}
+      {/* <Script src={...} /> */}
 
       {/* Hero Section */}
       <section className="bg-black py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+         <div className="container px-4 md:px-6">
+           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow-400 font-bauhaus">Contacto</h1>
             <p className="max-w-[700px] text-blue-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Entre em contacto conosco e descubra como podemos ajudar sua empresa a crescer.
             </p>
-          </div>
-        </div>
+           </div>
+         </div>
       </section>
 
       {/* Contact Form Section */}
       <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+         <div className="container px-4 md:px-6">
+           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="space-y-8">
-              <div>
+               <div>
                 <h2 className="text-3xl font-bold tracking-tighter mb-4">Fale Conosco</h2>
                 <p className="text-gray-500">
                   Preencha o formulário abaixo e entraremos em contacto o mais breve possível. Estamos ansiosos para
                   ouvir sobre seu projeto.
                 </p>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <MapPin className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
-                  <div>
-                    <h3 className="font-bold">Endereço</h3>
-                    <p className="text-gray-500">Bairro Ajuda IA Fase, Bissau, Guiné-Bissau</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <Phone className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
-                  <div>
-                    <h3 className="font-bold">Telefone</h3>
-                    <p className="text-gray-500">+245 955 949 429 | +245 966 865 331</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <Mail className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
-                  <div>
-                    <h3 className="font-bold">Email</h3>
-                    <p className="text-gray-500">info@abiptom.gw</p>
-                  </div>
-                </div>
-              </div>
-              <div className="aspect-video overflow-hidden rounded-lg">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31098.35874649034!2d-15.6142!3d11.8636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xee9b7c2f8f7c4d%3A0x6f4b8c7e7d2d8b0!2sBissau%2C%20Guinea-Bissau!5e0!3m2!1sen!2sus!4v1650000000000!5m2!1sen!2sus"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Mapa da localização da ABIPTOM"
-                ></iframe>
-              </div>
+               </div>
+               <div className="space-y-4">
+                 <div className="flex items-start">
+                   <MapPin className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
+                   <div>
+                     <h3 className="font-bold">Endereço</h3>
+                     <p className="text-gray-500">Bairro Ajuda IA Fase, Bissau, Guiné-Bissau</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start">
+                   <Phone className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
+                   <div>
+                     <h3 className="font-bold">Telefone</h3>
+                     <p className="text-gray-500">+245 955 949 429 | +245 966 865 331</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start">
+                   <Mail className="h-5 w-5 mr-2 mt-0.5 text-yellow-400" />
+                   <div>
+                     <h3 className="font-bold">Email</h3>
+                     <p className="text-gray-500">info@abiptom.gw</p>
+                   </div>
+                 </div>
+               </div>
+               <div className="aspect-video overflow-hidden rounded-lg">
+                 <MapEmbed
+                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4804.5253440792085!2d-15.615970524152907!3d11.861143638248679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xee6db9c9b22242b%3A0x3057dcd4ec174242!2sAbiptom%20Sarl!5e1!3m2!1spt-PT!2s!4v1746612533199!5m2!1spt-PT!2s"
+                   title="Mapa da localização da ABIPTOM"
+                   className="w-full h-full"
+                 />
+               </div>
             </div>
             <div>
               <Card>
@@ -191,7 +217,10 @@ export default function ContactPage() {
                     </Alert>
                   )}
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" ref={formRef}>
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    {/* Adicionar o componente CSRF Token para proteção contra ataques CSRF */}
+                    <CSRFToken />
+                    
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">Nome</Label>
@@ -286,8 +315,8 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
             </div>
-          </div>
-        </div>
+           </div>
+         </div>
       </section>
     </div>
   )

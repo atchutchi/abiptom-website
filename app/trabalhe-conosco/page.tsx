@@ -12,8 +12,8 @@ import { useState, useEffect, useRef } from "react"
 import { useToast } from "@/components/ui/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import Script from 'next/script'
-import emailjs from '@emailjs/browser'
+import CSRFToken from "@/components/csrf-token"
+import emailjs from '@emailjs/browser' // Importar o SDK do EmailJS
 
 // Form validation schema
 const formSchema = z.object({
@@ -27,21 +27,21 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-    };
-  }
-}
+// Remover declaração global do grecaptcha
+// declare global {
+//   interface Window {
+//     grecaptcha: {
+//       ready: (callback: () => void) => void;
+//       execute: (siteKey: string, options: { action: string }) => Promise<string>;
+//     };
+//   }
+// }
 
 export default function CareersPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
-  const formRef = useRef<HTMLFormElement>(null)
 
   const {
     register,
@@ -55,41 +55,67 @@ export default function CareersPage() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
     setSubmitError(null)
-    try {
-      // Verificar se as variáveis de ambiente estão carregadas
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CAREERS || 'template_07ea88j';
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    setSubmitSuccess(false)
 
-      if (!serviceId || !publicKey) {
-        throw new Error('Variáveis de ambiente do EmailJS não configuradas corretamente.');
+    try {
+      // 1. Primeiro, validar dados no servidor e obter token
+      console.log("Validando dados no servidor...");
+      const validationResponse = await fetch('/api/careers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // O header X-CSRF-Token será adicionado automaticamente pelo componente CSRFToken
+        },
+        body: JSON.stringify(data),
+      });
+
+      const validationResult = await validationResponse.json();
+
+      if (!validationResponse.ok) {
+        throw new Error(validationResult.error || 'Erro desconhecido ao validar candidatura');
       }
+
+      // 2. Agora, enviar o email diretamente via EmailJS SDK do cliente
+      console.log("Enviando email via EmailJS (cliente)...");
       
-      await emailjs.send(
+      // Obter os dados do EmailJS da resposta do servidor
+      const { serviceId, templateId, publicKey, templateParams } = validationResult.emailjs;
+      
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("Configuração do EmailJS ausente na resposta do servidor");
+      }
+
+      // Inicializar EmailJS com a chave pública
+      emailjs.init(publicKey);
+      
+      // Enviar email usando EmailJS do lado do cliente
+      const emailResponse = await emailjs.send(
         serviceId,
         templateId,
-        {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          position: data.position,
-          message: data.message,
-        },
-        publicKey
-      )
+        templateParams,
+        publicKey // User ID (chave pública)
+      );
+
+      if (emailResponse.status !== 200) {
+        console.error("Erro ao enviar email via EmailJS cliente:", emailResponse);
+        throw new Error("Falha ao enviar email. Por favor, tente novamente.");
+      }
+
+      // Sucesso
       setSubmitSuccess(true)
       toast({
         title: "Candidatura enviada!",
-        description: "Agradecemos seu interesse. Analisaremos seu currículo e entraremos em contacto.",
+        description: "Agradecemos seu interesse. Nossa equipe solicite que envies o currículo via email info@abiptom.gw e entrará em contacto em breve.",
         duration: 5000,
       })
       reset()
+
     } catch (error: any) {
-      setSubmitError("Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente.")
+      console.error("Erro no onSubmit (careers):", error);
+      setSubmitError(error.message || "Ocorreu um erro ao enviar sua candidatura. Por favor, tente novamente.")
       toast({
         title: "Erro",
-        description: "Não foi possível enviar sua candidatura. Tente novamente.",
+        description: error.message || "Não foi possível enviar sua candidatura. Tente novamente.",
         variant: "destructive",
       })
     } finally {
@@ -97,79 +123,76 @@ export default function CareersPage() {
     }
   }
 
-  useEffect(() => {
-    // Load reCAPTCHA when component mounts
-    window.grecaptcha?.ready(() => {
-      console.log('reCAPTCHA is ready');
-    });
-  }, []);
+  // Remover useEffect do grecaptcha
+  // useEffect(() => {
+  //   window.grecaptcha?.ready(() => {
+  //   });
+  // }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="afterInteractive"
-      />
+      {/* Remover Script tag do reCAPTCHA */}
+      {/* <Script src={...} /> */}
 
       {/* Hero Section */}
       <section className="bg-black py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+         <div className="container px-4 md:px-6">
+           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow-400 font-bauhaus">Trabalhe Conosco</h1>
             <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Junte-se à nossa equipe e faça parte de projetos inovadores.
             </p>
-          </div>
-        </div>
+           </div>
+         </div>
       </section>
 
       {/* Careers Content */}
       <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+         <div className="container px-4 md:px-6">
+           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="space-y-8">
-              <div>
+               <div>
                 <h2 className="text-3xl font-bold tracking-tighter mb-4 font-bauhaus">Por que trabalhar na ABIPTOM?</h2>
                 <p className="text-gray-700">
                   Na ABIPTOM, acreditamos que nosso maior ativo são as pessoas. Buscamos profissionais talentosos e
                   apaixonados que queiram fazer a diferença no mercado digital da Guiné-Bissau e além.
                 </p>
-              </div>
-              <div className="space-y-4">
-                <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-400">
-                  <h3 className="text-xl font-bold mb-2 font-bauhaus">Ambiente Inovador</h3>
-                  <p className="text-gray-700">
-                    Trabalhamos com as mais recentes tecnologias e metodologias, proporcionando um ambiente de constante
-                    aprendizado e inovação.
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-400">
-                  <h3 className="text-xl font-bold mb-2 font-bauhaus">Crescimento Profissional</h3>
-                  <p className="text-gray-700">
-                    Oferecemos oportunidades de desenvolvimento e crescimento dentro da empresa, com projetos
-                    desafiadores e diversificados.
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-400">
-                  <h3 className="text-xl font-bold mb-2 font-bauhaus">Equipe Colaborativa</h3>
-                  <p className="text-gray-700">
-                    Valorizamos o trabalho em equipe e a colaboração, criando um ambiente de trabalho positivo e
-                    produtivo.
-                  </p>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold mb-4 font-bauhaus">Áreas de Atuação</h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-700">
-                  <li>Design Gráfico</li>
-                  <li>Desenvolvimento Web</li>
-                  <li>Marketing Digital</li>
-                  <li>Gestão de Redes Sociais</li>
-                  <li>Produção de Vídeo</li>
-                  <li>Fotografia</li>
-                  <li>Animação 2D</li>
-                </ul>
-              </div>
+               </div>
+               <div className="space-y-4">
+                 <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-400">
+                   <h3 className="text-xl font-bold mb-2 font-bauhaus">Ambiente Inovador</h3>
+                   <p className="text-gray-700">
+                     Trabalhamos com as mais recentes tecnologias e metodologias, proporcionando um ambiente de constante
+                     aprendizado e inovação.
+                   </p>
+                 </div>
+                 <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-400">
+                   <h3 className="text-xl font-bold mb-2 font-bauhaus">Crescimento Profissional</h3>
+                   <p className="text-gray-700">
+                     Oferecemos oportunidades de desenvolvimento e crescimento dentro da empresa, com projetos
+                     desafiadores e diversificados.
+                   </p>
+                 </div>
+                 <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-400">
+                   <h3 className="text-xl font-bold mb-2 font-bauhaus">Equipe Colaborativa</h3>
+                   <p className="text-gray-700">
+                     Valorizamos o trabalho em equipe e a colaboração, criando um ambiente de trabalho positivo e
+                     produtivo.
+                   </p>
+                 </div>
+               </div>
+               <div>
+                 <h3 className="text-xl font-bold mb-4 font-bauhaus">Áreas de Atuação</h3>
+                 <ul className="list-disc list-inside space-y-2 text-gray-700">
+                   <li>Design Gráfico</li>
+                   <li>Desenvolvimento Web</li>
+                   <li>Marketing Digital</li>
+                   <li>Gestão de Redes Sociais</li>
+                   <li>Produção de Vídeo</li>
+                   <li>Fotografia</li>
+                   <li>Animação 2D</li>
+                 </ul>
+               </div>
             </div>
             <div>
               <Card className="border-yellow-400 border-2">
@@ -196,7 +219,10 @@ export default function CareersPage() {
                     </Alert>
                   )}
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" ref={formRef}>
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    {/* Adicionar o componente CSRF Token para proteção contra ataques CSRF */}
+                    <CSRFToken />
+                    
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">Nome</Label>
@@ -291,8 +317,8 @@ export default function CareersPage() {
                 </CardContent>
               </Card>
             </div>
-          </div>
-        </div>
+           </div>
+         </div>
       </section>
     </div>
   )

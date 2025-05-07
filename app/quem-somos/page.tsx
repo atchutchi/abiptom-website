@@ -38,7 +38,7 @@ export default function AboutPage() {
               <img
                 alt="Equipe Abiptom"
                 className="aspect-video object-cover w-full"
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/foto-quem-somos.png"
               />
             </div>
           </div>

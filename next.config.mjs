@@ -20,7 +20,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    domains: ['www.google-analytics.com'],
   },
   experimental: {
     webpackBuildWorker: true,

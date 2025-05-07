@@ -118,7 +118,9 @@ export default function ServicesPage() {
                   <span>Planificação estratégica simplificada</span>
                 </li>
               </ul>
-              <Button className="mt-auto bg-yellow text-black hover:bg-yellow-hover">Escolher Plano</Button>
+              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
+                <Link href="/contacto">Escolher Plano</Link>
+              </Button>
             </div>
             <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg border border-gray-200">
               <div className="text-center mb-6">
@@ -149,7 +151,9 @@ export default function ServicesPage() {
                   <span>10 Instagram/Facebook Stories</span>
                 </li>
               </ul>
-              <Button className="mt-auto bg-yellow text-black hover:bg-yellow-hover">Escolher Plano</Button>
+              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
+                <Link href="/contacto">Escolher Plano</Link>
+              </Button>
             </div>
             <div className="flex flex-col p-6 bg-grey shadow-lg rounded-lg text-white relative">
               <div className="absolute top-0 right-0 -mt-4 mr-4 bg-yellow text-black font-bold py-1 px-4 rounded-full text-xs uppercase">
@@ -187,7 +191,9 @@ export default function ServicesPage() {
                   <span>1 Concurso/Challenge</span>
                 </li>
               </ul>
-              <Button className="mt-auto bg-yellow text-black hover:bg-yellow-hover">Escolher Plano</Button>
+              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
+                <Link href="/contacto">Escolher Plano</Link>
+              </Button>
             </div>
             <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg border border-gray-200">
               <div className="text-center mb-6">
@@ -222,7 +228,9 @@ export default function ServicesPage() {
                   <span>Relatórios completos semanais</span>
                 </li>
               </ul>
-              <Button className="mt-auto bg-yellow text-black hover:bg-yellow-hover">Escolher Plano</Button>
+              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
+                <Link href="/contacto">Escolher Plano</Link>
+              </Button>
             </div>
           </div>
         </div>

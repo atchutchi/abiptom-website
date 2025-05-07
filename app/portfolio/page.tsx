@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { PortfolioGallery } from "@/app/components/portfolio-gallery"
 import { PDFPreview } from "@/app/components/pdf-preview"
 import Link from "next/link"
+import { ClientLogos } from "@/components/client-logos"
 
 export default function PortfolioPage() {
   return (
@@ -529,6 +530,12 @@ export default function PortfolioPage() {
                 />
 
                 <PDFPreview
+                  pdfUrl="/docs/portfolio/Relatorio-Anual-laboratorio-de-aceleração-undp-2020.pdf"
+                  title="Relatório UNDP 2020"
+                  description="Design do relatório anual do Laboratório de Aceleração UNDP."
+                />
+
+                <PDFPreview
                   pdfUrl="/docs/portfolio/THE-TOURIST-INVESTMENT-GUIDE-Guine-Bissau-Ministerio-de-turismo.pdf"
                   title="Guia de Investimento Turístico"
                   description="Design do guia de investimento turístico para o Ministério do Turismo."
@@ -565,9 +572,45 @@ export default function PortfolioPage() {
                 />
 
                 <PDFPreview
-                  pdfUrl="/docs/portfolio/Flyer_Nô Firmanta.pdf"
+                  pdfUrl="/docs/portfolio/Flyer_no-firmanta.pdf"
                   title="Flyer Nô Firmanta"
                   description="Material promocional para o projeto Nô Firmanta."
+                />
+
+                <PDFPreview
+                  pdfUrl="/docs/portfolio/forum-bissau-rising-guine-bissau-UNDP.pdf"
+                  title="Fórum Bissau Rising"
+                  description="Material gráfico para o fórum de investimentos Bissau Rising."
+                />
+
+                <PDFPreview
+                  pdfUrl="/docs/portfolio/6th-edition-newsletter-west-africa-competitive-programme-guinea-bissau-wacomp.pdf"
+                  title="Newsletter WACOMP"
+                  description="6ª edição da newsletter do Programa de Competitividade da África Ocidental - Guiné-Bissau."
+                />
+
+                <PDFPreview
+                  pdfUrl="/docs/portfolio/bloco-de-nota-dialogo-financeiro-undp.pdf"
+                  title="Bloco de Notas UNDP"
+                  description="Design de bloco de notas para o diálogo financeiro do UNDP."
+                />
+
+                <PDFPreview
+                  pdfUrl="/docs/portfolio/Pitch-Justiça-Movel-undp.pdf"
+                  title="Pitch Justiça Móvel"
+                  description="Apresentação do projeto Justiça Móvel do UNDP."
+                />
+
+                <PDFPreview
+                  pdfUrl="/docs/portfolio/Communication-Strategy-2022-2026-UNDP.pdf"
+                  title="Estratégia de Comunicação UNDP"
+                  description="Design do documento de estratégia de comunicação 2022-2026 do UNDP."
+                />
+
+                <PDFPreview
+                  pdfUrl="/docs/portfolio/Capa-unicef.pdf"
+                  title="Capa UNICEF"
+                  description="Design de capa para documento da UNICEF."
                 />
               </div>
             </TabsContent>
@@ -584,50 +627,7 @@ export default function PortfolioPage() {
               Trabalhamos com empresas e organizações de diversos setores.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-            <div className="flex items-center justify-center p-4">
-              <img alt="FUNDEI Logo" className="max-h-12 w-auto" src="/images/clients/fundei.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="LIGCCA Logo" className="max-h-12 w-auto" src="/images/clients/ligcca.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="Bissau Rising Logo" className="max-h-12 w-auto" src="/images/clients/bissau-rising.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="ENA Logo" className="max-h-12 w-auto" src="/images/clients/ena.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="Tchico Té Logo" className="max-h-12 w-auto" src="/images/clients/tchico-te.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="ONAGB Logo" className="max-h-12 w-auto" src="/images/clients/onagb.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="APGB Logo" className="max-h-12 w-auto" src="/images/clients/apgb.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="ENS Logo" className="max-h-12 w-auto" src="/images/clients/ens.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="UCB Logo" className="max-h-12 w-auto" src="/images/clients/ucb.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="Genesis Logo" className="max-h-12 w-auto" src="/images/clients/genesis.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="No Firmanta Logo" className="max-h-12 w-auto" src="/images/clients/no-firmanta.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="Fogão de Ouro Logo" className="max-h-12 w-auto" src="/images/clients/fogao-ouro.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="Kaucriar Logo" className="max-h-12 w-auto" src="/images/clients/kaucriar.png" />
-            </div>
-            <div className="flex items-center justify-center p-4">
-              <img alt="Gamela Logo" className="max-h-12 w-auto" src="/images/clients/gamela.png" />
-            </div>
-          </div>
+          <ClientLogos />
         </div>
       </section>
 

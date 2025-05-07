@@ -1,0 +1,11 @@
+# Allow all web crawlers (search engine bots)
+User-agent: *
+Allow: /
+
+# Disallow certain directories
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+# Sitemap location
+Sitemap: https://abiptom.gw/sitemap.xml 
