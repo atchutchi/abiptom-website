@@ -572,7 +572,7 @@ export default function PortfolioPage() {
                 />
 
                 <PDFPreview
-                  pdfUrl="/docs/portfolio/Flyer_no-firmanta.pdf"
+                  pdfUrl="/docs/portfolio/flyer-no-firmanta.pdf"
                   title="Flyer Nô Firmanta"
                   description="Material promocional para o projeto Nô Firmanta."
                 />
@@ -596,7 +596,7 @@ export default function PortfolioPage() {
                 />
 
                 <PDFPreview
-                  pdfUrl="/docs/portfolio/Pitch-Justiça-Movel-undp.pdf"
+                  pdfUrl="/docs/portfolio/Pitch-Justica-Movel-undp.pdf"
                   title="Pitch Justiça Móvel"
                   description="Apresentação do projeto Justiça Móvel do UNDP."
                 />
