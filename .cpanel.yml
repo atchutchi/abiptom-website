@@ -1,0 +1,11 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/username/public_html/
+    - /bin/cp -R .next $DEPLOYPATH
+    - /bin/cp -R public $DEPLOYPATH
+    - /bin/cp package.json $DEPLOYPATH
+    - /bin/cp package-lock.json $DEPLOYPATH
+    - /bin/cp server.js $DEPLOYPATH
+    - /bin/cp next.config.mjs $DEPLOYPATH
+    - /bin/cp -R node_modules $DEPLOYPATH # Opcional, pode desativar esta linha e instalar dependências no servidor 
