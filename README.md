@@ -1,244 +1,254 @@
 # ABIPTOM Website
 
-Um website moderno e responsivo para a ABIPTOM, uma agência criativa em Guiné-Bissau especializada em design, desenvolvimento web, produção de vídeo e marketing digital.
+Bem-vindo ao repositório oficial do website da ABIPTOM, uma agência criativa e de consultoria digital sediada na Guiné-Bissau. Este site foi desenvolvido para apresentar nossos serviços, portfólio, e compartilhar insights através do nosso blog, ao mesmo tempo que implementa funcionalidades modernas e seguras.
 
-## 🆕 Atualizações Recentes
+## 🎯 Visão Geral do Projeto
 
-- **Blog**: Implementação do sistema de blog com os primeiros cases de sucesso
-- **Esquema de cores atualizado**: Implementação consistente do esquema de cores preto e amarelo em todas as páginas
-- **Fonte Bauhaus**: Adição da fonte Bauhaus para títulos e elementos de destaque
-- **Páginas de Serviço**: Redesign completo das páginas de serviços com o novo esquema visual
-- **Cases de Sucesso**: Adição dos projetos UNIDO/AMAE e Banco BDU
-- **Design System**: Padronização de componentes UI com estilo consistente
+O website da ABIPTOM serve como um ponto central de contacto e informação para clientes atuais e potenciais. Ele é projetado para ser moderno, responsivo, e intuitivo, refletindo a qualidade e profissionalismo da agência. As principais seções incluem: Home, Serviços, Quem Somos, Portfólio, Blog, Contacto e Trabalhe Conosco.
 
-## 📝 Blog
+## ✨ Funcionalidades Implementadas
 
-O blog da ABIPTOM apresenta cases de sucesso e insights sobre projetos:
+O site conta com diversas funcionalidades para melhorar a experiência do usuário e a eficiência operacional:
 
-### Posts Recentes
-- **Projeto UNIDO/AMAE**: Branding para 21 marcas de mulheres empreendedoras
-- **Transformação Digital do Banco BDU**: Case study de consultoria digital
-- **Galeria UNIDO/AMAE**: Bastidores do projeto de branding
+1.  **Formulários Seguros com CAPTCHA Matemático**:
+    *   Páginas de `Contacto` e `Trabalhe Conosco` utilizam um CAPTCHA que requer a resolução de uma simples operação matemática (e.g., "Quanto é 5 + 3?") antes do envio.
+    *   Isso previne spam de forma eficaz sem depender de serviços externos como o reCAPTCHA.
+    *   Implementado com React Hook Form, Zod para validação, e EmailJS para o envio de emails.
 
-### Funcionalidades Planejadas
-- Categorização de posts
-- Sistema de busca
-- Paginação
-- RSS Feed
-- Newsletter integration
+2.  **Carrossel de Logos de Clientes (`Nossos Clientes`)**:
+    *   Componente `ClientLogos` exibe um carrossel horizontal com rolagem automática dos logos dos clientes.
+    *   Largura fixa para cada logo (168px) para garantir uma renderização consistente.
+    *   Utilizado na página inicial e na página de Portfólio.
 
-## 🤖 Assistente Virtual
+3.  **Blog com Conteúdo Dinâmico**:
+    *   Seção de blog para compartilhar notícias, cases de sucesso e artigos.
+    *   Atualmente destaca o "Projeto de Branding para 21 Marcas de Mulheres Empreendedoras".
+    *   Página inicial exibe uma prévia do último artigo.
 
-O site conta com um assistente virtual inteligente que oferece uma experiência de navegação guiada:
+4.  **Integração Google Maps**:
+    *   Componente `MapEmbed` para carregar de forma segura um iframe do Google Maps na página de Contacto.
+    *   Configuração de Content Security Policy (CSP) para permitir iframes do Google.
 
-- Interface estruturada com menus interativos
-- Respostas predefinidas para tópicos importantes
-- Sistema de navegação intuitivo com emojis numerados
-- Histórico de conversas com painel administrativo
-- Configurações personalizáveis via interface admin
+5.  **Segurança Abrangente**:
+    *   **Headers de Segurança**: Implementados via `middleware.ts` (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Strict-Transport-Security, Content Security Policy).
+    *   **Validação de Inputs**: Utilização do Zod para validar todos os dados de formulário no frontend e backend (quando aplicável via API routes).
+    *   **Proteção CSRF**: Token CSRF (`CSRFToken` component) utilizado nos formulários para prevenir ataques Cross-Site Request Forgery.
+    *   **Configuração CORS**: Embora não detalhada aqui, é uma consideração importante para APIs.
 
-### Funcionalidades do Assistente
-- **Menus Interativos**
-  - Menu principal com opções principais
-  - Submenus para serviços específicos
-  - Opções de contato e informações
-  - Navegação simplificada com números
+6.  **Redirecionamento Estratégico de Botões**:
+    *   Botões "Escolher Plano" nas páginas de serviços foram modificados para redirecionar diretamente para a página de `Contacto` (`/contacto`).
 
-- **Painel Administrativo**
-  - Visualização do histórico de conversas
-  - Configuração de mensagens e respostas
-  - Gerenciamento de serviços e informações
-  - Monitoramento de interações
+7.  **Design Responsivo e Moderno**:
+    *   Layout adaptável para desktops, tablets e dispositivos móveis.
+    *   Interface limpa e profissional.
 
-- **Respostas Inteligentes**
-  - Mensagens predefinidas para tópicos importantes
-  - Direcionamento adequado para cada tipo de solicitação
-  - Respostas éticas e profissionais
-  - Opção de retorno ao menu principal
+8.  **Assistente Virtual (ChatBot)**:
+    *   O site integra um componente `ChatBot` (visível em `app/layout.tsx`), potencialmente utilizando APIs de IA (Anthropic, Hugging Face) para interação com o usuário. *(Nota: A funcionalidade completa e estado atual deste chatbot não foram totalmente explorados nas interações recentes, mas a estrutura existe).*
 
-### Tecnologias do Assistente
-- Next.js API Routes para backend
-- React Dialog para interface
-- TypeScript para tipagem segura
-- Sistema de histórico persistente
-- Interface administrativa completa
+## 🛠️ Stack Tecnológica
 
-## 🚀 Tecnologias Utilizadas
-
-- **Next.js 14** - Framework React com App Router
-- **TypeScript** - Tipagem estática
-- **Tailwind CSS** - Framework CSS utilitário
-- **Shadcn/ui** - Componentes de UI reutilizáveis
-- **Lucide React** - Ícones modernos
-- **React** - Biblioteca JavaScript para UI
-- **Hugging Face** - API de Inteligência Artificial para o chatbot
-- **Radix UI** - Componentes acessíveis
+*   **Framework**: Next.js 14+ (com App Router)
+*   **Linguagem**: TypeScript
+*   **Estilização**: Tailwind CSS
+*   **Componentes UI**: Shadcn/ui (Button, Card, Input, Label, Textarea, Toast, Alert, etc.)
+*   **Gerenciamento de Formulários**: React Hook Form
+*   **Validação de Esquema**: Zod
+*   **Envio de Email (Cliente)**: EmailJS
+*   **Ícones**: Lucide React
+*   **Fontes**: Poppins (Google Fonts), Bauhaus 93 (local)
+*   **Animações/Carrossel**: Embla Carousel (para o `ClientLogos`)
+*   **Linting/Formatting**: ESLint, Prettier (configurações padrão do Next.js)
 
 ## 📁 Estrutura do Projeto
 
+Uma visão geral da organização das pastas principais:
+
 ```
 abiptom-website/
-├── app/
-│   ├── components/         # Componentes reutilizáveis
-│   ├── blog/              # Sistema de blog
-│   │   ├── page.tsx       # Página principal do blog
-│   │   └── [...posts]/    # Posts individuais
-│   ├── contacto/          # Página de contato
-│   ├── portfolio/         # Página de portfólio
-│   ├── servicos/          # Páginas de serviços
-│   │   ├── animacao-2d/   
-│   │   ├── design-grafico/
-│   │   ├── marketing-digital/
-│   │   └── ...           
-│   ├── trabalhe-conosco/  # Página de carreiras
-│   ├── layout.tsx         # Layout principal
-│   └── page.tsx           # Página inicial
-├── public/
-│   ├── fonts/            # Fontes locais (Bauhaus)
-│   └── images/           # Imagens do site
-└── components/           # Componentes compartilhados
+├── app/                     # Diretório principal do App Router (páginas, layouts)
+│   ├── (main)/              # Grupo de rotas para páginas principais
+│   │   ├── blog/
+│   │   ├── contacto/
+│   │   ├── portfolio/
+│   │   ├── quem-somos/
+│   │   ├── servicos/
+│   │   ├── trabalhe-conosco/
+│   │   └── page.tsx         # Página inicial (Home)
+│   ├── api/                 # Rotas de API (ex: para validação de formulários, CSRF)
+│   ├── components/          # Componentes específicos de rotas/páginas da app/
+│   └── layout.tsx           # Layout principal da aplicação
+├── components/              # Componentes UI globais e reutilizáveis (Shadcn/ui, etc.)
+│   ├── chat-bot/
+│   ├── client-logos.tsx
+│   ├── csrf-token.tsx
+│   ├── MapEmbed.tsx
+│   └── ui/                  # Componentes base do Shadcn/ui
+├── lib/                     # Funções utilitárias, tipos, dados
+│   ├── data/                # Dados estáticos (ex: blog-posts.ts)
+│   └── utils.ts             # Utilitários gerais (ex: cn para classnames)
+├── public/                  # Arquivos estáticos
+│   ├── fonts/               # Fontes locais (Bauhaus 93 Regular.ttf)
+│   └── images/              # Imagens do site
+├── styles/                  # Arquivos de estilo globais (se houver além de globals.css)
+├── middleware.ts            # Middleware para headers de segurança, etc.
+├── next.config.mjs          # Configuração do Next.js
+├── tailwind.config.ts       # Configuração do Tailwind CSS
+├── tsconfig.json            # Configuração do TypeScript
+└── package.json             # Dependências e scripts do projeto
 ```
 
-## 🎨 Design System
+## 🎨 Fontes e Design
 
-### Cores
-- **Amarelo** (`#FFD700`) - Cor principal, destaques
-- **Preto** (`#000000`) - Backgrounds e contraste
-- **Cinza Escuro** (`#333333`) - Textos principais
-- **Cinza Claro** (`#666666`) - Textos secundários
+*   **Tipografia**:
+    *   `Poppins`: Utilizada para o corpo do texto e elementos gerais, carregada via `next/font/google`.
+    *   `Bauhaus 93 Regular`: Utilizada para títulos e elementos de destaque (classe `.font-bauhaus`), carregada como fonte local de `public/fonts/`.
+*   **Esquema de Cores Principal**:
+    *   Amarelo (ABIPTOM): Usado para destaques, botões e elementos de marca.
+    *   Preto/Cinza Escuro: Usado para texto, fundos e contraste.
+*   **Estilo Visual**: Moderno, limpo, e profissional com foco na usabilidade e identidade da marca.
 
-### Tipografia
-- **Bauhaus** - Títulos e destaques
-- **Poppins** - Textos gerais
+## 🧑‍💻 Experiência do Usuário (UX)
 
-## 🛣️ Roadmap
+O design e desenvolvimento do site focam em proporcionar uma experiência de usuário positiva:
 
-### Fase 1 - Em Andamento
-- [x] Implementação do blog básico
-- [x] Redesign das páginas de serviço
-- [x] Integração do chatbot
-- [x] Cases de sucesso iniciais
-- [x] Atualização das páginas de serviço restantes
-- [x] Sistema de formulários com validação
+*   **Navegação Intuitiva**: Menus claros e estrutura de página lógica.
+*   **Responsividade**: Adaptação fluida a diferentes tamanhos de tela.
+*   **Performance**: Otimizações do Next.js para carregamento rápido (embora otimizações de imagem e LCP possam ser continuamente melhoradas).
+*   **Acessibilidade**: Uso de componentes Shadcn/ui que são construídos com acessibilidade em mente. Considerações semânticas de HTML.
+*   **Feedback ao Usuário**: Toasts para notificações (sucesso/erro em formulários), estados de loading em botões.
+*   **Segurança e Confiança**: Implementação de CAPTCHA e outros headers de segurança transmitem confiança.
+*   **Conteúdo Claro e Conciso**: Textos diretos e informativos.
+*   **CTAs (Call to Actions) Claros**: Botões e links que guiam o usuário para as ações desejadas.
 
-### Fase 2 - Próximos Passos
-- [x] Sistema de blog avançado
-  - Categorias e tags
-  - Busca
-  - Paginação
-  - RSS Feed
-- [x] Portfolio interativo
-  - Filtros por categoria
-  - Lightbox para imagens
-  - Páginas de detalhes
-- [x] Melhorias no chatbot
-  - ✓ Interface estruturada com menus
-  - ✓ Histórico de conversas
-  - ✓ Interface admin
-  - ✓ Respostas éticas e profissionais
+## 🚀 Começando (Setup Local)
 
-### Fase 3 - Otimização
-- [ ] SEO e Performance
-  - Meta tags
-  - Sitemap.xml
-  - Structured data
-  - OpenGraph tags
-  - Otimização de imagens
-- [ ] Analytics e Monitoramento
-  - Google Analytics
-  - Error tracking
-  - Performance monitoring
-  - Conversion tracking
+Siga estes passos para configurar e rodar o projeto localmente:
 
-### Fase 4 - Gestão de Conteúdo
-- [ ] CMS Headless
-  - Dashboard admin
-  - Versionamento de conteúdo
-  - Biblioteca de mídia
-- [ ] Sistema de newsletters
-- [ ] Área de cliente
-- [ ] Sistema de orçamentos
+1.  **Pré-requisitos**:
+    *   Node.js (versão 18.x ou superior recomendada)
+    *   npm, yarn ou pnpm (o projeto parece ter `pnpm-lock.yaml`, então `pnpm` pode ser o gerenciador de pacotes preferido)
 
-## 🛠 Setup e Instalação
+2.  **Clonar o Repositório**:
+    ```bash
+    git clone https://github.com/atchutchi/abiptom-website.git
+    cd abiptom-website
+    ```
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/atchutchi/abiptom-website.git
-```
+3.  **Instalar Dependências**:
+    Se estiver usando `pnpm`:
+    ```bash
+    pnpm install
+    ```
+    Ou `npm`:
+    ```bash
+    npm install
+    ```
+    Ou `yarn`:
+    ```bash
+    yarn install
+    ```
 
-2. Instale as dependências:
-```bash
-npm install
-```
+4.  **Configurar Variáveis de Ambiente**:
+    Crie um arquivo `.env.local` na raiz do projeto e adicione as seguintes variáveis. Consulte também o `.env.example` se existir.
 
-3. Configure as variáveis de ambiente:
-```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_HUGGINGFACE_API_KEY=seu_token_aqui
-```
+    ```env
+    # Chaves do EmailJS (obtenha no dashboard do EmailJS)
+    NEXT_PUBLIC_EMAILJS_SERVICE_ID=SEU_SERVICE_ID
+    NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT=SEU_TEMPLATE_ID_CONTACTO
+    NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CAREERS=SEU_TEMPLATE_ID_TRABALHE_CONOSCO
+    NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=SUA_PUBLIC_KEY
 
-4. Rode o projeto:
-```bash
-npm run dev
-```
+    # Segredo para CSRF (gere uma string aleatória segura, ex: openssl rand -base64 32)
+    CSRF_SECRET=SEU_SEGREDO_CSRF_DE_MINIMO_32_CARACTERES
 
-## 📦 Dependências Principais
+    # Opcional: Google Analytics
+    NEXT_PUBLIC_GA_MEASUREMENT_ID=SEU_GA_ID
 
-```json
-{
-  "dependencies": {
-    "next": "14.x",
-    "react": "18.x",
-    "react-dom": "18.x",
-    "tailwindcss": "3.x",
-    "@radix-ui/react-icons": "latest",
-    "lucide-react": "latest",
-    "class-variance-authority": "latest",
-    "clsx": "latest"
-  }
-}
-```
+    # URL base para metadados e links canônicos
+    NEXT_PUBLIC_SITE_URL=http://localhost:3000
+    ```
+    **Importante**: Nunca comite seu arquivo `.env.local` com chaves reais para o repositório. Adicione `.env.local` ao seu `.gitignore`.
+
+5.  **Rodar o Servidor de Desenvolvimento**:
+    ```bash
+    pnpm dev
+    ```
+    Ou `npm run dev` / `yarn dev`.
+
+    Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o site.
+
+## 🚢 Deploy (Publicação)
+
+Recomendamos **Vercel** para o deploy de aplicações Next.js devido à sua integração nativa e otimizações.
+
+**Passos para Deploy com Vercel:**
+
+1.  **Push para um Repositório Git**:
+    Certifique-se que seu código está atualizado em um repositório Git (GitHub, GitLab, Bitbucket).
+
+2.  **Criar uma Conta na Vercel**:
+    Se ainda não tem, crie uma conta em [vercel.com](https://vercel.com/).
+
+3.  **Importar Projeto na Vercel**:
+    *   No seu dashboard da Vercel, clique em "Add New..." -> "Project".
+    *   Escolha "Import Git Repository" e conecte sua conta Git.
+    *   Selecione o repositório do seu site ABIPTOM.
+    *   Vercel geralmente detecta automaticamente que é um projeto Next.js e configura as definições de build corretamente.
+
+4.  **Configurar Variáveis de Ambiente na Vercel**:
+    *   Nas configurações do seu projeto na Vercel (Settings -> Environment Variables), adicione todas as variáveis de ambiente que você configurou no seu `.env.local`:
+        *   `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+        *   `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT`
+        *   `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CAREERS`
+        *   `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+        *   `CSRF_SECRET`
+        *   `NEXT_PUBLIC_GA_MEASUREMENT_ID` (se estiver usando)
+        *   `NEXT_PUBLIC_SITE_URL` (defina para a URL de produção do seu site, ex: `https://abiptom.gw`)
+
+5.  **Deploy**:
+    *   Clique no botão "Deploy". Vercel irá construir e publicar seu site.
+    *   Após o deploy, você receberá uma URL de produção e URLs de preview para cada push para branches.
+
+**Considerações Adicionais para Deploy:**
+
+*   **Domínio Personalizado**: Você pode configurar um domínio personalizado (ex: `abiptom.gw`) nas configurações do projeto na Vercel.
+*   **Build & Output Settings**: Geralmente, as configurações padrão da Vercel para Next.js são ideais (`next build` como build command, output directory `.next`).
+*   **Middleware**: O `middleware.ts` será executado automaticamente pela Vercel em Edge Functions.
+
+## 📜 Scripts Disponíveis
+
+No `package.json`, você encontrará os seguintes scripts:
+
+*   `npm run dev`: Inicia o servidor de desenvolvimento.
+*   `npm run build`: Gera a build de produção do site.
+*   `npm run start`: Inicia um servidor de produção (após `build`).
+*   `npm run lint`: Executa o linter (ESLint) para verificar a qualidade do código.
+
+## 🔄 Atualizações e Roadmap (Resumido do README anterior)
+
+O projeto tem um roadmap que inclui:
+
+*   **Blog Avançado**: Categorias, tags, busca, paginação.
+*   **Portfólio Interativo**: Filtros, lightbox, detalhes de projeto.
+*   **Melhorias no Chatbot**: Se for mantido.
+*   **Otimização SEO e Performance**: Meta tags, sitemap, dados estruturados.
+*   **Analytics**: Integração e monitoramento.
+*   **CMS Headless**: Para gerenciamento de conteúdo facilitado.
 
 ## 🤝 Contribuição
 
-1. Fork o projeto
-2. Crie sua branch (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+Se desejar contribuir (para membros da equipe ou colaboradores externos):
+
+1.  Fork o projeto (se externo).
+2.  Crie uma nova branch (`git checkout -b feature/NovaFuncionalidade`).
+3.  Faça suas alterações e commit (`git commit -m 'Adicionar NovaFuncionalidade'`).
+4.  Push para a branch (`git push origin feature/NovaFuncionalidade`).
+5.  Abra um Pull Request para revisão.
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes (se existir, caso contrário, considere adicionar um).
 
-## 👥 Equipe
+---
 
-- Designer UI/UX
-- Desenvolvedor Frontend
-- Desenvolvedor Backend
-- Gerente de Projeto
-
-## 📞 Suporte
-
-Para suporte, email admin@abiptom.gw ou abra uma issue no repositório.
-
-## Segurança
-
-### reCAPTCHA v3
-O site utiliza o Google reCAPTCHA v3 para proteção contra spam e bots nos formulários de contato e candidaturas.
-
-- Integrado nos formulários:
-  - Página de Contato (`/contacto`)
-  - Página de Carreiras (`/trabalhe-conosco`)
-
-A verificação é feita de forma invisível, sem necessidade de interação do usuário, melhorando a experiência de uso.
-
-### Variáveis de Ambiente
-As chaves de API e credenciais sensíveis devem ser configuradas através de variáveis de ambiente:
-
-```env
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=seu_site_key_aqui
-RECAPTCHA_SECRET_KEY=seu_secret_key_aqui
-```
-
-⚠️ **IMPORTANTE**: Nunca commit credenciais ou chaves de API diretamente no código. Sempre use variáveis de ambiente e mantenha um arquivo `.env.example` com exemplos das variáveis necessárias. 
+Este README atualizado deve fornecer uma excelente visão geral do seu projeto ABIPTOM, suas funcionalidades, e como gerenciá-lo. 
