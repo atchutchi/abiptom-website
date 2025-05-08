@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postinstall": "npm run build",
     "start": "node server.js",
     "lint": "next lint"
   },
