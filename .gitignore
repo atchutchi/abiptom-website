@@ -41,3 +41,6 @@ next-env.d.ts
 
 # backup
 backup
+
+SECURITY_FIXES.md
+SUPABASE_SETUP.md
