@@ -8,9 +8,6 @@ export function middleware(request: NextRequest) {
   // Prevenir MIME type sniffing
   response.headers.set('X-Content-Type-Options', 'nosniff')
   
-  // Prevenir clickjacking
-  response.headers.set('X-Frame-Options', 'SAMEORIGIN')
-  
   // Proteção XSS básica
   response.headers.set('X-XSS-Protection', '1; mode=block')
   
@@ -20,16 +17,17 @@ export function middleware(request: NextRequest) {
   // HTTP Strict Transport Security
   response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
   
-  // Content Security Policy
+  // Content Security Policy atualizada para permitir YouTube e Google Maps
   response.headers.set(
     'Content-Security-Policy',
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://cdn.emailjs.com; " +
-    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://api.emailjs.com; " +
-    "img-src 'self' data: https://www.google-analytics.com; " +
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-    "font-src 'self' https://fonts.gstatic.com; " +
-    "frame-src 'self';"
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://cdn.emailjs.com https://www.youtube.com https://*.youtube.com https://maps.googleapis.com https://*.googleapis.com; " +
+    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://api.emailjs.com https://maps.googleapis.com https://*.googleapis.com https://smakmuyzyaoifhpjapkj.supabase.co; " +
+    "img-src 'self' data: blob: https://www.google-analytics.com https://maps.googleapis.com https://*.googleapis.com https://img.youtube.com https://*.ytimg.com https://i.ytimg.com https://smakmuyzyaoifhpjapkj.supabase.co; " +
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.googleapis.com; " +
+    "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; " +
+    "frame-src 'self' https://www.google.com https://*.google.com https://www.youtube.com https://*.youtube.com https://youtube.com https://maps.google.com https://www.google.com/maps; " +
+    "object-src 'none';"
   )
   
   // Retorna a resposta com os headers adicionados
