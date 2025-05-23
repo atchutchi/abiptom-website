@@ -519,6 +519,24 @@ export default function PortfolioPage() {
                     </p>
                   </div>
                 </div>
+
+                <div className="group overflow-hidden rounded-lg border">
+                  <div className="relative aspect-video overflow-hidden">
+                    <iframe
+                      className="w-full h-full"
+                      src="https://www.youtube.com/embed/_Jd46NOpYMQ"
+                      title="Novo Projeto ABIPTOM"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold font-bauhaus">Novo Projeto ABIPTOM</h3>
+                    <p className="text-sm text-gray-dark">
+                      Mais um projeto de produção audiovisual da ABIPTOM.
+                    </p>
+                  </div>
+                </div>
               </div>
             </TabsContent>
             <TabsContent value="pdf" className="mt-8">
