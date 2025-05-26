@@ -111,7 +111,7 @@ export async function listMediaFiles(folder?: string) {
     }
 
     // Adicionar URLs públicas aos arquivos
-    return data.map(file => ({
+    return data.map((file: any) => ({
       ...file,
       publicUrl: getMediaPublicUrl(folder ? `${folder}/${file.name}` : file.name)
     }))
@@ -221,7 +221,7 @@ export async function ensureMediaBucketExists() {
       throw listError
     }
 
-    const mediaExists = buckets?.some(bucket => bucket.name === MEDIA_BUCKET)
+    const mediaExists = buckets?.some((bucket: any) => bucket.name === MEDIA_BUCKET)
 
     if (!mediaExists) {
       const { error: createError } = await supabaseAdmin.storage.createBucket(MEDIA_BUCKET, {
