@@ -4,6 +4,13 @@ import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, Suspense } from 'react'
 
+// Declaração para TypeScript
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
 function GoogleAnalyticsInner({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()

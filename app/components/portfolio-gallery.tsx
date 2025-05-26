@@ -111,7 +111,7 @@ const portfolioItems: PortfolioItem[] = [
     id: 'gw-domain',
     title: 'Campanha .GW',
     description: 'Banner para campanha do domínio nacional .GW.',
-    image: '/images/portfolio/graphicdesign/.gw-banner.png',
+    image: '/images/portfolio/graphicdesign/gw-banner.png',
     category: ['design'],
     tags: ['Design', 'Publicidade']
   },
@@ -357,9 +357,15 @@ export function PortfolioGallery() {
 
       {/* PDFs */}
       <PDFPreview
-        pdfUrl="/docs/portfolio/Relatorio-Anual-laboratorio-de-aceleração-undp-2022.pdf"
+        pdfUrl="/docs/portfolio/Relatorio-Anual-laboratorio-de-aceleracao-undp-2022.pdf"
         title="Relatório UNDP 2022"
         description="Design do relatório anual do Laboratório de Aceleração UNDP."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/Relatorio-Anual-laboratorio-de-aceleracao-undp-2020.pdf"
+        title="Relatório UNDP 2020"
+        description="Design do relatório anual do Laboratório de Aceleração UNDP 2020."
       />
 
       <PDFPreview
@@ -399,9 +405,45 @@ export function PortfolioGallery() {
       />
 
       <PDFPreview
-        pdfUrl="/docs/portfolio/Flyer_Nô Firmanta.pdf"
+        pdfUrl="/docs/portfolio/flyer-no-firmanta.pdf"
         title="Flyer Nô Firmanta"
         description="Material promocional para o projeto Nô Firmanta."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/Communication-Strategy-2022-2026-UNDP.pdf"
+        title="Estratégia de Comunicação UNDP"
+        description="Design da estratégia de comunicação 2022-2026 do UNDP."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/Pitch-Justica-Movel-undp.pdf"
+        title="Pitch Justiça Móvel"
+        description="Apresentação do projeto Justiça Móvel do UNDP."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/Capa-unicef.pdf"
+        title="Capa UNICEF"
+        description="Design de capa para documento da UNICEF."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/forum-bissau-rising-guine-bissau-UNDP.pdf"
+        title="Fórum Bissau Rising"
+        description="Material do fórum Bissau Rising da Guiné-Bissau UNDP."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/6th-edition-newsletter-west-africa-competitive-programme-guinea-bissau-wacomp.pdf"
+        title="Newsletter WACOMP"
+        description="6ª edição do newsletter do programa competitivo da África Ocidental."
+      />
+
+      <PDFPreview
+        pdfUrl="/docs/portfolio/bloco-de-nota-dialogo-financeiro-undp.pdf"
+        title="Bloco de Nota Diálogo Financeiro"
+        description="Design de bloco de notas para diálogo financeiro UNDP."
       />
     </div>
   )

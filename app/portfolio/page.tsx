@@ -106,7 +106,7 @@ export default function PortfolioPage() {
                     <img
                       alt="Domínio .GW"
                       className="object-cover w-full h-full transition-all group-hover:scale-105"
-                      src="/images/portfolio/graphicdesign/.gw-banner.png"
+                      src="/images/portfolio/graphicdesign/gw-banner.png"
                     />
                   </div>
                   <div className="p-4">
