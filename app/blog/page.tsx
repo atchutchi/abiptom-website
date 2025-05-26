@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { BlogSearch } from "@/components/blog/BlogSearch";
 import { CategoryBadge } from "@/components/blog/CategoryBadge";
@@ -24,7 +24,7 @@ const getPosts = async (): Promise<BlogPost[]> => {
   return blogPosts;
 };
 
-export default function BlogPage() {
+function BlogContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -87,21 +87,7 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-black py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow-400 font-bauhaus">
-              Blog ABIPTOM
-            </h1>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Insights, notícias e cases de sucesso sobre design, desenvolvimento web e marketing digital.
-            </p>
-          </div>
-        </div>
-      </section>
-
+    <>
       {/* Blog Content */}
       <section className="py-12">
         <div className="container px-4 md:px-6">
@@ -185,6 +171,34 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+    </>
+  );
+}
+
+export default function BlogPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="bg-black py-16 md:py-24">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow-400 font-bauhaus">
+              Blog ABIPTOM
+            </h1>
+            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Insights, notícias e cases de sucesso sobre design, desenvolvimento web e marketing digital.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Suspense fallback={
+        <div className="flex justify-center items-center py-12">
+          <div className="text-gray-500">Carregando posts...</div>
+        </div>
+      }>
+        <BlogContent />
+      </Suspense>
     </div>
   );
 }
