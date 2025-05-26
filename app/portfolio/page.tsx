@@ -289,6 +289,21 @@ export default function PortfolioPage() {
                     </p>
                   </div>
                 </div>
+                <div className="group overflow-hidden rounded-lg border">
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      alt="Website Dacosta Music"
+                      className="object-cover w-full h-full transition-all group-hover:scale-105"
+                      src="/images/portfolio//websites/dacosta-music.png"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold font-bauhaus">Website Dacosta Music</h3>
+                    <p className="text-sm text-gray-dark">
+                      Site desenvolvido para Agência de Artista Dacosta Music.
+                    </p>
+                  </div>
+                </div>
               </div>
             </TabsContent>
             <TabsContent value="social">
@@ -531,9 +546,9 @@ export default function PortfolioPage() {
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-bold font-bauhaus">Novo Projeto ABIPTOM</h3>
+                    <h3 className="font-bold font-bauhaus">Teaser Cantanhez</h3>
                     <p className="text-sm text-gray-dark">
-                      Mais um projeto de produção audiovisual da ABIPTOM.
+                      Mais um projeto de produção audiovisual feito pelo João Azeredo.
                     </p>
                   </div>
                 </div>

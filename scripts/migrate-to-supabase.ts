@@ -1,124 +1,106 @@
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import path from 'path'
-import { createBuckets, uploadFromUrl, STORAGE_BUCKETS } from '../lib/supabase/storage'
+import { uploadFromUrl } from '../lib/supabase/storage'
+import { ensureMediaBucketExists } from '../lib/supabase/media-storage'
 
-// File mapping configuration
-const FILE_MAPPINGS = {
-  // Images
-  'images/': STORAGE_BUCKETS.IMAGES,
-  'placeholder': STORAGE_BUCKETS.ASSETS,
-  // Documents/PDFs
-  'docs/': STORAGE_BUCKETS.DOCUMENTS,
-  // Other assets
-  'fonts/': STORAGE_BUCKETS.ASSETS,
-  '.htaccess': STORAGE_BUCKETS.ASSETS,
-  'robots.txt': STORAGE_BUCKETS.ASSETS
-}
+// Configurar variáveis de ambiente
+import dotenv from 'dotenv'
+dotenv.config({ path: '.env.local' })
 
-async function migrateFiles() {
-  console.log('🚀 Starting migration to Supabase Storage...')
-  
-  try {
-    // First create the buckets
-    console.log('📦 Creating storage buckets...')
-    await createBuckets()
-    
-    // Get all files from public directory
-    const publicDir = path.join(process.cwd(), 'public')
-    const files = await getAllFiles(publicDir)
-    
-    console.log(`📁 Found ${files.length} files to migrate`)
-    
-    for (const filePath of files) {
-      await migrateFile(filePath, publicDir)
-    }
-    
-    console.log('✅ Migration completed successfully!')
-    
-  } catch (error) {
-    console.error('❌ Migration failed:', error)
-    process.exit(1)
-  }
-}
+const PUBLIC_DIR = path.join(process.cwd(), 'public')
+const BASE_URL = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 
-async function getAllFiles(dir: string): Promise<string[]> {
+// Extensões de arquivo permitidas
+const ALLOWED_EXTENSIONS = [
+  '.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg',
+  '.mp4', '.webm', '.pdf'
+]
+
+async function getFilesRecursively(dir: string): Promise<string[]> {
   const files: string[] = []
   
-  function scanDirectory(currentDir: string) {
-    const items = fs.readdirSync(currentDir)
+  async function scan(currentDir: string) {
+    const entries = await fs.readdir(currentDir, { withFileTypes: true })
     
-    for (const item of items) {
-      const fullPath = path.join(currentDir, item)
-      const stat = fs.statSync(fullPath)
+    for (const entry of entries) {
+      const fullPath = path.join(currentDir, entry.name)
       
-      if (stat.isDirectory()) {
-        scanDirectory(fullPath)
-      } else {
-        files.push(fullPath)
+      if (entry.isDirectory()) {
+        await scan(fullPath)
+      } else if (entry.isFile()) {
+        const ext = path.extname(entry.name).toLowerCase()
+        if (ALLOWED_EXTENSIONS.includes(ext)) {
+          files.push(fullPath)
+        }
       }
     }
   }
   
-  scanDirectory(dir)
+  await scan(dir)
   return files
 }
 
-async function migrateFile(filePath: string, publicDir: string) {
+async function migrateFiles() {
+  console.log('🚀 Iniciando migração de arquivos para Supabase...')
+  
   try {
-    // Get relative path from public directory
-    const relativePath = path.relative(publicDir, filePath)
-    const normalizedPath = relativePath.replace(/\\/g, '/') // Convert Windows paths
+    // Verificar se o bucket existe
+    await ensureMediaBucketExists()
+    console.log('✅ Bucket media verificado')
     
-    // Determine which bucket to use
-    const bucket = getBucketForFile(normalizedPath)
+    // Obter todos os arquivos da pasta public
+    const files = await getFilesRecursively(PUBLIC_DIR)
+    console.log(`📁 Encontrados ${files.length} arquivos para migrar`)
     
-    if (!bucket) {
-      console.log(`⏭️  Skipping ${normalizedPath} (no bucket mapping)`)
-      return
+    const results = {
+      success: [] as string[],
+      failed: [] as { file: string; error: string }[]
     }
     
-    // Create URL for the local file (for development, we'll use a different approach)
-    // For now, we'll read the file directly
-    const fileBuffer = fs.readFileSync(filePath)
-    const blob = new Blob([fileBuffer])
+    for (const file of files) {
+      const relativePath = path.relative(PUBLIC_DIR, file)
+      const supabasePath = relativePath.replace(/\\/g, '/')
+      
+      try {
+        // Construir URL local do arquivo
+        const fileUrl = `${BASE_URL}/${relativePath.replace(/\\/g, '/')}`
+        
+        console.log(`📤 Migrando: ${relativePath}`)
+        
+        await uploadFromUrl(fileUrl, 'media', supabasePath, {
+          upsert: true
+        })
+        
+        results.success.push(relativePath)
+        console.log(`✅ Sucesso: ${relativePath}`)
+        
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
+        results.failed.push({ file: relativePath, error: errorMessage })
+        console.error(`❌ Falha: ${relativePath} - ${errorMessage}`)
+      }
+    }
     
-    // Upload to Supabase
-    console.log(`📤 Uploading ${normalizedPath} to ${bucket}...`)
+    // Resumo
+    console.log('\n📊 Resumo da migração:')
+    console.log(`✅ Sucesso: ${results.success.length} arquivos`)
+    console.log(`❌ Falhas: ${results.failed.length} arquivos`)
     
-    // Note: For the actual upload, we'll need to modify this to work with Node.js
-    // For now, this is the structure
-    
-    console.log(`✅ Uploaded ${normalizedPath}`)
+    if (results.failed.length > 0) {
+      console.log('\n❌ Arquivos que falharam:')
+      results.failed.forEach(({ file, error }) => {
+        console.log(`  - ${file}: ${error}`)
+      })
+    }
     
   } catch (error) {
-    console.error(`❌ Failed to migrate ${filePath}:`, error)
+    console.error('💥 Erro durante a migração:', error)
+    process.exit(1)
   }
 }
 
-function getBucketForFile(filePath: string): string | null {
-  for (const [pattern, bucket] of Object.entries(FILE_MAPPINGS)) {
-    if (filePath.startsWith(pattern) || filePath.includes(pattern)) {
-      return bucket
-    }
-  }
-  
-  // Default bucket based on file extension
-  const ext = path.extname(filePath).toLowerCase()
-  
-  if (['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'].includes(ext)) {
-    return STORAGE_BUCKETS.IMAGES
-  }
-  
-  if (['.pdf', '.doc', '.docx'].includes(ext)) {
-    return STORAGE_BUCKETS.DOCUMENTS
-  }
-  
-  return STORAGE_BUCKETS.ASSETS
-}
-
-// Run migration if called directly
-if (require.main === module) {
-  migrateFiles()
-}
-
-export { migrateFiles } 
+// Executar migração
+migrateFiles().then(() => {
+  console.log('\n✨ Migração concluída!')
+  process.exit(0)
+}) 

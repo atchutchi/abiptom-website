@@ -1,5 +1,49 @@
+import { config } from 'dotenv';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Load environment variables at module level
+try {
+  config({ path: '.env.local' });
+} catch (e) {
+  console.warn('Could not load .env.local');
+}
+
+// Get Supabase configuration
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://smakmuyzyaoifhpjapkj.supabase.co';
+const SUPABASE_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || 'media';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    console.log('🔧 Configuring Supabase rewrites...');
+    console.log('📍 Supabase URL:', SUPABASE_URL);
+    console.log('🪣 Bucket:', SUPABASE_BUCKET);
+    
+    if (!SUPABASE_URL || SUPABASE_URL === 'undefined') {
+      console.warn('❌ NEXT_PUBLIC_SUPABASE_URL not found, skipping Supabase rewrites');
+      return [];
+    }
+
+    try {
+      const supabaseHost = new URL(SUPABASE_URL).host;
+      
+      const rewrites = [
+        {
+          source: '/media/:path*',
+          destination: `https://${supabaseHost}/storage/v1/object/public/${SUPABASE_BUCKET}/:path*`,
+        },
+      ];
+      
+      console.log('✅ Supabase rewrites configured successfully');
+      console.log('🔄 Rewrite rule:', `/media/:path* → https://${supabaseHost}/storage/v1/object/public/${SUPABASE_BUCKET}/:path*`);
+      
+      return rewrites;
+    } catch (error) {
+      console.error('❌ Error configuring Supabase rewrites:', error.message);
+      return [];
+    }
+  },
   async headers() {
     return [
       {
@@ -78,24 +122,43 @@ const nextConfig = {
       'i.ytimg.com',
       'smakmuyzyaoifhpjapkj.supabase.co'
     ],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.googleapis.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.ytimg.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.youtube.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.supabase.co',
+    remotePatterns: (() => {
+      const patterns = [
+        {
+          protocol: 'https',
+          hostname: '*.googleapis.com',
+        },
+        {
+          protocol: 'https',
+          hostname: '*.ytimg.com',
+        },
+        {
+          protocol: 'https',
+          hostname: '*.youtube.com',
+        },
+        {
+          protocol: 'https',
+          hostname: '*.supabase.co',
+        }
+      ];
+
+      // Add dynamic Supabase configuration using module-level variables
+      if (SUPABASE_URL && SUPABASE_URL !== 'undefined') {
+        try {
+          const supabaseHost = new URL(SUPABASE_URL).host;
+          patterns.push({
+            protocol: 'https',
+            hostname: supabaseHost,
+            pathname: `/storage/v1/object/public/${SUPABASE_BUCKET}/**`,
+          });
+          console.log('✅ Supabase images pattern added:', supabaseHost);
+        } catch (error) {
+          console.warn('⚠️ Could not add Supabase images pattern:', error.message);
+        }
       }
-    ]
+
+      return patterns;
+    })()
   },
   reactStrictMode: true
 };
