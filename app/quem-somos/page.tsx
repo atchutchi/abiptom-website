@@ -132,8 +132,8 @@ export default function AboutPage() {
                 <h3 className="text-xl font-bold text-black font-bauhaus">Atchutchi Ferreira</h3>
                 <p className="text-sm text-yellow font-semibold">CEO e Gestor de Projetos</p>
                 <p className="text-sm text-gray-dark">
-                  Especialista em TI, comunicador e gestor de projetos, com forte experiência profissional em várias
-                  áreas, incluindo gestão de sistemas de informação, desenvolvimento de conteúdo digital, e marketing em
+                  Fundador da Empresa, Especialista em TI, Full Stack Developer e Gestor de projetos, com mais de 10 anos de experiência profissional em várias
+                  áreas, incluindo gestão de sistemas de informação, telecomunicações, desenvolvimento de conteúdo digital, e marketing em
                   redes sociais.
                 </p>
               </div>
@@ -162,7 +162,7 @@ export default function AboutPage() {
                 <Image
                   alt="Emerson Demésio Mendes"
                   className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/emerson.png"
+                  src="/images/team/emerson.jpg"
                   width={160}
                   height={160}
                   priority
@@ -201,7 +201,7 @@ export default function AboutPage() {
                 <Image
                   alt="Arianna Duarte"
                   className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/arianna.jfif"
+                  src="/images/team/arianna.jpg"
                   width={160}
                   height={160}
                   priority
@@ -212,6 +212,25 @@ export default function AboutPage() {
                 <p className="text-sm text-yellow font-semibold">Gestora de Marketing e B2B</p>
                 <p className="text-sm text-gray-dark">
                   Com formação em Engenharia de Geociências e especialização em marketing e vendas, lidera a implementação de estratégias comerciais, gestão de redes sociais e captação de novos clientes. Atua no desenvolvimento de propostas, negociação de contratos e análise de métricas, garantindo uma comunicação eficaz e alinhada com os objetivos da empresa.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center space-y-4">
+              <div className="overflow-hidden rounded-full">
+                <Image
+                  alt="José"
+                  className="aspect-square object-cover w-40 h-40"
+                  src="/images/team/jose.png"
+                  width={160}
+                  height={160}
+                  priority
+                />
+              </div>
+              <div className="space-y-2 text-center">
+                <h3 className="text-xl font-bold text-black font-bauhaus">José</h3>
+                <p className="text-sm text-yellow font-semibold">Videomaker</p>
+                <p className="text-sm text-gray-dark">
+                  É o videomaker da ABIPTOM, responsável pela captação e edição de conteúdos audiovisuais para projetos institucionais, promocionais e transmissões ao vivo. Com experiência em produção de vídeo e operação de câmaras, traz uma abordagem criativa e técnica ao trabalho.
                 </p>
               </div>
             </div>

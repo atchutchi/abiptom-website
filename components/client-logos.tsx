@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 // Lista estática de logos dos clientes
 const staticLogos = [
   "/images/clients/ap-trading.png",
+  "/images/clients/aguabalur.jpg",
+  "/images/clients/satyam-travel.jpg",
   "/images/clients/apbef.png",
   "/images/clients/amae.png",
   "/images/clients/alil.png",
