@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react"
+import { TikTokIcon } from "./icons/tiktok"
 
 export function SiteFooter() {
   return (
@@ -15,21 +16,25 @@ export function SiteFooter() {
               Design Gráfico e Web Design e Desenvolvimento de Software.
             </p>
             <div className="flex space-x-4">
-              <Link href="https://facebook.com" className="text-yellow hover:text-white">
+              <Link href="https://www.facebook.com/abiptomsarl" className="text-yellow hover:text-white">
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link href="https://instagram.com" className="text-yellow hover:text-white">
+              <Link href="https://www.instagram.com/abiptom_gb?igsh=OGNqZXZ5ZWp3NTZo" className="text-yellow hover:text-white">
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
-              <Link href="https://twitter.com" className="text-yellow hover:text-white">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="https://linkedin.com" className="text-yellow hover:text-white">
+              <Link href="https://www.linkedin.com/company/abiptom-sarl" className="text-yellow hover:text-white">
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
+              </Link>
+              <Link href="https://youtube.com/@abiptom?si=KbnwfDmqH0rn0Db2" className="text-yellow hover:text-white">
+                <Youtube className="h-5 w-5" />
+                <span className="sr-only">YouTube</span>
+              </Link>
+              <Link href="https://www.tiktok.com/@abiptomsarl?_t=ZM-8wgJOHGrQST&_r=1" className="text-yellow hover:text-white">
+                <TikTokIcon className="h-5 w-5" />
+                <span className="sr-only">TikTok</span>
               </Link>
             </div>
           </div>

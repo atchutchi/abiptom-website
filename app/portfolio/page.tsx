@@ -557,93 +557,27 @@ export default function PortfolioPage() {
             <TabsContent value="pdf" className="mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <PDFPreview
-                  pdfUrl="/docs/portfolio/Relatorio-Anual-laboratorio-de-aceleração-undp-2022.pdf"
-                  title="Relatório UNDP 2022"
-                  description="Design do relatório anual do Laboratório de Aceleração UNDP."
+                  pdfUrl="/docs/portfolio/relatorio-guine-bissau-digital-2024.pdf"
+                  title="Relatório Guiné-Bissau Digital 2024"
+                  description="Relatório sobre o panorama digital da Guiné-Bissau em 2024."
                 />
 
                 <PDFPreview
-                  pdfUrl="/docs/portfolio/Relatorio-Anual-laboratorio-de-aceleração-undp-2020.pdf"
-                  title="Relatório UNDP 2020"
-                  description="Design do relatório anual do Laboratório de Aceleração UNDP."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/THE-TOURIST-INVESTMENT-GUIDE-Guine-Bissau-Ministerio-de-turismo.pdf"
+                  pdfUrl="/docs/portfolio/guia-de-investimento-turistico.pdf"
                   title="Guia de Investimento Turístico"
-                  description="Design do guia de investimento turístico para o Ministério do Turismo."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/brochura-INVESTING-IN-GUINEA-BISSSAU.pdf"
-                  title="Investing in Guinea-Bissau"
-                  description="Brochura de promoção de investimentos na Guiné-Bissau."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/catalogo-produtos-da-amae.pdf"
-                  title="Catálogo AMAE"
-                  description="Catálogo de produtos da Associação de Mulheres de Atividade Económica."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/covid-19-The-Building-Forward_report.pdf"
-                  title="Building Forward"
-                  description="Relatório sobre impactos e recuperação pós-COVID-19."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/flyer-kau.criar.pdf"
-                  title="Flyer Kau Criar"
-                  description="Material promocional para o programa de empreendedorismo."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/Rollup-dialogo-financeiro.pdf"
-                  title="Roll-up Diálogo Financeiro"
-                  description="Design de roll-up para evento de diálogo financeiro."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/flyer-no-firmanta.pdf"
-                  title="Flyer Nô Firmanta"
-                  description="Material promocional para o projeto Nô Firmanta."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/forum-bissau-rising-guine-bissau-UNDP.pdf"
-                  title="Fórum Bissau Rising"
-                  description="Material gráfico para o fórum de investimentos Bissau Rising."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/6th-edition-newsletter-west-africa-competitive-programme-guinea-bissau-wacomp.pdf"
-                  title="Newsletter WACOMP"
-                  description="6ª edição da newsletter do Programa de Competitividade da África Ocidental - Guiné-Bissau."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/bloco-de-nota-dialogo-financeiro-undp.pdf"
-                  title="Bloco de Notas UNDP"
-                  description="Design de bloco de notas para o diálogo financeiro do UNDP."
+                  description="Guia completo para investimento no setor turístico da Guiné-Bissau."
                 />
 
                 <PDFPreview
                   pdfUrl="/docs/portfolio/Pitch-Justica-Movel-undp.pdf"
-                  title="Pitch Justiça Móvel"
-                  description="Apresentação do projeto Justiça Móvel do UNDP."
+                  title="Pitch Justiça Móvel UNDP"
+                  description="Apresentação do projeto Justiça Móvel do UNDP Guiné-Bissau."
                 />
 
                 <PDFPreview
-                  pdfUrl="/docs/portfolio/Communication-Strategy-2022-2026-UNDP.pdf"
-                  title="Estratégia de Comunicação UNDP"
-                  description="Design do documento de estratégia de comunicação 2022-2026 do UNDP."
-                />
-
-                <PDFPreview
-                  pdfUrl="/docs/portfolio/Capa-unicef.pdf"
-                  title="Capa UNICEF"
-                  description="Design de capa para documento da UNICEF."
+                  pdfUrl="/docs/portfolio/beyond-lections-peacebuilding-fund-in-guinea-bissau.pdf"
+                  title="Beyond Elections - Peacebuilding Fund"
+                  description="Documento sobre construção da paz na Guiné-Bissau pós-eleições."
                 />
               </div>
             </TabsContent>
