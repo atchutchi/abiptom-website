@@ -37,56 +37,57 @@ export interface ContentfulBlogPost {
 }
 
 // Função para buscar todos os posts
-export async function getAllBlogPosts(locale: string = 'pt'): Promise<ContentfulBlogPost[]> {
+export async function getAllBlogPosts(locale: string = 'pt'): Promise<any[]> {
   try {
-    const entries = await client.getEntries<ContentfulBlogPost['fields']>({
-      content_type: 'blogPost',
+    const entries = await client.getEntries({
+      content_type: 'abiptomBlog', // Content type ID do Contentful
       locale,
-      order: ['-fields.publishDate'],
+      order: ['-sys.createdAt'], // Ordenar por data de criação
     })
     
-    return entries.items as ContentfulBlogPost[]
-  } catch (error) {
-    console.error('Error fetching blog posts:', error)
+    console.log(`✅ Fetched ${entries.items.length} posts from Contentful`)
+    return entries.items as any[]
+  } catch (error: any) {
+    console.error('❌ Error fetching blog posts from Contentful:', error.message)
     return []
   }
 }
 
 // Função para buscar um post específico pelo slug
-export async function getBlogPostBySlug(slug: string, locale: string = 'pt'): Promise<ContentfulBlogPost | null> {
+export async function getBlogPostBySlug(slug: string, locale: string = 'pt'): Promise<any | null> {
   try {
-    const entries = await client.getEntries<ContentfulBlogPost['fields']>({
-      content_type: 'blogPost',
+    const entries = await client.getEntries({
+      content_type: 'abiptomBlog', // Content type ID do Contentful
       'fields.slug': slug,
       locale,
       limit: 1,
     })
     
     if (entries.items.length > 0) {
-      return entries.items[0] as ContentfulBlogPost
+      return entries.items[0]
     }
     
     return null
-  } catch (error) {
-    console.error(`Error fetching blog post with slug ${slug}:`, error)
+  } catch (error: any) {
+    console.error(`❌ Error fetching blog post with slug ${slug}:`, error.message)
     return null
   }
 }
 
 // Função para buscar posts em destaque
-export async function getFeaturedBlogPosts(locale: string = 'pt'): Promise<ContentfulBlogPost[]> {
+export async function getFeaturedBlogPosts(locale: string = 'pt'): Promise<any[]> {
   try {
-    const entries = await client.getEntries<ContentfulBlogPost['fields']>({
-      content_type: 'blogPost',
+    const entries = await client.getEntries({
+      content_type: 'abiptomBlog', // Content type ID do Contentful
       'fields.featured': true,
       locale,
-      order: ['-fields.publishDate'],
+      order: ['-sys.createdAt'],
       limit: 3,
     })
     
-    return entries.items as ContentfulBlogPost[]
-  } catch (error) {
-    console.error('Error fetching featured blog posts:', error)
+    return entries.items as any[]
+  } catch (error: any) {
+    console.error('❌ Error fetching featured blog posts:', error.message)
     return []
   }
 }

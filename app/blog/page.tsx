@@ -15,13 +15,29 @@ import {
   getAllCategories,
   getAllTags,
 } from "@/lib/utils/blog";
-import { blogPosts } from "@/lib/data/blog-posts";
 import Link from "next/link";
 import Image from "next/image";
 
-// Get posts from our data file
+// Get posts from Contentful via API
 const getPosts = async (): Promise<BlogPost[]> => {
-  return blogPosts;
+  try {
+    // Buscar do Contentful via API route
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.abiptom.gw'}/api/blog/posts`, {
+      cache: 'no-store', // Sempre buscar dados frescos
+      next: { revalidate: 0 }
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to fetch posts from API');
+      return [];
+    }
+    
+    const posts = await response.json();
+    return posts;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
 };
 
 function BlogContent() {
