@@ -26,22 +26,22 @@ export async function POST(request: NextRequest) {
     // Verificar assinatura (se configurada)
     const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET
     
-    // 🔍 DEBUG: Logs para diagnóstico
-    console.log('🔐 Webhook Secret presente:', !!webhookSecret)
-    console.log('📝 Signature presente:', !!signature)
-    
-    // ⚠️ TEMPORÁRIO: Validação desabilitada para testes
-    // TODO: Reativar após confirmar que as variáveis estão corretas
-    if (false && webhookSecret && signature) {
+    // Verificar assinatura para segurança (opcional se não configurado)
+    if (webhookSecret && signature) {
       const isValid = verifyContentfulWebhook(body, signature, webhookSecret)
       
       if (!isValid) {
-        console.error('Invalid webhook signature')
+        console.error('❌ Invalid webhook signature')
+        console.log('📋 Debug: Secret length:', webhookSecret.length)
+        console.log('📋 Debug: Signature length:', signature.length)
         return NextResponse.json(
           { error: 'Invalid signature' },
           { status: 401 }
         )
       }
+      console.log('✅ Webhook signature verified')
+    } else {
+      console.warn('⚠️ Webhook signature validation skipped (not configured)')
     }
     
     // Parse do body
