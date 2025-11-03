@@ -29,10 +29,9 @@ async function setupWebhook() {
     })
 
     const space = await client.getSpace(SPACE_ID)
-    const environment = await space.getEnvironment('master')
 
-    // Verificar se webhook já existe
-    const existingWebhooks = await environment.getWebhooks()
+    // Webhooks são do Space, não do Environment
+    const existingWebhooks = await space.getWebhooks()
     const webhookName = 'ABIPTOM Auto Deploy'
     
     const existing = existingWebhooks.items.find(
@@ -53,7 +52,7 @@ async function setupWebhook() {
       console.log('✅ Webhook atualizado com sucesso!')
     } else {
       // Criar novo webhook
-      const webhook = await environment.createWebhook({
+      const webhook = await space.createWebhook({
         name: webhookName,
         url: `${SITE_URL}/api/contentful-webhook`,
         topics: [
