@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, CheckCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -116,10 +117,13 @@ export default function Home() {
               </div>
             </div>
             <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
-              <img
+              <Image
                 alt="Equipe Abiptom"
                 className="aspect-video object-cover w-full"
                 src="/images/foto-quem-somos.png"
+                width={800}
+                height={450}
+                priority={false}
               />
             </div>
           </div>
@@ -209,10 +213,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-3xl mx-auto">
             <Link href="/blog/branding-unido-amae-guine-bissau" className="group">
               <div className="space-y-3">
-                <img
+                <Image
                   alt="Projeto de Branding UNIDO e AMAE"
                   className="aspect-video overflow-hidden rounded-lg object-cover transition-all group-hover:scale-105"
                   src="/images/blog/reuniao-com-unido-e-amae-branding.jpg"
+                  width={800}
+                  height={450}
+                  priority={false}
                 />
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black group-hover:text-yellow transition-colors font-bauhaus">

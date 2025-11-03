@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 // Lista estática de logos dos clientes
 const staticLogos = [
@@ -91,16 +92,16 @@ export function ClientLogos() {
               width: `${logoSlotWidth}px` 
             }}
           >
-            <img
+            <Image
               alt={`Cliente ${index % logos.length + 1}`}
-              className="max-h-12 md:max-h-16 w-auto object-contain" // Image will fit within the content box (120px wide after padding)
+              className="max-h-12 md:max-h-16 w-auto object-contain"
               src={logoSrc}
+              width={120}
+              height={64}
+              loading="lazy"
               onError={(e) => {
-                // Option 1: Hide broken image icon (browser default)
-                // e.currentTarget.style.display = 'none';
-                // Option 2: Replace with a placeholder or specific style if needed
                 console.error(`Failed to load logo: ${logoSrc}`);
-                (e.target as HTMLImageElement).style.visibility = 'hidden'; // Keeps space, hides icon
+                (e.target as HTMLImageElement).style.visibility = 'hidden';
               }}
             />
           </div>

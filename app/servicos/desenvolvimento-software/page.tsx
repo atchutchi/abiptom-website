@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { CheckCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -201,27 +202,27 @@ export default function DesenvolvimentoSoftwarePage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="JavaScript" className="h-16 w-auto mb-2" src="/images/servicos/JavaScript-logo.png" />
+              <Image alt="JavaScript" className="h-16 w-auto mb-2" src="/images/servicos/JavaScript-logo.png" width={64} height={64} />
               <span className="text-sm font-medium">JavaScript</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="Python" className="h-16 w-auto mb-2" src="/images/servicos/Python-logo-notext.svg.png" />
+              <Image alt="Python" className="h-16 w-auto mb-2" src="/images/servicos/Python-logo-notext.svg.png" width={64} height={64} />
               <span className="text-sm font-medium">Python</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="React" className="h-16 w-auto mb-2" src="/images/servicos/React_Logo_SVG.svg.png" />
+              <Image alt="React" className="h-16 w-auto mb-2" src="/images/servicos/React_Logo_SVG.svg.png" width={64} height={64} />
               <span className="text-sm font-medium">React</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="Node.js" className="h-16 w-auto mb-2" src="/images/servicos/Node.js_logo.svg" />
+              <Image alt="Node.js" className="h-16 w-auto mb-2" src="/images/servicos/Node.js_logo.svg" width={64} height={64} />
               <span className="text-sm font-medium">Node.js</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="Flutter" className="h-16 w-auto mb-2" src="/images/servicos/flutter-logo-white-inset.svg" />
+              <Image alt="Flutter" className="h-16 w-auto mb-2" src="/images/servicos/flutter-logo-white-inset.svg" width={64} height={64} />
               <span className="text-sm font-medium">Flutter</span>
             </div>
             <div className="flex flex-col items-center justify-center p-4">
-              <img alt="SQL" className="h-16 w-auto mb-2" src="/images/servicos/SQL-Database.png" />
+              <Image alt="SQL" className="h-16 w-auto mb-2" src="/images/servicos/SQL-Database.png" width={64} height={64} />
               <span className="text-sm font-medium">SQL</span>
             </div>
           </div>

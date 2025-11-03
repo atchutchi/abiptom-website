@@ -14,25 +14,26 @@ try {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
-    domains: ['www.google-analytics.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.google-analytics.com',
+      },
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
-  allowedDevOrigins: [
-    'http://192.168.17.16',
-    'https://192.168.17.16',
-    'http://localhost',
-    'http://192.168.17.16:3000',
-  ],
 }
 
 if (userConfig) {

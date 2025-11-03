@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   description:
     "Somos a ABIPTOM, SARL, um grupo de Consultores nacionais e internacionais especializados em Marketing, Design Gráfico e Web Design e Desenvolvimento de Software.",
   generator: 'Next.js',
-  keywords: ['marketing digital', 'design gráfico', 'web design', 'desenvolvimento de software', 'consultoria', 'moçambique'],
+  keywords: ['marketing digital', 'design gráfico', 'web design', 'desenvolvimento de software', 'consultoria', 'guiné-bissau'],
   authors: [{ name: 'ABIPTOM' }],
   metadataBase: new URL('https://abiptom.gw'),
   openGraph: {
@@ -90,6 +90,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-import './globals.css'
