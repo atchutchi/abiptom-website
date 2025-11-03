@@ -11,7 +11,22 @@ export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-black">
+    <>
+      {/* Skip Links para acessibilidade */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-yellow text-black px-4 py-2 rounded-md z-[100] font-medium shadow-lg"
+      >
+        Pular para o conteúdo principal
+      </a>
+      <a 
+        href="#footer" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-40 bg-yellow text-black px-4 py-2 rounded-md z-[100] font-medium shadow-lg"
+      >
+        Ir para o rodapé
+      </a>
+      
+      <header className="sticky top-0 z-50 w-full border-b bg-black">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
@@ -113,6 +128,7 @@ export function SiteHeader() {
           </Sheet>
         </div>
       </div>
-    </header>
+      </header>
+    </>
   )
 }

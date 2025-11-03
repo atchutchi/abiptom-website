@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ChatBot } from "@/components/chat-bot/ChatBot"
+import { BackToTop } from "@/components/back-to-top"
 import GoogleAnalytics from "./components/GoogleAnalytics"
 
 const poppins = Poppins({
@@ -81,9 +82,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main id="main-content" className="flex-1">{children}</main>
             <SiteFooter />
             <ChatBot />
+            <BackToTop />
           </div>
         </ThemeProvider>
       </body>

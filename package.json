@@ -8,10 +8,16 @@
     "start": "next start",
     "lint": "next lint",
     "supabase:init": "tsx scripts/migrate-to-supabase.ts",
-    "supabase:test": "open http://localhost:3000/admin/supabase-test"
+    "supabase:test": "open http://localhost:3000/admin/supabase-test",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "contentful:webhook": "tsx scripts/setup-contentful-webhook.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
+    "@contentful/rich-text-react-renderer": "^16.1.5",
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.10.0",
     "@huggingface/inference": "^3.8.1",
@@ -51,6 +57,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "contentful": "^11.8.9",
     "date-fns": "^3.0.0",
     "dotenv": "^16.5.0",
     "embla-carousel-react": "8.5.1",
@@ -58,6 +65,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.454.0",
     "next": "15.2.4",
+    "next-intl": "^4.4.0",
     "next-themes": "^0.4.4",
     "nodemailer": "^6.10.1",
     "react": "^18.2.0",
@@ -74,6 +82,7 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",

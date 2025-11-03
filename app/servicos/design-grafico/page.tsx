@@ -2,6 +2,7 @@ import Link from "next/link"
 import { CheckCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 
 export default function DesignGraficoPage() {
   return (
@@ -9,6 +10,13 @@ export default function DesignGraficoPage() {
       {/* Hero Section */}
       <section className="bg-black py-16 md:py-24">
         <div className="container px-4 md:px-6">
+          <Breadcrumbs 
+            items={[
+              { label: 'Serviços', href: '/servicos' },
+              { label: 'Design Gráfico' }
+            ]}
+            className="mb-8"
+          />
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h1 className="text-3xl font-bauhaus tracking-tighter sm:text-5xl md:text-6xl text-yellow">
               Design Gráfico

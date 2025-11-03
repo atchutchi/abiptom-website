@@ -8,6 +8,7 @@ import { PortfolioPreview } from "@/app/components/portfolio-preview"
 import { TestimonialSlider } from "@/components/testimonial-slider"
 import { ClientLogos } from "@/components/client-logos"
 import { HeroSection } from "@/components/hero-section"
+import { AnimatedSection } from "@/components/animated-section"
 
 export default function Home() {
   return (
@@ -15,18 +16,21 @@ export default function Home() {
       <HeroSection />
 
       {/* Services Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white" aria-labelledby="services-heading">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Nossos Serviços</div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">
-              Transformamos ideias em realidade digital
-            </h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Oferecemos soluções digitais personalizadas e de alto calibre para ajudar sua marca a se destacar.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatedSection animation="fade-up">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Nossos Serviços</div>
+              <h2 id="services-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">
+                Transformamos ideias em realidade digital
+              </h2>
+              <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Oferecemos soluções digitais personalizadas e de alto calibre para ajudar sua marca a se destacar.
+              </p>
+            </div>
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={100}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <ServiceCard
               title="Design Gráfico"
               description="Criação de logotipos, flyers, cartazes, brochuras e materiais visuais que fortalecem sua marca."
@@ -70,17 +74,19 @@ export default function Home() {
                 Ver todos os serviços <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* About Section Preview */}
-      <section className="py-16 md:py-24 bg-gray-light">
+      <section className="py-16 md:py-24 bg-gray-light" aria-labelledby="about-heading">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="space-y-4">
-              <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Quem Somos</div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">
+            <AnimatedSection animation="fade-right">
+              <div className="space-y-4">
+                <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Quem Somos</div>
+                <h2 id="about-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">
                 ABIPTOM, Guardião das Novas Tecnologias
               </h2>
               <p className="text-gray-dark md:text-xl/relaxed">
@@ -115,8 +121,10 @@ export default function Home() {
                   <Link href="/quem-somos">Saiba mais sobre nós</Link>
                 </Button>
               </div>
-            </div>
-            <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
+              </div>
+            </AnimatedSection>
+            <AnimatedSection animation="fade-left" delay={100}>
+              <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
               <Image
                 alt="Equipe Abiptom"
                 className="aspect-video object-cover w-full"
@@ -125,67 +133,83 @@ export default function Home() {
                 height={450}
                 priority={false}
               />
-            </div>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
       {/* Portfolio Preview */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white" aria-labelledby="portfolio-heading">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Nosso Portfólio</div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">
+          <AnimatedSection animation="fade-up">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Nosso Portfólio</div>
+              <h2 id="portfolio-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">
               Trabalhos que nos orgulhamos
             </h2>
             <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Conheça alguns dos projetos que desenvolvemos para nossos clientes.
             </p>
-          </div>
-          <PortfolioPreview />
-          <div className="flex justify-center mt-12">
+            </div>
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={100}>
+            <PortfolioPreview />
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={200}>
+            <div className="flex justify-center mt-12">
             <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
               <Link href="/portfolio">
                 Ver portfólio completo <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 md:py-24 bg-gray-light">
+      <section className="py-16 md:py-24 bg-gray-light" aria-labelledby="testimonials-heading">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Depoimentos</div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">O que nossos clientes dizem</h2>
+          <AnimatedSection animation="fade-up">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Depoimentos</div>
+              <h2 id="testimonials-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">O que nossos clientes dizem</h2>
             <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               A satisfação de nossos clientes é nossa maior recompensa.
             </p>
-          </div>
-          <TestimonialSlider />
+            </div>
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={100}>
+            <TestimonialSlider />
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Clients */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white" aria-labelledby="clients-heading">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Nossos Clientes</div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">Empresas que confiam em nós</h2>
+          <AnimatedSection animation="fade-up">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Nossos Clientes</div>
+              <h2 id="clients-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">Empresas que confiam em nós</h2>
             <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Trabalhamos com empresas e organizações de diversos setores.
             </p>
-          </div>
-          <ClientLogos />
+            </div>
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={100}>
+            <ClientLogos />
+          </AnimatedSection>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black">
+      <section className="py-16 md:py-24 bg-black" aria-labelledby="cta-heading">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-yellow font-bauhaus">
+          <AnimatedSection animation="scale-up">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <h2 id="cta-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-yellow font-bauhaus">
               Pronto para transformar suas ideias em realidade?
             </h2>
             <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -196,21 +220,25 @@ export default function Home() {
                 <Link href="/contacto">Fale conosco</Link>
               </Button>
             </div>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Blog Preview */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white" aria-labelledby="blog-heading">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Blog</div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">Últimas do nosso blog</h2>
+          <AnimatedSection animation="fade-up">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <div className="inline-block rounded-lg bg-yellow/10 px-3 py-1 text-sm text-yellow font-semibold">Blog</div>
+              <h2 id="blog-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-bauhaus text-black">Últimas do nosso blog</h2>
             <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Fique por dentro das novidades e tendências do mundo digital.
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-3xl mx-auto">
+            </div>
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={100}>
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-3xl mx-auto">
             <Link href="/blog/branding-unido-amae-guine-bissau" className="group">
               <div className="space-y-3">
                 <Image
@@ -234,14 +262,17 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-          </div>
-          <div className="flex justify-center mt-12">
+            </div>
+          </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={200}>
+            <div className="flex justify-center mt-12">
             <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
               <Link href="/blog">
                 Ver todos os artigos <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
     </div>

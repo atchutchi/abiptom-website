@@ -4,7 +4,7 @@ import { TikTokIcon } from "./icons/tiktok"
 
 export function SiteFooter() {
   return (
-    <footer className="bg-black text-white">
+    <footer id="footer" className="bg-black text-white">
       <div className="container px-4 md:px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>

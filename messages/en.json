@@ -1,0 +1,106 @@
+{
+  "common": {
+    "companyName": "ABIPTOM",
+    "tagline": "Guardian of New Technologies",
+    "learnMore": "Learn more",
+    "contactUs": "Contact us",
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "backToTop": "Back to top"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact",
+    "careers": "Careers",
+    "skipToContent": "Skip to main content",
+    "skipToFooter": "Go to footer"
+  },
+  "home": {
+    "hero": {
+      "title": "Transform your ideas into digital reality",
+      "subtitle": "We are specialists in Digital Marketing, Graphic Design and Software Development in Guinea-Bissau"
+    },
+    "services": {
+      "title": "Our Services",
+      "heading": "We transform ideas into digital reality",
+      "description": "We offer personalized, high-caliber digital solutions to help your brand stand out.",
+      "viewAll": "View all services"
+    },
+    "about": {
+      "badge": "About Us",
+      "title": "ABIPTOM, Guardian of New Technologies",
+      "description": "We are a group of national and international consultants specialized in Marketing, Graphic Design, Web Design and Software Development. With a strong presence in Guinea-Bissau, we transform ideas into reality through personalized digital solutions.",
+      "values": {
+        "quality": "Commitment to Quality",
+        "innovation": "Focused Innovation",
+        "professionalism": "Professionalism",
+        "integrity": "Integrity",
+        "respect": "Respect for the Client"
+      }
+    },
+    "portfolio": {
+      "badge": "Our Portfolio",
+      "title": "Work we're proud of",
+      "description": "Discover some of the projects we've developed for our clients.",
+      "viewAll": "View full portfolio"
+    },
+    "testimonials": {
+      "badge": "Testimonials",
+      "title": "What our clients say",
+      "description": "Our clients' satisfaction is our greatest reward."
+    },
+    "clients": {
+      "badge": "Our Clients",
+      "title": "Companies that trust us",
+      "description": "We work with companies and organizations from various sectors."
+    },
+    "cta": {
+      "title": "Ready to turn your ideas into reality?",
+      "description": "Get in touch with us and discover how we can help your business grow."
+    },
+    "blog": {
+      "badge": "Blog",
+      "title": "Latest from our blog",
+      "description": "Stay up to date with the latest news and trends in the digital world.",
+      "viewAll": "View all articles"
+    }
+  },
+  "services": {
+    "graphic-design": {
+      "title": "Graphic Design",
+      "description": "Creation of logos, flyers, posters, brochures and visual materials that strengthen your brand."
+    },
+    "web-development": {
+      "title": "Web Development",
+      "description": "Modern, responsive and SEO-optimized websites that convert visitors into customers."
+    },
+    "social-media": {
+      "title": "Social Media",
+      "description": "Professional social media management with personalized strategies to increase your engagement."
+    },
+    "video-production": {
+      "title": "Video Production",
+      "description": "Promotional videos, animations and audiovisual content to boost your communication."
+    },
+    "photography": {
+      "title": "Photography",
+      "description": "Professional photography services for products, events and corporate content."
+    },
+    "animation-2d": {
+      "title": "2D Animation",
+      "description": "Creative animations that bring your ideas to life and capture your audience's attention."
+    }
+  },
+  "footer": {
+    "description": "We are ABIPTOM, SARL, a group of national and international Consultants specialized in Marketing, Graphic Design and Web Design and Software Development.",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved."
+  }
+}
+

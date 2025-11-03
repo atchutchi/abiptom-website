@@ -1,0 +1,106 @@
+{
+  "common": {
+    "companyName": "ABIPTOM",
+    "tagline": "Guardião das Novas Tecnologias",
+    "learnMore": "Saiba mais",
+    "contactUs": "Fale conosco",
+    "readMore": "Ler mais",
+    "viewAll": "Ver tudo",
+    "backToTop": "Voltar ao topo"
+  },
+  "nav": {
+    "home": "Início",
+    "about": "Quem Somos",
+    "services": "Serviços",
+    "portfolio": "Portfólio",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "careers": "Trabalhe Conosco",
+    "skipToContent": "Pular para o conteúdo principal",
+    "skipToFooter": "Ir para o rodapé"
+  },
+  "home": {
+    "hero": {
+      "title": "Transforme suas ideias em realidade digital",
+      "subtitle": "Somos especialistas em Marketing Digital, Design Gráfico e Desenvolvimento de Software na Guiné-Bissau"
+    },
+    "services": {
+      "title": "Nossos Serviços",
+      "heading": "Transformamos ideias em realidade digital",
+      "description": "Oferecemos soluções digitais personalizadas e de alto calibre para ajudar sua marca a se destacar.",
+      "viewAll": "Ver todos os serviços"
+    },
+    "about": {
+      "badge": "Quem Somos",
+      "title": "ABIPTOM, Guardião das Novas Tecnologias",
+      "description": "Somos um grupo de consultores nacionais e internacionais especializados em Marketing, Design Gráfico, Web Design e Desenvolvimento de Software. Com forte presença na Guiné-Bissau, transformamos ideias em realidade através de soluções digitais personalizadas.",
+      "values": {
+        "quality": "Compromisso com a Qualidade",
+        "innovation": "Inovação Focada",
+        "professionalism": "Profissionalismo",
+        "integrity": "Integridade",
+        "respect": "Respeito pelo Cliente"
+      }
+    },
+    "portfolio": {
+      "badge": "Nosso Portfólio",
+      "title": "Trabalhos que nos orgulhamos",
+      "description": "Conheça alguns dos projetos que desenvolvemos para nossos clientes.",
+      "viewAll": "Ver portfólio completo"
+    },
+    "testimonials": {
+      "badge": "Depoimentos",
+      "title": "O que nossos clientes dizem",
+      "description": "A satisfação de nossos clientes é nossa maior recompensa."
+    },
+    "clients": {
+      "badge": "Nossos Clientes",
+      "title": "Empresas que confiam em nós",
+      "description": "Trabalhamos com empresas e organizações de diversos setores."
+    },
+    "cta": {
+      "title": "Pronto para transformar suas ideias em realidade?",
+      "description": "Entre em contato conosco e descubra como podemos ajudar sua empresa a crescer."
+    },
+    "blog": {
+      "badge": "Blog",
+      "title": "Últimas do nosso blog",
+      "description": "Fique por dentro das novidades e tendências do mundo digital.",
+      "viewAll": "Ver todos os artigos"
+    }
+  },
+  "services": {
+    "graphic-design": {
+      "title": "Design Gráfico",
+      "description": "Criação de logotipos, flyers, cartazes, brochuras e materiais visuais que fortalecem sua marca."
+    },
+    "web-development": {
+      "title": "Desenvolvimento Web",
+      "description": "Websites modernos, responsivos e otimizados para SEO que convertem visitantes em clientes."
+    },
+    "social-media": {
+      "title": "Social Media",
+      "description": "Gestão profissional de redes sociais com estratégias personalizadas para aumentar seu engajamento."
+    },
+    "video-production": {
+      "title": "Produção de Vídeo",
+      "description": "Vídeos promocionais, animações e conteúdo audiovisual para impulsionar sua comunicação."
+    },
+    "photography": {
+      "title": "Fotografia",
+      "description": "Serviços fotográficos profissionais para produtos, eventos e conteúdo corporativo."
+    },
+    "animation-2d": {
+      "title": "Animação 2D",
+      "description": "Animações criativas que dão vida às suas ideias e capturam a atenção do seu público."
+    }
+  },
+  "footer": {
+    "description": "Somos a ABIPTOM, SARL, um grupo de Consultores nacionais e internacionais especializados em Marketing, Design Gráfico e Web Design e Desenvolvimento de Software.",
+    "quickLinks": "Links Rápidos",
+    "contact": "Contacto",
+    "followUs": "Siga-nos",
+    "rights": "Todos os direitos reservados."
+  }
+}
+
