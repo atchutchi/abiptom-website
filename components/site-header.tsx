@@ -46,9 +46,11 @@ export function SiteHeader() {
           <Link href="/portfolio" className="text-sm font-medium text-white transition-colors hover:text-yellow">
             Portfólio
           </Link>
+          {/* TODO: Descomentar quando o Blog estiver concluído
           <Link href="/blog" className="text-sm font-medium text-white transition-colors hover:text-yellow">
             Blog
           </Link>
+          */}
           <Link href="/contacto" className="text-sm font-medium text-white transition-colors hover:text-yellow">
             Contacto
           </Link>
@@ -97,6 +99,7 @@ export function SiteHeader() {
                 >
                   Portfólio
                 </Link>
+                {/* TODO: Descomentar quando o Blog estiver concluído
                 <Link
                   href="/blog"
                   className="text-sm font-medium text-white transition-colors hover:text-yellow"
@@ -104,6 +107,7 @@ export function SiteHeader() {
                 >
                   Blog
                 </Link>
+                */}
                 <Link
                   href="/contacto"
                   className="text-sm font-medium text-white transition-colors hover:text-yellow"

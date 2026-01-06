@@ -46,5 +46,7 @@ backup
 # Scripts com API keys hardcoded (NUNCA COMMITAR!)
 scripts/simple-upload.js
 
-SECURITY_FIXES.md
-SUPABASE_SETUP.md
+# Documentação (exceto README.md)
+*.md
+!README.md
+docs/*.md

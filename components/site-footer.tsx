@@ -61,11 +61,13 @@ export function SiteFooter() {
                   Portfólio
                 </Link>
               </li>
+              {/* TODO: Descomentar quando o Blog estiver concluído
               <li>
                 <Link href="/blog" className="text-white hover:text-yellow">
                   Blog
                 </Link>
               </li>
+              */}
               <li>
                 <Link href="/contacto" className="text-white hover:text-yellow">
                   Contacto
