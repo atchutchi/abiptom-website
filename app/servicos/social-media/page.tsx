@@ -204,7 +204,7 @@ export default function SocialMediaPage() {
               <ul className="space-y-3 mb-6 flex-1">
                 <li className="flex items-center">
                   <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>15-20 Posts por mês</span>
+                  <span>10-12 Posts por mês</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
@@ -233,7 +233,7 @@ export default function SocialMediaPage() {
               <ul className="space-y-3 mb-6 flex-1">
                 <li className="flex items-center">
                   <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>21-25 Posts por mês</span>
+                  <span>15-20 Posts por mês</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
