@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CHATBOT_CONFIG } from '@/lib/chat/chatbot-config';
-
 interface Service {
   name: string;
   description: string;

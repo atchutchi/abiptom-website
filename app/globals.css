@@ -1,99 +1,282 @@
+@import "./design-tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================
+   BASE — Dark Theme & Typography
+   ======================================== */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --background: 0 0% 3.1%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 5.9%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5.9%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 45 100% 48%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 8.2%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 8.2%;
+    --muted-foreground: 0 0% 64.3%;
+    --accent: 0 0% 8.2%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 24.3%;
+    --input: 0 0% 24.3%;
+    --ring: 45 100% 48%;
     --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: auto;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-bauhaus text-black;
-  }
-  p,
-  span,
-  div,
-  a,
-  button,
-  input,
-  textarea {
-    @apply font-sans text-gray-dark;
+
+  ::selection {
+    background-color: var(--accent-gold);
+    color: var(--bg-black);
   }
 }
 
-/* Custom styles for buttons */
-.btn-primary {
-  @apply bg-yellow text-black hover:bg-yellow-hover transition-colors;
+/* ========================================
+   TYPOGRAPHY — Obys Scale
+   ======================================== */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+
+  p, span, div, a, button, input, textarea, li, label {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+  }
 }
 
-.btn-outline {
-  @apply border-yellow text-yellow hover:bg-yellow hover:text-black transition-colors;
+@layer components {
+  .heading-hero {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 8.75rem);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.05em;
+  }
+
+  .heading-section {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 8.75rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+
+  .heading-subsection {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  .body-large {
+    font-family: var(--font-body);
+    font-size: clamp(1.125rem, 2vw, 1.75rem);
+    font-weight: 300;
+    line-height: 1.35;
+  }
+
+  .body-base {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .text-label {
+    font-family: var(--font-body);
+    font-size: clamp(0.75rem, 1vw, 0.875rem);
+    font-weight: 400;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .text-crawling {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 8.75rem);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  /* Text Outline / Stroke Effect */
+  .font--outline {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: var(--text-primary);
+  }
+
+  .font--outline-dark {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: var(--bg-secondary);
+  }
+
+  .italic-outline {
+    font-style: italic;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: var(--text-primary);
+  }
 }
 
-/* Section alternating backgrounds */
-.section-alt {
-  @apply bg-gray-light;
+/* ========================================
+   CONTAINERS
+   ======================================== */
+@layer components {
+  .obys-container {
+    width: 100%;
+    max-width: var(--container-default);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 4vw, 2rem);
+    padding-right: clamp(1rem, 4vw, 2rem);
+  }
+
+  .obys-container--wide {
+    max-width: var(--container-wide);
+  }
+
+  .obys-container--small {
+    max-width: var(--container-small);
+  }
+
+  .obys-container--fluid {
+    max-width: 100%;
+  }
 }
 
-/* Animações para a Hero Section */
+/* ========================================
+   SECTION SPACING
+   ======================================== */
+@layer components {
+  .section-padding {
+    padding-top: clamp(4rem, 10vw, 10rem);
+    padding-bottom: clamp(4rem, 10vw, 10rem);
+  }
+
+  .section-padding-sm {
+    padding-top: clamp(2rem, 5vw, 5rem);
+    padding-bottom: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+/* ========================================
+   BUTTONS — Obys Variants
+   ======================================== */
+@layer components {
+  .btn-obys {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    padding: 0.875rem 2rem;
+    border-radius: 0;
+    transition: all var(--duration-default) var(--ease-default);
+  }
+
+  .btn-obys--primary {
+    background-color: var(--accent-gold);
+    color: var(--bg-black);
+  }
+
+  .btn-obys--primary:hover {
+    background-color: var(--accent-gold-hover);
+  }
+
+  .btn-obys--dark {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  .btn-obys--light {
+    background-color: var(--text-primary);
+    color: var(--bg-black);
+  }
+
+  .btn-obys--outline {
+    background-color: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+  }
+
+  .btn-obys--outline:hover {
+    background-color: var(--accent-gold);
+    color: var(--bg-black);
+  }
+
+  .btn-obys--play {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: var(--accent-gold);
+    color: var(--bg-black);
+    padding: 0;
+  }
+
+  .btn-obys--play:hover {
+    transform: scale(1.1);
+  }
+}
+
+/* ========================================
+   CURSOR — Custom cursor styles
+   ======================================== */
+.custom-cursor--enabled,
+.custom-cursor--enabled * {
+  cursor: none !important;
+}
+
+/* ========================================
+   SCROLL INDICATOR
+   ======================================== */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--accent-gold);
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -104,7 +287,7 @@
 @keyframes fade-left {
   from {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(30px);
   }
   to {
     opacity: 1;
@@ -112,23 +295,111 @@
   }
 }
 
+@keyframes reveal-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .animate-fade-up {
-  animation: fade-up 0.5s ease-out forwards;
+  animation: fade-up 0.6s var(--ease-default) forwards;
 }
 
 .animate-fade-left {
-  animation: fade-left 0.5s ease-out forwards;
+  animation: fade-left 0.6s var(--ease-default) forwards;
 }
 
-/* Adicione atrasos para animações sequenciais */
-.delay-100 {
-  animation-delay: 100ms;
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ========================================
+   FORM STYLES — Dark
+   ======================================== */
+@layer components {
+  .form-input-dark {
+    background-color: transparent;
+    border: 1px solid var(--border-dark);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+    transition: border-color var(--duration-default) var(--ease-default);
+    width: 100%;
+  }
+
+  .form-input-dark:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+  }
+
+  .form-input-dark::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-label-dark {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
 }
 
-.delay-200 {
-  animation-delay: 200ms;
+/* ========================================
+   DIVIDERS
+   ======================================== */
+@layer components {
+  .divider-dark {
+    border: none;
+    height: 1px;
+    background-color: var(--border-dark);
+  }
 }
 
-.delay-300 {
-  animation-delay: 300ms;
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .custom-cursor--enabled,
+  .custom-cursor--enabled * {
+    cursor: auto !important;
+  }
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-gold);
 }

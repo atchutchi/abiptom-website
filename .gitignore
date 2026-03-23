@@ -27,7 +27,6 @@ yarn-error.log*
 # local env files
 .env*.local
 .env.local
-env.example
 
 # vercel
 .vercel
@@ -48,3 +47,30 @@ scripts/simple-upload.js
 
 SECURITY_FIXES.md
 SUPABASE_SETUP.md
+
+# Redesign progress documentation
+REDESIGN_PROGRESS.md
+
+# Internal setup & configuration guides (not for public repo)
+CONTENTFUL_FINAL_STEPS.md
+SETUP_WEBHOOKS.md
+SETUP_CONTENTFUL.md
+SETUP_I18N.md
+SETUP_PLAYWRIGHT.md
+README_IMPROVEMENTS.md
+
+# Environment example (contains variable structure)
+.env.example
+
+# Temporary scripts with secrets
+scripts/temp/
+*.secret.*
+
+# Supabase
+supabase/.temp/
+
+# OS
+Thumbs.db
+
+# Swap files
+*.swp

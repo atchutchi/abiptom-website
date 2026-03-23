@@ -1,427 +1,277 @@
+import Image from "next/image"
 import Link from "next/link"
-import { CheckCircle } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 
+import { AnimatedSection } from "@/components/animated-section"
 import { Button } from "@/components/ui/button"
+import { CrawlingLine } from "@/components/crawling-line"
+import { PageTransition } from "@/components/page-transition"
+import { TextSplitter } from "@/components/text-splitter"
 
-export default function SocialMediaPage() {
+const packages = [
+  {
+    name: "Básico",
+    popular: false,
+    features: [
+      "10–12 posts por mês",
+      "Até 3 plataformas geridas",
+      "Consulta inicial e alinhamento",
+      "Planificação estratégica simplificada",
+    ],
+  },
+  {
+    name: "Silver",
+    popular: false,
+    features: [
+      "15–20 posts por mês",
+      "Até 4 plataformas geridas",
+      "2 posts patrocinados",
+      "3 posts personalizados",
+      "10 Instagram / Facebook Stories",
+    ],
+  },
+  {
+    name: "Gold",
+    popular: true,
+    features: [
+      "26–30 posts por mês",
+      "Até 5 plataformas geridas",
+      "4 posts patrocinados",
+      "5 posts personalizados",
+      "15 Instagram / Facebook Stories",
+      "1 concurso ou challenge",
+    ],
+  },
+  {
+    name: "Premium+",
+    popular: false,
+    features: [
+      "31–40 posts por mês",
+      "Até 5 plataformas geridas",
+      "8 posts patrocinados",
+      "10 posts personalizados",
+      "20 Instagram / Facebook Stories",
+      "Relatórios completos semanais",
+    ],
+  },
+] as const
+
+const processSteps = [
+  {
+    title: "Diagnóstico e briefing",
+    description:
+      "Reunimos contexto da marca, público-alvo, tom de voz e objetivos de negócio para definir o que as redes devem entregar.",
+  },
+  {
+    title: "Estratégia e calendário",
+    description:
+      "Construímos linhas editoriais, temas e formatos por plataforma, com calendário claro de publicações e campanhas.",
+  },
+  {
+    title: "Produção e publicação",
+    description:
+      "Criamos copy e peças visuais, agendamos posts e stories e garantimos consistência visual e narrativa.",
+  },
+  {
+    title: "Monitorização e comunidade",
+    description:
+      "Acompanhamos comentários, mensagens e menções, respondendo com critério e protegendo a reputação da marca.",
+  },
+  {
+    title: "Relatório e otimização",
+    description:
+      "Analisamos métricas, partilhamos insights e ajustamos conteúdo e investimento para melhorar resultados mês a mês.",
+  },
+] as const
+
+const SocialMediaPage = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-black py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h1 className="text-3xl font-bauhaus tracking-tighter sm:text-5xl md:text-6xl text-yellow">Social Media</h1>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Gestão profissional de redes sociais com estratégias personalizadas para aumentar seu engajamento.
-            </p>
+    <PageTransition>
+      <div className="flex flex-col min-h-screen bg-obys-near-black">
+        {/* Hero */}
+        <section className="section-padding bg-obys-near-black">
+          <div className="obys-container">
+            <AnimatedSection animation="fade-up">
+              <span className="text-label text-obys-gold mb-6 block">Serviços</span>
+            </AnimatedSection>
+            <TextSplitter
+              text="Social Media"
+              as="h1"
+              className="heading-hero text-white mb-8"
+              splitBy="word"
+              delay={0.15}
+            />
+            <AnimatedSection animation="fade-up" delay={350}>
+              <p className="body-large text-obys-text-secondary max-w-3xl">
+                Gestão profissional de redes sociais com estratégia, conteúdo e acompanhamento contínuo — para marcas
+                que querem presença consistente, engajamento real e decisões baseadas em dados.
+              </p>
+            </AnimatedSection>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Service Description */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Presença Digital Estratégica</h2>
-              <p className="text-gray-dark md:text-xl/relaxed">
-                As redes sociais são hoje um dos principais canais de comunicação entre empresas e clientes. Na ABIPTOM,
-                desenvolvemos estratégias personalizadas para cada plataforma, criando conteúdo relevante e engajador
-                que conecta sua marca ao público-alvo.
-              </p>
-              <p className="text-gray-dark md:text-xl/relaxed">
-                Nossa equipe de especialistas em social media combina criatividade, análise de dados e conhecimento das
-                tendências para maximizar o impacto da sua presença nas redes sociais, gerando resultados mensuráveis
-                para o seu negócio.
-              </p>
-            </div>
-            <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
-              <img
-                alt="Social Media"
-                className="aspect-video object-cover w-full"
-                src="/images/servicos/social-media.png"
-              />
-            </div>
-          </div>
+        <div className="border-y border-obys-border-dark bg-obys-dark">
+          <CrawlingLine
+            items={[
+              "Estratégia",
+              "Conteúdo",
+              "Instagram",
+              "Facebook",
+              "LinkedIn",
+              "Community management",
+              "Relatórios",
+              "ABIPTOM",
+            ]}
+            speed={38}
+            className="py-6"
+          />
         </div>
-      </section>
 
-      {/* Services Offered */}
-      <section className="py-16 md:py-24 bg-gray-light">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Serviços de Social Media</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Oferecemos uma gama completa de serviços para potencializar sua presença nas redes sociais.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Gestão de Redes Sociais</h3>
-              <p className="text-gray-dark mb-4">
-                Administração completa das suas redes sociais, desde a criação de conteúdo até o monitoramento e
-                interação com seguidores.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Planejamento de conteúdo</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Criação e publicação de posts</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Monitoramento e resposta a comentários</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Criação de Conteúdo</h3>
-              <p className="text-gray-dark mb-4">
-                Desenvolvimento de conteúdo visual e textual atrativo e relevante para suas redes sociais.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Design de posts</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Copywriting</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Produção de fotos e vídeos</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Publicidade em Redes Sociais</h3>
-              <p className="text-gray-dark mb-4">
-                Criação e gestão de campanhas publicitárias nas principais plataformas de redes sociais.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Facebook e Instagram Ads</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>LinkedIn Ads</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Twitter Ads</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Estratégia de Conteúdo</h3>
-              <p className="text-gray-dark mb-4">
-                Desenvolvimento de estratégias de conteúdo alinhadas aos objetivos do seu negócio e às características
-                do seu público.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Análise de público-alvo</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Definição de tom de voz</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Calendário editorial</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Análise e Relatórios</h3>
-              <p className="text-gray-dark mb-4">
-                Monitoramento e análise do desempenho das suas redes sociais, com relatórios detalhados e insights
-                estratégicos.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Métricas de engajamento</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Análise de concorrência</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Recomendações estratégicas</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Gestão de Comunidade</h3>
-              <p className="text-gray-dark mb-4">
-                Construção e gestão de comunidades online, fortalecendo o relacionamento com seu público e aumentando a
-                fidelidade à marca.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Moderação de comentários</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Resposta a mensagens</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Gestão de crises</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Packages */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Pacotes de Gestão de Redes Sociais</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Escolha o pacote que melhor se adapta às necessidades do seu negócio.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg border border-gray-200">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bauhaus">Básico</h3>
-                <div className="mt-4 text-center">
-                  <span className="text-sm text-gray-dark">Consultar preço</span>
+        {/* Abordagem — 2 colunas */}
+        <section className="section-padding bg-obys-dark" aria-labelledby="abordagem-heading">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <div className="grid gap-16 lg:grid-cols-2 lg:gap-20 items-center">
+              <AnimatedSection animation="fade-right">
+                <div>
+                  <span className="text-label text-obys-gold mb-6 block">Como trabalhamos</span>
+                  <h2 id="abordagem-heading" className="heading-section text-white mb-10">
+                    Presença digital com método
+                  </h2>
+                  <p className="body-large text-obys-text-secondary mb-8">
+                    As redes sociais são hoje um dos principais pontos de contacto entre marcas e audiências. Na ABIPTOM
+                    planeamos cada plataforma em função dos seus objetivos: awareness, leads, comunidade ou suporte à
+                    venda.
+                  </p>
+                  <p className="body-base text-obys-text-secondary">
+                    Combinamos criatividade, rotinas de publicação fiáveis e leitura de métricas para que o esforço no
+                    social se traduza em conversas, confiança e crescimento mensurável — sem depender apenas de
+                    improviso ou trends isoladas.
+                  </p>
                 </div>
-              </div>
-              <ul className="space-y-3 mb-6 flex-1">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>10-12 Posts por mês</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>3 plataformas geridas</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Consulta inicial</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Planificação estratégica simplificada</span>
-                </li>
-              </ul>
-              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Escolher Plano</Link>
-              </Button>
-            </div>
-            <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg border border-gray-200">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bauhaus">Silver</h3>
-                <div className="mt-4 text-center">
-                  <span className="text-sm text-gray-dark">Consultar preço</span>
+              </AnimatedSection>
+              <AnimatedSection animation="fade-left" delay={200}>
+                <div className="relative aspect-video overflow-hidden border border-obys-border-dark">
+                  <Image
+                    alt="Serviços de gestão de redes sociais pela ABIPTOM"
+                    className="object-cover"
+                    src="/images/servicos/social-media.png"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
                 </div>
-              </div>
-              <ul className="space-y-3 mb-6 flex-1">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>15-20 Posts por mês</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>4 plataformas geridas</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>2 posts pagos</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>3 posts personalizados</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>10 Instagram/Facebook Stories</span>
-                </li>
-              </ul>
-              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Escolher Plano</Link>
-              </Button>
-            </div>
-            <div className="flex flex-col p-6 bg-gray-light shadow-lg rounded-lg text-white relative">
-              <div className="absolute top-0 right-0 -mt-4 mr-4 bg-yellow text-black font-bold py-1 px-4 rounded-full text-xs uppercase">
-                Popular
-              </div>
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bauhaus">Gold</h3>
-                <div className="mt-4 text-center">
-                  <span className="text-sm text-gray-dark">Consultar preço</span>
-                </div>
-              </div>
-              <ul className="space-y-3 mb-6 flex-1">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>26-30 Posts por mês</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>5 plataformas geridas</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>4 posts pagos</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>5 posts personalizados</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>15 Instagram/Facebook Stories</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>1 Concurso/Challenge</span>
-                </li>
-              </ul>
-              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Escolher Plano</Link>
-              </Button>
-            </div>
-            <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg border border-gray-200">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bauhaus">Premium+</h3>
-                <div className="mt-4 text-center">
-                  <span className="text-sm text-gray-dark">Consultar preço</span>
-                </div>
-              </div>
-              <ul className="space-y-3 mb-6 flex-1">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>31-40 Posts por mês</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>5 plataformas geridas</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>8 posts pagos</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>10 posts personalizados</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>20 Instagram/Facebook Stories</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Relatórios completos semanais</span>
-                </li>
-              </ul>
-              <Button asChild className="mt-auto bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Escolher Plano</Link>
-              </Button>
+              </AnimatedSection>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Portfolio */}
-      <section className="py-16 md:py-24 bg-gray-light">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Trabalhos</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça alguns dos projetos de social media que desenvolvemos para nossos clientes.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Campanha MTN Boss"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold font-bauhaus text-yellow">Campanha MTN Boss</h3>
-                <p className="text-sm text-gray-dark">
-                  Gestão de redes sociais e criação de conteúdo para campanha promocional.
-                </p>
-              </div>
-            </div>
+        {/* Pacotes */}
+        <section className="section-padding bg-obys-near-black" aria-labelledby="pacotes-heading">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <AnimatedSection animation="fade-up" className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+              <span className="text-label text-obys-gold mb-6 block">Oferta</span>
+              <h2 id="pacotes-heading" className="heading-section text-white mb-8">
+                Pacotes de gestão
+              </h2>
+              <p className="body-large text-obys-text-secondary">
+                Escolha o nível de intensidade e de canais que faz sentido para a sua operação. Todos os planos podem
+                ser ajustados após conversa com a nossa equipa.
+              </p>
+            </AnimatedSection>
 
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Caiiro Tour"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/images/portfolio/graphicdesign/Caiiro-tour-setembro-social-media.png"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold font-bauhaus text-yellow">Caiiro Tour</h3>
-                <p className="text-sm text-gray-dark">
-                  Estratégia de conteúdo e gestão de mídias sociais para evento musical.
-                </p>
-              </div>
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+              {packages.map((pkg, index) => (
+                <AnimatedSection key={pkg.name} animation="fade-up" delay={index * 80}>
+                  <div
+                    className={`relative flex flex-col h-full border p-8 bg-obys-near-black transition-colors duration-obys hover:border-obys-gold ${
+                      pkg.popular ? "border-2 border-obys-gold" : "border-obys-border-dark"
+                    }`}
+                  >
+                    {pkg.popular ? (
+                      <span className="text-label text-obys-gold absolute -top-3 left-1/2 -translate-x-1/2 bg-obys-near-black px-4">
+                        Popular
+                      </span>
+                    ) : null}
+                    <h3 className="heading-subsection text-white mb-2 text-center">{pkg.name}</h3>
+                    <p className="body-base text-obys-text-secondary text-center mb-8">Consultar preço</p>
+                    <ul className="space-y-4 flex-1 mb-10">
+                      {pkg.features.map((feature) => (
+                        <li key={feature} className="flex gap-3 text-obys-text-secondary body-base">
+                          <Check className="h-5 w-5 shrink-0 text-obys-gold mt-0.5" aria-hidden />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Button variant="obys-primary" size="xl" className="w-full mt-auto gap-2" asChild>
+                      <Link href="/contacto">
+                        Escolher plano
+                        <ArrowRight className="h-5 w-5" aria-hidden />
+                      </Link>
+                    </Button>
+                  </div>
+                </AnimatedSection>
+              ))}
             </div>
+          </div>
+        </section>
 
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  alt="Yunus Social Business"
-                  className="object-cover w-full h-full transition-all group-hover:scale-105"
-                  src="/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold font-bauhaus text-yellow">Yunus Social Business</h3>
-                <p className="text-sm text-gray-dark">
-                  Gestão de redes sociais e criação de conteúdo para organização social.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center mt-8">
-            <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
-              <Link href="/portfolio">Ver mais trabalhos</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+        {/* Processo */}
+        <section className="section-padding bg-obys-dark border-t border-obys-border-dark" aria-labelledby="processo-heading">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <AnimatedSection animation="fade-up" className="mb-16 lg:mb-20">
+              <span className="text-label text-obys-gold mb-6 block">Processo</span>
+              <h2 id="processo-heading" className="heading-section text-white mb-8 max-w-3xl">
+                Como gerimos as suas contas
+              </h2>
+              <p className="body-large text-obys-text-secondary max-w-2xl">
+                Um fluxo claro da primeira reunião à melhoria contínua, para que saiba sempre o que esperar em cada fase.
+              </p>
+            </AnimatedSection>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
-              Pronto para potencializar sua presença nas redes sociais?
-            </h2>
-            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Entre em contato conosco e descubra como nossos serviços de social media podem ajudar sua empresa a
-              crescer e se conectar com seu público de forma eficaz.
-            </p>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Fale conosco</Link>
-              </Button>
-            </div>
+            <ol className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 list-none p-0 m-0">
+              {processSteps.map((step, index) => (
+                <AnimatedSection key={step.title} animation="fade-up" delay={index * 70}>
+                  <li className="border border-obys-border-dark p-8 bg-obys-near-black hover:border-obys-gold transition-colors duration-obys h-full flex flex-col">
+                    <span className="text-label text-obys-gold mb-4">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="heading-subsection text-white mb-4">{step.title}</h3>
+                    <p className="body-base text-obys-text-secondary flex-1">{step.description}</p>
+                  </li>
+                </AnimatedSection>
+              ))}
+            </ol>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* CTA */}
+        <section className="section-padding bg-obys-near-black border-t border-obys-border-dark">
+          <div className="obys-container text-center">
+            <AnimatedSection animation="fade-up">
+              <span className="text-label text-obys-gold mb-6 block">Próximo passo</span>
+              <h2 className="heading-hero text-white mb-8">Vamos conversar sobre o seu social?</h2>
+              <p className="body-large text-obys-text-secondary max-w-2xl mx-auto mb-12">
+                Peça uma proposta ou esclareça dúvidas sobre pacotes, plataformas e prazos. Estamos disponíveis por
+                formulário de contacto ou WhatsApp.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button variant="obys-primary" size="xl" className="gap-2" asChild>
+                  <Link href="/contacto">
+                    Contactar a ABIPTOM
+                    <ArrowRight className="h-5 w-5" aria-hidden />
+                  </Link>
+                </Button>
+                <Button variant="outline-primary" size="xl" asChild>
+                  <a href="https://wa.me/245966865331" target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+      </div>
+    </PageTransition>
   )
 }
+
+export default SocialMediaPage

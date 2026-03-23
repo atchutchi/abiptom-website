@@ -1,10 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 const testimonials = [
   {
@@ -12,66 +10,123 @@ const testimonials = [
       "A ABIPTOM transformou completamente nossa presença online. O design do nosso website e a estratégia de marketing digital superaram todas as nossas expectativas.",
     author: "Hotel Uaque",
     position: "Administração",
-    image: "/placeholder.svg?height=100&width=100",
   },
   {
     quote:
       "Trabalhar com a equipe da ABIPTOM foi uma experiência incrível. Profissionais talentosos e dedicados que entregam resultados excepcionais.",
     author: "Chef Aladje",
     position: "Gerente",
-    image: "/placeholder.svg?height=100&width=100",
   },
   {
     quote:
       "A qualidade do trabalho e o compromisso com prazos fazem da ABIPTOM um parceiro confiável para qualquer projeto digital.",
     author: "Ana Djú",
     position: "Acclab PNUD",
-    image: "/placeholder.svg?height=100&width=100",
   },
 ]
 
 export function TestimonialSlider() {
   const [current, setCurrent] = useState(0)
+  const [direction, setDirection] = useState(0)
 
-  const prev = () => setCurrent((current - 1 + testimonials.length) % testimonials.length)
-  const next = () => setCurrent((current + 1) % testimonials.length)
+  const handlePrev = () => {
+    setDirection(-1)
+    setCurrent((current - 1 + testimonials.length) % testimonials.length)
+  }
+
+  const handleNext = () => {
+    setDirection(1)
+    setCurrent((current + 1) % testimonials.length)
+  }
+
+  const variants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 100 : -100,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (dir: number) => ({
+      x: dir < 0 ? 100 : -100,
+      opacity: 0,
+    }),
+  }
 
   return (
-    <div className="relative">
-      <div className="overflow-hidden">
-        <div className="flex justify-center">
-          <Card className="w-full max-w-3xl bg-white">
-            <CardContent className="p-6 md:p-10">
-              <div className="flex flex-col items-center text-center">
-                <Quote className="h-12 w-12 text-blue-600 mb-6" />
-                <p className="text-lg md:text-xl mb-6">{testimonials[current].quote}</p>
-                <div className="flex flex-col items-center">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-full">
-                    <img
-                      alt={testimonials[current].author}
-                      className="object-cover"
-                      src={testimonials[current].image || "/placeholder.svg"}
-                    />
-                  </div>
-                  <div className="mt-4">
-                    <h3 className="font-bold">{testimonials[current].author}</h3>
-                    <p className="text-sm text-gray-500">{testimonials[current].position}</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+    <div className="relative max-w-4xl mx-auto">
+      <div className="border border-obys-border-dark p-8 md:p-16 bg-obys-dark/30 min-h-[300px] flex flex-col justify-center">
+        <div className="mb-8">
+          <span className="font-display text-6xl md:text-8xl text-obys-gold/20 leading-none select-none">
+            &ldquo;
+          </span>
         </div>
+
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5, ease: [0.3, 0.86, 0.36, 0.95] }}
+          >
+            <blockquote className="body-large text-obys-text-light mb-10 italic">
+              {testimonials[current].quote}
+            </blockquote>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-[1px] bg-obys-gold" />
+              <div>
+                <p className="font-display text-white text-lg">
+                  {testimonials[current].author}
+                </p>
+                <p className="font-body text-obys-text-muted text-sm">
+                  {testimonials[current].position}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
-      <div className="flex justify-center mt-6 space-x-2">
-        <Button variant="outline" size="icon" onClick={prev} className="rounded-full">
-          <ChevronLeft className="h-4 w-4" />
-          <span className="sr-only">Anterior</span>
-        </Button>
-        <Button variant="outline" size="icon" onClick={next} className="rounded-full">
-          <ChevronRight className="h-4 w-4" />
-          <span className="sr-only">Próximo</span>
-        </Button>
+
+      <div className="flex items-center justify-between mt-6">
+        <div className="flex gap-3">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setDirection(i > current ? 1 : -1)
+                setCurrent(i)
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-obys ${
+                i === current ? "bg-obys-gold w-8" : "bg-obys-border-dark"
+              }`}
+              aria-label={`Depoimento ${i + 1}`}
+              type="button"
+            />
+          ))}
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={handlePrev}
+            className="w-10 h-10 flex items-center justify-center border border-obys-border-dark text-obys-text-secondary hover:border-obys-gold hover:text-obys-gold transition-colors duration-obys ease-obys-default"
+            aria-label="Depoimento anterior"
+            type="button"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="w-10 h-10 flex items-center justify-center border border-obys-border-dark text-obys-text-secondary hover:border-obys-gold hover:text-obys-gold transition-colors duration-obys ease-obys-default"
+            aria-label="Próximo depoimento"
+            type="button"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   )

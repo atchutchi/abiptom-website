@@ -1,332 +1,236 @@
 import Link from "next/link"
-import { CheckCircle } from "lucide-react"
+import { ArrowRight, CheckCircle } from "lucide-react"
 
+import { AnimatedSection } from "@/components/animated-section"
+import { CrawlingLine } from "@/components/crawling-line"
+import { PageTransition } from "@/components/page-transition"
+import { TextSplitter } from "@/components/text-splitter"
 import { Button } from "@/components/ui/button"
+
+const videoServices = [
+  {
+    title: "Vídeo Institucional",
+    description:
+      "Apresente a sua empresa, valores e equipa com narrativa clara e imagem profissional que reforça confiança.",
+    bullets: ["Roteiro alinhado à marca", "Filmagem em alta definição", "Tom adequado ao público-alvo"],
+  },
+  {
+    title: "Vídeo Promocional",
+    description:
+      "Destaque produtos e serviços com mensagens diretas, criatividade e apelo emocional para converter atenção em ação.",
+    bullets: ["Conceito e storytelling", "Foco em benefícios", "Calls-to-action eficazes"],
+  },
+  {
+    title: "Cobertura de Eventos",
+    description:
+      "Registo completo de conferências, lançamentos e encontros corporativos, com material pronto para redes e arquivo institucional.",
+    bullets: ["Multi-câmara quando necessário", "Entrevistas e momentos-chave", "Resumos e highlights"],
+  },
+  {
+    title: "Animação 2D / Motion Graphics",
+    description:
+      "Explique ideias complexas com motion design, infografia animada e identidade em movimento.",
+    bullets: ["Storyboard e style frames", "Motion graphics e tipografia animada", "Entrega em formatos digitais"],
+  },
+  {
+    title: "Edição e Pós-Produção",
+    description:
+      "Montagem, cor, som, legendas e masterização para entregar ficheiros prontos para web, TV ou redes sociais.",
+    bullets: ["Corte rítmico e narrativo", "Cor e tratamento de imagem", "Mixagem e exportação multiformato"],
+  },
+]
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Briefing",
+    description:
+      "Alinhamos objetivos, público, mensagens-chave, prazos e canais de distribuição para definir o rumo do projeto.",
+  },
+  {
+    step: "02",
+    title: "Pré-Produção",
+    description:
+      "Roteiro, planeamento de locações ou assets gráficos, casting e cronograma — tudo documentado antes de gravar ou animar.",
+  },
+  {
+    step: "03",
+    title: "Filmagem / Criação",
+    description:
+      "Execução em campo com equipa e equipamento adequados, ou produção de frames e animação conforme o formato acordado.",
+  },
+  {
+    step: "04",
+    title: "Edição",
+    description:
+      "Montagem, motion, música, voz-off e revisões em ciclos claros até fecharmos a versão final.",
+  },
+  {
+    step: "05",
+    title: "Entrega",
+    description:
+      "Exportação nos formatos pedidos (redes, web, projeção), com ficheiros mestres arquivados para futuras atualizações.",
+  },
+]
 
 export default function ProducaoVideoPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-black py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h1 className="text-3xl font-bauhaus tracking-tighter sm:text-5xl md:text-6xl text-yellow">
-              Produção de Vídeo
-            </h1>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Vídeos promocionais, animações e conteúdo audiovisual para impulsionar sua comunicação.
-            </p>
+    <PageTransition>
+      <div className="flex flex-col">
+        <section className="section-padding bg-obys-near-black">
+          <div className="obys-container">
+            <AnimatedSection animation="fade-up">
+              <span className="text-label text-obys-gold mb-6 block">Audiovisual</span>
+            </AnimatedSection>
+            <TextSplitter
+              text="Produção de Vídeo"
+              as="h1"
+              className="heading-hero text-white mb-8"
+              splitBy="word"
+              delay={0.15}
+            />
+            <AnimatedSection animation="fade-up" delay={350}>
+              <p className="body-large text-obys-text-secondary max-w-2xl">
+                Vídeos promocionais, animações e conteúdo audiovisual para marcas que precisam de presença forte e
+                narrativa consistente.
+              </p>
+            </AnimatedSection>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Service Description */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Conteúdo Audiovisual de Impacto</h2>
-              <p className="text-gray-dark md:text-xl/relaxed">
-                O vídeo é uma das formas mais poderosas de comunicação, capaz de transmitir mensagens complexas de forma
-                envolvente e memorável. Na ABIPTOM, produzimos conteúdo audiovisual de alta qualidade que cativa seu
-                público e fortalece sua marca.
-              </p>
-              <p className="text-gray-dark md:text-xl/relaxed">
-                Nossa equipe de produção combina criatividade, técnica e narrativa para criar vídeos que não apenas
-                informam, mas também emocionam e inspiram ação, ajudando sua empresa a alcançar seus objetivos de
-                comunicação e marketing.
-              </p>
-            </div>
-            <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/Rg8RjicC89Y"
-                title="Produção de Vídeo ABIPTOM"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Offered */}
-      <section className="py-16 md:py-24 bg-gray-light">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Serviços de Produção de Vídeo</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Oferecemos uma ampla gama de serviços de produção audiovisual para atender às necessidades da sua empresa.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Vídeos Institucionais</h3>
-              <p className="text-gray-dark mb-4">
-                Apresente sua empresa, valores e diferenciais de forma profissional e envolvente.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Roteiro personalizado</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Filmagem em alta definição</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Edição profissional</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Vídeos Promocionais</h3>
-              <p className="text-gray-dark mb-4">
-                Promova seus produtos ou serviços com vídeos atrativos que destacam seus benefícios e diferenciais.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Conceito criativo</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Demonstração de produtos</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Call-to-action eficaz</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Vídeos para Redes Sociais</h3>
-              <p className="text-gray-dark mb-4">
-                Conteúdo audiovisual otimizado para diferentes plataformas de redes sociais, aumentando seu engajamento.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Formatos específicos para cada plataforma</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Conteúdo viral</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Stories e Reels</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Animação 2D e Motion Graphics</h3>
-              <p className="text-gray-dark mb-4">
-                Explique conceitos complexos de forma simples e visualmente atraente com animações personalizadas.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Animação de logotipos</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Vídeos explicativos</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Infográficos animados</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Vídeos de Eventos</h3>
-              <p className="text-gray-dark mb-4">
-                Registre seus eventos corporativos, lançamentos de produtos ou conferências com qualidade profissional.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Cobertura completa</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Entrevistas com participantes</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Vídeo resumo</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bauhaus mb-2">Vídeos Educativos e Tutoriais</h3>
-              <p className="text-gray-dark mb-4">
-                Crie conteúdo educativo para treinamentos, tutoriais de produtos ou cursos online.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Estrutura didática</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Demonstrações passo a passo</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span>Recursos visuais explicativos</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Process */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nosso Processo de Produção</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Trabalhamos de forma estruturada para garantir que seu vídeo atenda aos seus objetivos e supere suas
-              expectativas.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">1</span>
-              </div>
-              <h3 className="text-xl font-bauhaus mb-2">Briefing</h3>
-              <p className="text-gray-dark">Entendemos seus objetivos, público-alvo e mensagem que deseja transmitir.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">2</span>
-              </div>
-              <h3 className="text-xl font-bauhaus mb-2">Roteiro</h3>
-              <p className="text-gray-dark">
-                Desenvolvemos um roteiro detalhado que estrutura a narrativa do seu vídeo.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">3</span>
-              </div>
-              <h3 className="text-xl font-bauhaus mb-2">Produção</h3>
-              <p className="text-gray-dark">Realizamos as filmagens ou criamos as animações conforme o planejamento.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">4</span>
-              </div>
-              <h3 className="text-xl font-bauhaus mb-2">Edição</h3>
-              <p className="text-gray-dark">Montamos o vídeo, adicionamos efeitos, música e elementos gráficos.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black mb-4">
-                <span className="text-xl font-bold">5</span>
-              </div>
-              <h3 className="text-xl font-bauhaus mb-2">Finalização</h3>
-              <p className="text-gray-dark">Realizamos ajustes finais e entregamos o vídeo nos formatos necessários.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Portfolio */}
-      <section className="py-16 md:py-24 bg-gray-light">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl">Nossos Trabalhos</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça alguns dos vídeos que produzimos para nossos clientes.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/N_Oq4NavzGA"
-                  title="BISSAU RISING - Impact Investment & Trade Forum"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold font-bauhaus">BISSAU RISING</h3>
-                <p className="text-sm text-gray-dark">
-                  Impact Investment & Trade Forum - Produção audiovisual do evento.
+        <section className="section-padding bg-obys-dark">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+              <AnimatedSection animation="fade-right">
+                <span className="text-label text-obys-gold mb-4 block">O que fazemos</span>
+                <h2 className="heading-section text-white mb-8">Conteúdo audiovisual com impacto</h2>
+                <p className="body-large text-obys-text-secondary mb-6">
+                  O vídeo é uma das formas mais eficazes de comunicar: resume ideias, gera emoção e permanece na memória.
+                  Na ABIPTOM unimos criatividade, técnica e estratégia para produzir peças que apoiam marketing,
+                  institucional e eventos.
                 </p>
-              </div>
-            </div>
-
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/Rg8RjicC89Y"
-                  title="Accelerator Lab Guinea-Bissau"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold font-bauhaus">Accelerator Lab Guinea-Bissau</h3>
-                <p className="text-sm text-gray-dark">
-                  Stakeholder Workshop and Launch - Cobertura do evento.
+                <p className="body-base text-obys-text-secondary">
+                  Desde roteiro à entrega final, acompanhamos cada fase para garantir qualidade, coerência com a sua marca
+                  e resultados mensuráveis em digital.
                 </p>
-              </div>
+              </AnimatedSection>
+              <AnimatedSection animation="fade-left" delay={150}>
+                <div className="aspect-video overflow-hidden rounded-sm border border-obys-border-dark bg-obys-near-black">
+                  <iframe
+                    className="h-full w-full"
+                    src="https://www.youtube.com/embed/Rg8RjicC89Y"
+                    title="Produção de vídeo ABIPTOM — exemplo de projeto"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </AnimatedSection>
             </div>
+          </div>
+        </section>
 
-            <div className="group overflow-hidden rounded-lg border">
-              <div className="relative aspect-video overflow-hidden">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/H5W2LleZMF4"
-                  title="Conheça o Accelerator Lab Guiné-Bissau"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold font-bauhaus">Accelerator Lab Guiné-Bissau</h3>
-                <p className="text-sm text-gray-dark">
-                  Vídeo institucional apresentando o Accelerator Lab.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center mt-8">
-            <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
-              <Link href="/portfolio">Ver mais trabalhos</Link>
-            </Button>
-          </div>
+        <div className="border-y border-obys-border-dark bg-obys-near-black">
+          <CrawlingLine
+            items={[
+              "Vídeo institucional",
+              "Promo",
+              "Eventos",
+              "Motion",
+              "Pós-produção",
+              "Storytelling",
+            ]}
+            speed={32}
+            className="py-6"
+          />
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h2 className="text-3xl font-bauhaus tracking-tighter sm:text-4xl md:text-5xl text-yellow">
-              Pronto para criar vídeos impactantes para sua marca?
-            </h2>
-            <p className="max-w-[700px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Entre em contato conosco e descubra como nossos serviços de produção de vídeo podem ajudar sua empresa a
-              se comunicar de forma mais eficaz.
-            </p>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button asChild className="bg-yellow text-black hover:bg-yellow-hover">
-                <Link href="/contacto">Fale conosco</Link>
-              </Button>
+        <section className="section-padding bg-obys-near-black">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <AnimatedSection animation="fade-up" className="mb-16 md:mb-20">
+              <span className="text-label text-obys-gold mb-4 block">Serviços</span>
+              <h2 className="heading-section text-white mb-6">Linha de produção</h2>
+              <p className="body-large text-obys-text-secondary max-w-2xl">
+                Soluções modulares — pode contratar o pacote completo ou fases específicas (só edição, só animação,
+                cobertura de um dia de evento).
+              </p>
+            </AnimatedSection>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {videoServices.map((service, index) => (
+                <AnimatedSection key={service.title} animation="fade-up" delay={index * 80}>
+                  <article className="border border-obys-border-dark bg-obys-near-black p-8 transition-colors duration-obys ease-obys-default hover:border-obys-gold h-full flex flex-col">
+                    <h3 className="heading-subsection text-white mb-4">{service.title}</h3>
+                    <p className="body-base text-obys-text-secondary mb-6 grow">{service.description}</p>
+                    <ul className="space-y-3">
+                      {service.bullets.map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-obys-gold" aria-hidden />
+                          <span className="body-base text-obys-text-secondary">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                </AnimatedSection>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        <section className="section-padding bg-obys-dark border-t border-obys-border-dark">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <AnimatedSection animation="fade-up" className="mb-16 md:mb-20 text-center">
+              <span className="text-label text-obys-gold mb-4 block">Processo</span>
+              <h2 className="heading-section text-white mb-6">Como trabalhamos</h2>
+              <p className="body-large text-obys-text-secondary max-w-2xl mx-auto">
+                Um fluxo em cinco etapas para previsibilidade, revisões organizadas e entrega no prazo.
+              </p>
+            </AnimatedSection>
+
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
+              {processSteps.map((item, index) => (
+                <AnimatedSection key={item.title} animation="fade-up" delay={index * 70}>
+                  <div className="flex flex-col items-center text-center h-full">
+                    <div
+                      className="mb-6 flex h-14 w-14 items-center justify-center rounded-full border border-obys-gold text-obys-gold font-body text-sm font-medium"
+                      aria-hidden
+                    >
+                      {item.step}
+                    </div>
+                    <h3 className="heading-subsection text-white mb-3">{item.title}</h3>
+                    <p className="body-base text-obys-text-secondary">{item.description}</p>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding bg-obys-near-black border-t border-obys-border-dark">
+          <div className="obys-container text-center">
+            <AnimatedSection animation="scale-up">
+              <span className="text-label text-obys-gold mb-6 block">Contacto</span>
+              <h2 className="heading-hero text-white mb-8">Vamos produzir o seu próximo vídeo?</h2>
+              <p className="body-large text-obys-text-secondary max-w-2xl mx-auto mb-12">
+                Conte-nos a ideia, o prazo e o canal (web, redes, evento). Respondemos com proposta, orçamento e
+                referências alinhadas ao projeto.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild variant="obys-primary" size="xl">
+                  <Link href="/contacto" className="inline-flex items-center gap-2">
+                    Fale conosco
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline-primary" size="xl">
+                  <a href="https://wa.me/245966865331" target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+      </div>
+    </PageTransition>
   )
 }

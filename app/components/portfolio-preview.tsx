@@ -1,109 +1,92 @@
+"use client"
+
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
+import { motion } from "framer-motion"
+
+const projects = [
+  {
+    title: "Website ARN",
+    category: "Desenvolvimento Web",
+    image: "/images/portfolio/websites/arn.png",
+    description: "Website institucional com sistema de gestão de conteúdo.",
+  },
+  {
+    title: "Bissau Rising",
+    category: "Design Gráfico",
+    image: "/images/portfolio/graphicdesign/bissaurising-banner.png",
+    description: "Banners e materiais para o fórum de investimentos.",
+  },
+  {
+    title: "Yunus Social Business",
+    category: "Social Media",
+    image: "/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg",
+    description: "Gestão de redes sociais e criação de conteúdo.",
+  },
+  {
+    title: "Campanha MTN Boss",
+    category: "Design Gráfico",
+    image: "/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg",
+    description: "Campanha publicitária da MTN Guiné-Bissau.",
+  },
+  {
+    title: "Hotel Uaque",
+    category: "Desenvolvimento Web",
+    image: "/images/portfolio/websites/hotel-uque.png",
+    description: "Site com sistema de reservas e gestão hoteleira.",
+  },
+]
+
 export function PortfolioPreview() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {/* Website */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website ARN"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/arn.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website ARN</h3>
-          <p className="text-sm text-gray-dark">
-            Desenvolvimento de website institucional com sistema de gestão de conteúdo.
-          </p>
-        </div>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+      {projects.map((project, i) => (
+        <motion.div
+          key={project.title}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{
+            duration: 0.6,
+            delay: i * 0.1,
+            ease: [0.3, 0.86, 0.36, 0.95],
+          }}
+          className={i === 0 ? "md:col-span-2" : ""}
+        >
+          <Link href="/portfolio" className="group relative block overflow-hidden">
+            <div className={`relative ${i === 0 ? "aspect-[21/9]" : "aspect-video"} overflow-hidden bg-obys-dark`}>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-700 ease-obys-default group-hover:scale-105"
+                sizes={i === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw"}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-obys" />
 
-      {/* Design Gráfico */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Bissau Rising - Banners"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/bissaurising-banner.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Bissau Rising</h3>
-          <p className="text-sm text-gray-dark">
-            Design de banners e materiais para redes sociais do fórum de investimentos.
-          </p>
-        </div>
-      </div>
-
-      {/* Vídeo */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/N_Oq4NavzGA"
-            title="BISSAU RISING - Impact Investment & Trade Forum"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">BISSAU RISING</h3>
-          <p className="text-sm text-gray-dark">
-            Impact Investment & Trade Forum - Produção audiovisual do evento.
-          </p>
-        </div>
-      </div>
-
-      {/* Social Media */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Yunus Social Business"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Yunus Social Business</h3>
-          <p className="text-sm text-gray-dark">
-            Gestão de redes sociais e criação de conteúdo para organização social.
-          </p>
-        </div>
-      </div>
-
-      {/* Design Gráfico 2 */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Campanha MTN Boss"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Campanha MTN Boss</h3>
-          <p className="text-sm text-gray-dark">
-            Design para campanha publicitária da MTN Guiné-Bissau.
-          </p>
-        </div>
-      </div>
-
-      {/* Website 2 */}
-      <div className="group overflow-hidden rounded-lg border">
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            alt="Website Hotel Uque"
-            className="object-cover w-full h-full transition-all group-hover:scale-105"
-            src="/images/portfolio/websites/hotel-uque.png"
-          />
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold font-bauhaus">Website Hotel Uque</h3>
-          <p className="text-sm text-gray-dark">
-            Site com sistema de reservas e gestão hoteleira.
-          </p>
-        </div>
-      </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <span className="text-label text-obys-gold mb-2 block">
+                      {project.category}
+                    </span>
+                    <h3 className="font-display text-xl md:text-2xl text-white">
+                      {project.title}
+                    </h3>
+                    <p className="font-body text-sm text-obys-text-secondary mt-1 max-w-md">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div className="w-10 h-10 flex items-center justify-center border border-white/30 text-white/60 group-hover:border-obys-gold group-hover:text-obys-gold transition-colors duration-obys flex-shrink-0 ml-4">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+      ))}
     </div>
   )
-} 
+}

@@ -1,95 +1,143 @@
+"use client"
+
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import Image from "next/image"
+import { ArrowRight, Facebook, Instagram, Linkedin, Youtube } from "lucide-react"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { TextSplitter } from "@/components/text-splitter"
+import { CrawlingLine } from "@/components/crawling-line"
+import { TikTokIcon } from "./icons/tiktok"
+
+const socialLinks = [
+  { label: "Facebook", href: "https://www.facebook.com/abiptomsarl", icon: Facebook },
+  { label: "Instagram", href: "https://www.instagram.com/abiptom_gb", icon: Instagram },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/abiptom-sarl", icon: Linkedin },
+  { label: "YouTube", href: "https://youtube.com/@abiptom", icon: Youtube },
+  { label: "TikTok", href: "https://www.tiktok.com/@abiptomsarl", icon: TikTokIcon },
+]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      delay: i * 0.15,
+      ease: [0.3, 0.86, 0.36, 0.95],
+    },
+  }),
+}
 
 export function HeroSection() {
   return (
-    <section className="relative w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-black via-black to-black/95 overflow-hidden">
-      {/* Círculo decorativo animado */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-yellow/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-yellow/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <section className="relative min-h-screen flex flex-col justify-center bg-obys-near-black overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero_section.gif"
+          alt=""
+          fill
+          className="object-cover"
+          unoptimized
+          priority
+        />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      <div className="container relative px-4 md:px-6">
-        <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Conteúdo */}
-          <div className="flex flex-col justify-center space-y-6 text-center md:text-left">
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bauhaus tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none text-yellow animate-fade-up">
-                ABIPTOM
-              </h1>
-              <h2 className="text-2xl font-medium text-white md:text-3xl animate-fade-up delay-100">
-                Guardião das Novas Tecnologias
-              </h2>
-              <p className="max-w-[600px] text-white/90 text-lg md:text-xl/relaxed lg:text-xl/relaxed xl:text-2xl/relaxed animate-fade-up delay-200">
-                Transformamos ideias em realidade através de soluções digitais personalizadas e de alto calibre.
+      <div className="obys-container flex-1 flex flex-col justify-center py-32 lg:py-40 relative z-10">
+        <div className="max-w-5xl">
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <span className="text-label text-obys-text-muted">
+              Guardião das Novas Tecnologias
+            </span>
+          </motion.div>
+
+          <TextSplitter
+            text="Transformamos visões em experiências digitais"
+            as="h1"
+            className="heading-hero text-white mb-8"
+            splitBy="word"
+            delay={0.5}
+            staggerDelay={0.06}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mt-12">
+            <motion.div
+              custom={3}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+            >
+              <p className="body-large text-obys-text-secondary max-w-md">
+                Soluções digitais de alto calibre para marcas que querem liderar. Design, desenvolvimento e estratégia sob medida.
               </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up delay-300">
-              <Button asChild size="lg" className="bg-yellow text-black hover:bg-yellow-hover transform transition-transform hover:scale-105">
-                <Link href="/servicos" className="flex items-center">
-                  Nossos Serviços <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button 
-                asChild 
-                size="lg" 
-                variant="outline" 
-                className="text-yellow border-yellow hover:bg-yellow hover:text-black transform transition-transform hover:scale-105"
-              >
-                <Link href="/contacto">Fale Conosco</Link>
-              </Button>
-            </div>
+            </motion.div>
+
+            <motion.div
+              custom={4}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-col gap-6"
+            >
+              <div className="flex flex-wrap gap-4">
+                <Button asChild variant="obys-primary" size="lg">
+                  <Link href="/servicos" className="flex items-center gap-2">
+                    Nossos Serviços
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline-primary" size="lg">
+                  <Link href="/contacto">Fale Conosco</Link>
+                </Button>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Imagem */}
-          <div className="relative mx-auto w-full max-w-[500px] md:max-w-none animate-fade-left">
-            <div className="aspect-square md:aspect-video relative rounded-full md:rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
-              <img
-                alt="ABIPTOM Hero Image"
-                className="object-cover w-full h-full transform transition-transform hover:scale-105 duration-700"
-                src="/images/abiptom.png"
-              />
-              {/* Overlay gradiente */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-            </div>
-          </div>
+          <motion.div
+            className="flex items-center gap-5 mt-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+          >
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-obys-text-muted hover:text-obys-gold transition-colors duration-obys ease-obys-default"
+                aria-label={label}
+              >
+                <Icon className="w-5 h-5" />
+              </a>
+            ))}
+          </motion.div>
         </div>
+      </div>
+
+      <div className="border-t border-obys-border-dark relative z-10">
+        <CrawlingLine
+          items={[
+            "Web Design",
+            "Software",
+            "Redes Sociais",
+            "Audiovisual",
+            "Design Gráfico",
+            "Marketing Digital",
+            "Fotografia",
+            "Animação 2D",
+          ]}
+          speed={35}
+          className="py-6"
+        />
       </div>
     </section>
   )
 }
-
-// Adicione estes estilos ao seu arquivo globals.css
-/*
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-left {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-fade-up {
-  animation: fade-up 0.5s ease-out forwards;
-}
-
-.animate-fade-left {
-  animation: fade-left 0.5s ease-out forwards;
-}
-*/

@@ -1,139 +1,115 @@
-export const CHATBOT_CONFIG = {
-  initialMessage: 
-    "Olá! Sou o assistente virtual da ABIPTOM SARL – Guardião das Novas Tecnologias.\n" +
-    "Como posso ajudar-te hoje? Escolhe uma das opções:\n\n" +
-    "1️⃣ Conhecer os nossos serviços\n" +
-    "2️⃣ Solicitar uma cotação\n" +
-    "3️⃣ Falar com a nossa equipa\n" +
-    "4️⃣ Mais informações\n\n" +
-    "0️⃣ Sair",
-  
-  priceMessage: 
-    "Para fornecer uma proposta personalizada, precisamos conhecer melhor as tuas necessidades.\n\n" +
-    "Como preferes prosseguir?\n" +
-    "1️⃣ Agendar uma reunião\n" +
-    "2️⃣ Falar por telefone: +245 955 804 184\n" +
-    "3️⃣ Receber por email: comercial@abiptom.gw\n" +
-    "0️⃣ Voltar ao menu anterior",
+import type { QuickAction } from "./chatbot-types"
 
-  companyInfo: {
-    name: "ABIPTOM SARL",
-    location: "Bairro Ajuda – 1ª Fase, Bissau, Guiné-Bissau",
-    email: "comercial@abiptom.gw",
-    phone: "+245 955 804 184"
-  },
+export const SYSTEM_PROMPT = `Tu és o assistente virtual da ABIPTOM, uma empresa de tecnologia e serviços digitais sediada na Guiné-Bissau.
 
-  services: [
-    {
-      name: "Desenvolvimento Web",
-      description: 
-        "Desenvolvemos websites e aplicações web personalizadas. Inclui planeamento, design, programação, testes, manutenção e alojamento."
-    },
-    {
-      name: "Marketing Digital",
-      description: 
-        "Estratégias em redes sociais (Facebook, Instagram, TikTok, LinkedIn, etc.), SEO, anúncios pagos e criação de conteúdos digitais."
-    },
-    {
-      name: "Design Gráfico",
-      description: 
-        "Criação de logotipos, flyers, brochuras, cartões de visita, banners, conteúdos visuais e identidade de marca."
-    },
-    {
-      name: "Produção de Vídeo",
-      description: 
-        "Vídeos institucionais, teasers, spots promocionais e conteúdo audiovisual para redes sociais, com edição e filmagem incluída."
-    },
-    {
-      name: "Redes e Infraestrutura",
-      description: 
-        "Instalação e manutenção de redes, servidores locais, configuração de infraestrutura de TI, segurança e suporte técnico."
-    },
-    {
-      name: "Consultoria Digital",
-      description: 
-        "Acompanhamos a transformação digital da tua organização com soluções de gestão, automação e otimização de processos."
-    }
-  ],
+## SOBRE A ABIPTOM
+A ABIPTOM SARL é uma empresa guineense com mais de 5 anos de experiência em soluções digitais. Oferecemos um ecossistema completo de serviços: gestão de redes sociais, produção audiovisual, web design, desenvolvimento de software, serviços técnicos, CCTV, redes, ERP Flexbundle e alojamento e domínios.
 
-  conversationOptions: {
-    services: {
-      message: 
-        "Estes são os nossos principais serviços. Seleciona uma opção para saber mais:\n\n" +
-        "1️⃣ Desenvolvimento Web\n" +
-        "2️⃣ Marketing Digital\n" +
-        "3️⃣ Design Gráfico\n" +
-        "4️⃣ Produção de Vídeo\n" +
-        "5️⃣ Redes e Infraestrutura\n" +
-        "6️⃣ Consultoria Digital\n\n" +
-        "0️⃣ Voltar ao menu principal",
-      options: {
-        "1": "Desenvolvimento Web",
-        "2": "Marketing Digital",
-        "3": "Design Gráfico",
-        "4": "Produção de Vídeo",
-        "5": "Redes e Infraestrutura",
-        "6": "Consultoria Digital"
-      }
-    },
+Somos o único parceiro na Guiné-Bissau que oferece tudo num só lugar, do website ao CCTV, do ERP às redes sociais.
 
-    contact: {
-      message: 
-        "Escolhe como preferes entrar em contacto:\n\n" +
-        "1️⃣ Agendar uma reunião (Calendly)\n" +
-        "2️⃣ Falar por telefone\n" +
-        "3️⃣ Enviar um email\n" +
-        "4️⃣ Visitar o nosso escritório\n\n" +
-        "0️⃣ Voltar ao menu principal",
-      options: {
-        "1": "Para agendar uma reunião, acede a: https://calendly.com/abiptom",
-        "2": "Liga para: +245 955 804 184",
-        "3": "Envia um email para: comercial@abiptom.gw",
-        "4": "Visita-nos: Bairro Ajuda – 1ª Fase, Bissau"
-      }
-    },
+## CONTACTOS
+- WhatsApp: +245 966 865 331
+- Email: info@abiptom.gw
+- Website: www.abiptom.gw
+- Endereço: Bairro Ajuda IA Fase, Bissau, Guiné-Bissau
 
-    moreInfo: {
-      message: 
-        "Que tipo de informação procuras?\n\n" +
-        "1️⃣ Sobre a empresa\n" +
-        "2️⃣ Casos de sucesso\n" +
-        "3️⃣ Como trabalhamos\n" +
-        "4️⃣ Tecnologias utilizadas\n\n" +
-        "0️⃣ Voltar ao menu principal",
-      options: {
-        "1": "Somos uma empresa de referência na Guiné-Bissau nas áreas de tecnologia, design e marketing digital.",
-        "2": "Consulta exemplos reais em: https://abiptom.gw/portfolio",
-        "3": "Seguimos estas etapas: 1) Planeamento, 2) Execução, 3) Testes, 4) Entrega e 5) Suporte.",
-        "4": "Utilizamos React, Django, WordPress, Node.js, Adobe Suite, entre outras tecnologias."
-      }
-    }
-  },
+## SERVIÇOS DISPONÍVEIS
 
-  commonQuestions: [
-    {
-      question: "Quanto tempo demora o desenvolvimento de um website?",
-      answer: 
-        "Depende da complexidade. Projetos simples: 2–4 semanas. Projetos mais robustos podem demorar mais. Avaliamos caso a caso."
-    },
-    {
-      question: "Oferecem alojamento e domínio?",
-      answer: 
-        "Sim, temos pacotes de alojamento (com SSL, email e backups). Contacta-nos para identificar o plano mais adequado ao teu projeto."
-    },
-    {
-      question: "Como é o vosso processo de trabalho?",
-      answer: 
-        "Começamos com o briefing, depois planeamos, executamos, testamos e entregamos com suporte contínuo. Garantimos qualidade em cada fase."
-    }
-  ],
+### Gestão de Redes Sociais
+- Pacote Básico
+- Pacote Silver
+- Pacote Gold
+- Pacote Premium+
 
-  ethicalGuidelines: [
-    "Nunca fornecemos valores automaticamente.",
-    "Encaminhamos sempre orçamentos para contacto direto.",
-    "Mantemos tom profissional e respeitoso.",
-    "Não comparamos com concorrentes.",
-    "Não prometemos resultados irreais.",
-    "Encaminhamos assuntos complexos à equipa humana."
-  ]
-};
+### Web Design e Desenvolvimento
+- Website WordPress até 5 páginas
+- Website personalizado
+- E-commerce
+- Manutenção de website
+
+### Vídeo e Produção Audiovisual
+- Vídeo institucional
+- Vídeo promocional para redes sociais
+- Cobertura de evento
+
+### Design Gráfico
+- Flyer
+- Cartaz
+- Brochura
+- Catálogo
+
+### Serviços Técnicos
+- Instalação de rede
+- CCTV
+- Câmaras Wi-Fi
+- Sistema CCTV completo
+
+### ERP Flexbundle
+- Licença por módulo
+- Utilizadores
+- Implementação
+- Treinamento
+
+### Desenvolvimento de Software
+- Software personalizado
+- Aplicação móvel informativa
+- Aplicação móvel funcional
+- App e-commerce
+
+### Alojamento e Domínios
+- Domínio .GW
+- Domínio .COM e .ORG
+- Alojamento básico
+- Alojamento profissional
+- Email profissional
+- Google Workspace
+
+### Outros Serviços
+- SEO básico
+- Edição de vídeo
+- Pós-produção
+
+## CLIENTES DE REFERÊNCIA
+UNICEF, UNDP, UN-HABITAT, UNIDO, MTN, Governo da Guiné-Bissau, Aldeias SOS, ARN, Banco BDU, Hotel Uaque, Darling SARL, entre outros.
+
+## REGRAS DE COMPORTAMENTO
+1. Responde sempre em português (PT)
+2. Sê profissional, acessível e amigável
+3. Usa verbos de acção: transformar, crescer, digitalizar, construir
+4. Quando o cliente mostrar interesse num serviço específico, explica o serviço, destaca benefícios e informa que a cotação é personalizada
+5. Nunca apresentes preços fixos no chat
+6. Sempre que o cliente perguntar preço, valor, custo, orçamento ou tabela de preços, responde que a ABIPTOM trabalha com cotação ajustada às necessidades do projecto e convida o cliente a pedir uma cotação
+7. Se o cliente quiser avançar com proposta ou cotação, pede nome, email, telefone e descrição do que precisa
+8. Para questões que não consegues responder, encaminha para WhatsApp (+245 966 865 331) ou email (info@abiptom.gw)
+9. Nunca inventes informação. Se não souberes, diz que vais encaminhar para a equipa
+10. Sugere serviços complementares quando fizer sentido (por exemplo website + redes sociais + SEO)
+11. Menciona os clientes de referência quando relevante para demonstrar credibilidade
+12. Mantém respostas concisas, máximo 3 a 4 parágrafos curtos
+13. Quando apropriado, oferece botões de acção rápida como "Pedir cotação", "Falar no WhatsApp", "Falar com a equipa"
+14. Se o cliente perguntar algo fora do âmbito dos serviços, redirecciona educadamente para os serviços da ABIPTOM
+15. Quando o cliente pedir preços directamente, evita listas de valores e responde com uma frase como: "Para esse serviço, a ABIPTOM prepara uma cotação personalizada de acordo com o teu objectivo, dimensão do projecto e necessidades específicas."
+`
+
+export const INITIAL_MESSAGE =
+  "Olá! Sou o assistente virtual da ABIPTOM. Posso ajudar-te a conhecer os nossos serviços, pedir uma cotação ou colocar-te em contacto com a nossa equipa. Como posso ajudar hoje?"
+
+export const QUICK_ACTIONS_INITIAL: QuickAction[] = [
+  { label: "Redes Sociais", value: "Quero saber sobre gestão de redes sociais" },
+  { label: "Websites", value: "Preciso de um website" },
+  { label: "Vídeo", value: "Quero produção de vídeo" },
+  { label: "Pedir Cotação", value: "Quero pedir uma cotação" },
+  { label: "Falar com Equipa", value: "Quero falar com alguém da equipa" },
+]
+
+export const WHATSAPP_LINK = "https://wa.me/245966865331"
+export const EMAIL_ADDRESS = "info@abiptom.gw"
+
+export const FALLBACK_MESSAGE =
+  "Peço desculpa, estou com dificuldades técnicas de momento. Podes contactar-nos directamente pelo WhatsApp (+245 966 865 331) ou email (info@abiptom.gw). A nossa equipa terá todo o gosto em ajudar-te!"
+
+export const HF_MODELS = [
+  "mistralai/Mixtral-8x7B-Instruct-v0.1",
+  "meta-llama/Meta-Llama-3.1-8B-Instruct",
+  "microsoft/Phi-3-mini-4k-instruct",
+  "HuggingFaceH4/zephyr-7b-beta",
+] as const

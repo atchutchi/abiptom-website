@@ -1,0 +1,43 @@
+:root {
+  /* Backgrounds */
+  --bg-primary: #080808;
+  --bg-secondary: #151515;
+  --bg-surface: #0b0b0b;
+  --bg-black: #000;
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a4a4a4;
+  --text-muted: #575757;
+  --text-light-grey: #e6e6e6;
+
+  /* Accent — ABIPTOM */
+  --accent-gold: #F5B800;
+  --accent-gold-hover: #FFD040;
+  --accent-blue: #0f5cf1;
+  --accent-blue-hover: #276df3;
+  --accent-orange: #ff8f0a;
+
+  /* Borders / Neutrals */
+  --border-dark: #3e3e3e;
+  --border-medium: #4a4a4a;
+  --neutral-muted: #a6a6a6;
+  --light-divider: #dee2e6;
+  --near-white: #f2f2f2;
+
+  /* Typography */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+
+  /* Transitions */
+  --ease-default: cubic-bezier(.3, .86, .36, .95);
+  --ease-page: cubic-bezier(.4, 0, 0, 1);
+  --duration-default: 0.35s;
+  --duration-page: 1.5s;
+
+  /* Containers */
+  --container-default: 1060px;
+  --container-wide: 1260px;
+  --container-small: 890px;
+}

@@ -1,242 +1,295 @@
-import { CheckCircle } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { AnimatedSection } from "@/components/animated-section"
+import { TextSplitter } from "@/components/text-splitter"
+import { CrawlingLine } from "@/components/crawling-line"
+import { PageTransition } from "@/components/page-transition"
 
-export default function AboutPage() {
+const team = [
+  {
+    name: "Atchutchi Ferreira",
+    role: "CEO e Gestor de Projetos",
+    image: "/images/team/atchtchi.jpg",
+    bio: "Fundador da Empresa, Especialista em TI, Full Stack Developer e Gestor de projetos, com mais de 10 anos de experiência profissional.",
+  },
+  {
+    name: "Clayton da Cruz L.J. Correia",
+    role: "Chief Technology Officer (CTO)",
+    image: "/images/team/clayton.jpg",
+    bio: "Com mais de 15 anos de experiência em desenvolvimento de software, infraestruturas digitais e gestão de sistemas.",
+  },
+  {
+    name: "Emerson Demésio Mendes",
+    role: "Director Geral",
+    image: "/images/team/emerson.jpg",
+    bio: "Economista altamente qualificado, com formação em Economia com especialização em Finanças e Crédito.",
+  },
+  {
+    name: "Sweline J. Mota Sambú",
+    role: "Coordenadora Administrativa e Operações, Relações Institucionais e Jurista",
+    image: "/images/team/sweline.jpeg",
+    bio: "Responsável pela coordenação administrativa e operacional da ABIPTOM, assegurando também as relações institucionais e o apoio jurídico. Licenciada em Direito, com pós-graduações em Direito Bancário e Direito Penal Ambiental.",
+  },
+  {
+    name: "Valbert Valentim",
+    role: "Assistente Administrativo",
+    image: "/images/team/valbert.jpeg",
+    bio: "O suporte organizacional da ABIPTOM, garantindo que cada processo interno decorra com eficiência e precisão, responsável pelo apoio administrativo e logístico.",
+  },
+  {
+    name: "Arianna Duarte",
+    role: "Gestora de Marketing e B2B",
+    image: "/images/team/arianna.jpg",
+    bio: "Lidera a implementação de estratégias comerciais, gestão de redes sociais e captação de novos clientes.",
+  },
+  {
+    name: "Alison Okica",
+    role: "Host de Social Media",
+    image: "/images/team/alison.jpeg",
+    bio: "A energia e a voz por trás das campanhas digitais da ABIPTOM, com carisma e presença cativante, representa as marcas em frente às câmaras e participa na criação de roteiros e conteúdos.",
+  },
+  {
+    name: "Amelissa Barreto Duarte",
+    role: "Designer Gráfico",
+    image: "/images/team/amelissa.svg",
+    bio: "Responsável por dar forma e cor às ideias da ABIPTOM, com um olhar apurado para o detalhe e paixão pelo design, transforma conceitos em peças visuais marcantes.",
+  },
+  {
+    name: "Carlos Rittos dos Santos",
+    role: "Designer Gráfico",
+    image: "/images/team/carlos-rittos-dos-santos.jpeg",
+    bio: "Especialista em design editorial, identidade visual e conteúdos digitais, com domínio avançado das ferramentas Adobe.",
+  },
+  {
+    name: "Abdul Karim",
+    role: "Designer Gráfico",
+    image: "/images/team/abdul-karim.jpg",
+    bio: "Criativo e versátil, traz uma visão contemporânea ao design da ABIPTOM, aliando sensibilidade estética e domínio técnico na criação de identidades visuais, materiais gráficos e conteúdos digitais de impacto.",
+  },
+  {
+    name: "José",
+    role: "Videomaker",
+    image: "/images/team/jose.png",
+    bio: "Responsável pela captação e edição de conteúdos audiovisuais para projetos institucionais e promocionais.",
+  },
+]
+
+const metrics = [
+  { value: "10+", label: "Anos de experiência" },
+  { value: "200+", label: "Projectos entregues" },
+  { value: "50+", label: "Clientes satisfeitos" },
+  { value: "11", label: "Especialistas na equipa" },
+]
+
+const AboutPage = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-black py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-yellow font-bauhaus">
-              Quem Somos
-            </h1>
-            <p className="max-w-[700px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça a ABIPTOM, uma empresa comprometida com a inovação e excelência.
-            </p>
+    <PageTransition>
+      <div className="flex flex-col">
+        {/* Hero */}
+        <section className="section-padding bg-obys-near-black">
+          <div className="obys-container">
+            <AnimatedSection animation="fade-up">
+              <span className="text-label text-obys-gold mb-6 block">
+                Quem Somos
+              </span>
+            </AnimatedSection>
+            <TextSplitter
+              text="Guardião das Novas Tecnologias"
+              as="h1"
+              className="heading-hero text-white mb-8"
+              splitBy="word"
+              delay={0.2}
+            />
+            <AnimatedSection animation="fade-up" delay={400}>
+              <p className="body-large text-obys-text-secondary max-w-2xl">
+                Na interseção da tecnologia e da arte, construímos experiências digitais que ajudam marcas a destacarem-se.
+              </p>
+            </AnimatedSection>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* About Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-black font-bauhaus">ABIPTOM, SARL</h2>
-              <p className="text-gray-dark md:text-xl/relaxed">
-                Somos a ABIPTOM, SARL, um grupo de Consultores nacionais e internacionais especializados em Marketing,
-                Design Gráfico e Web Design e Desenvolvimento de Software. Com uma forte presença na Guiné-Bissau,
-                transformamos ideias em realidade através de soluções digitais personalizadas e de alto calibre.
-              </p>
-              <p className="text-gray-dark md:text-xl/relaxed">
-                Na interseção da tecnologia e da arte, construímos experiências digitais impressionantes que ajudam as
-                marcas a destacarem-se.
-              </p>
-            </div>
-            <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover">
-              <img
-                alt="Equipe Abiptom"
-                className="aspect-video object-cover w-full"
-                src="/images/foto-quem-somos.png"
-              />
+        {/* About Content */}
+        <section className="section-padding bg-obys-dark">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <div className="grid gap-16 lg:grid-cols-2 items-center">
+              <AnimatedSection animation="fade-right">
+                <div>
+                  <h2 className="heading-section text-white mb-10">
+                    ABIPTOM, SARL
+                  </h2>
+                  <p className="body-large text-obys-text-secondary mb-8">
+                    Somos um grupo de Consultores nacionais e internacionais especializados em Marketing, Design Gráfico, Web Design e Desenvolvimento de Software.
+                  </p>
+                  <p className="body-base text-obys-text-secondary">
+                    Com uma forte presença na Guiné-Bissau, transformamos ideias em realidade através de soluções digitais personalizadas e de alto calibre.
+                  </p>
+                </div>
+              </AnimatedSection>
+              <AnimatedSection animation="fade-left" delay={200}>
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <Image
+                    alt="Equipa ABIPTOM"
+                    className="object-cover"
+                    src="/images/foto_1.jpg"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
+                </div>
+              </AnimatedSection>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Mission, Vision, Values */}
-      <section className="py-16 md:py-24 bg-gray-light">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 md:grid-cols-3 md:gap-12">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-black font-bauhaus">Missão</h3>
-              <p className="text-gray-dark">
-                Nossa missão é entregar resultados. Somos dedicados a oferecer serviços excepcionais que promovem o
-                crescimento das empresas e marcas que confiam em nós. Através de uma combinação de expertise técnica e
-                criativa, oferecemos soluções digitais de alto impacto que geram valor tangível.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-black font-bauhaus">Visão</h3>
-              <p className="text-gray-dark">
-                Ambicionamos ser uma referência indiscutível no campo da tecnologia e do design na Guiné-Bissau.
-                Trabalhamos para criar um futuro no qual a ABIPTOM, SARL seja sinónimo de excelência e inovação no
-                Marketing, Design Gráfico e Web Design. Nosso objetivo é construir uma reputação sólida baseada na
-                entrega consistente de serviços de alta qualidade que criam um impacto real para os nossos clientes.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-black font-bauhaus">Valores</h3>
-              <div className="space-y-2">
-                <div className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span className="text-gray-dark">
-                    Compromisso com a Qualidade: Priorizamos a excelência em todas as etapas do nosso trabalho. A
-                    qualidade não é negociável.
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span className="text-gray-dark">
-                    Inovação Focada: Empregamos a tecnologia mais recente para entregar soluções inovadoras e
-                    funcionais.
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span className="text-gray-dark">
-                    Profissionalismo: Mantemos os mais altos padrões de profissionalismo em todos os nossos
-                    compromissos.
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span className="text-gray-dark">Integridade: Fazemos negócios de maneira ética e transparente.</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-yellow" />
-                  <span className="text-gray-dark">
-                    Respeito pelo Cliente: Valorizamos os nossos clientes e nos esforçamos para superar as suas
-                    expectativas em cada projeto.
-                  </span>
-                </div>
-              </div>
+        {/* Metrics */}
+        <section className="section-padding-sm bg-obys-near-black border-y border-obys-border-dark">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {metrics.map((metric, i) => (
+                <AnimatedSection key={metric.label} animation="fade-up" delay={i * 100}>
+                  <div className="text-center py-8">
+                    <span className="font-display text-5xl md:text-6xl text-obys-gold block mb-3">
+                      {metric.value}
+                    </span>
+                    <span className="text-label text-obys-text-muted">
+                      {metric.label}
+                    </span>
+                  </div>
+                </AnimatedSection>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Team Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-black font-bauhaus">Nossa Equipe</h2>
-            <p className="max-w-[700px] text-gray-dark md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Conheça os profissionais que fazem a ABIPTOM acontecer.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center space-y-4">
-              <div className="overflow-hidden rounded-full">
-                <Image
-                  alt="Atchutchi Ferreira"
-                  className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/atchtchi.jpg"
-                  width={160}
-                  height={160}
-                  priority
-                />
-              </div>
-              <div className="space-y-2 text-center">
-                <h3 className="text-xl font-bold text-black font-bauhaus">Atchutchi Ferreira</h3>
-                <p className="text-sm text-yellow font-semibold">CEO e Gestor de Projetos</p>
-                <p className="text-sm text-gray-dark">
-                  Fundador da Empresa, Especialista em TI, Full Stack Developer e Gestor de projetos, com mais de 10 anos de experiência profissional em várias
-                  áreas, incluindo gestão de sistemas de informação, telecomunicações, desenvolvimento de conteúdo digital, e marketing em
-                  redes sociais.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="overflow-hidden rounded-full">
-                <Image
-                  alt="Clayton da Cruz L.J. Correia"
-                  className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/clayton.jpg"
-                  width={160}
-                  height={160}
-                  priority
-                />
-              </div>
-              <div className="space-y-2 text-center">
-                <h3 className="text-xl font-bold text-black font-bauhaus">Clayton da Cruz L.J. Correia</h3>
-                <p className="text-sm text-yellow font-semibold">Chief Technology Officer (CTO)</p>
-                <p className="text-sm text-gray-dark">
-                  Com mais de 15 anos de experiência em desenvolvimento de software, infraestruturas digitais e gestão de sistemas, lidera a arquitetura técnica e operacional dos projectos digitais da empresa.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="overflow-hidden rounded-full">
-                <Image
-                  alt="Emerson Demésio Mendes"
-                  className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/emerson.jpg"
-                  width={160}
-                  height={160}
-                  priority
-                />
-              </div>
-              <div className="space-y-2 text-center">
-                <h3 className="text-xl font-bold text-black font-bauhaus">Emerson Demésio Mendes</h3>
-                <p className="text-sm text-yellow font-semibold">Director Geral</p>
-                <p className="text-sm text-gray-dark">
-                  Economista altamente qualificado, com formação em Economia com especialização em Finanças e Crédito
-                  pela Universidade Estatal Orçamentária de Construção Civil de Rostov-on-Don, Federação da Rússia.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="overflow-hidden rounded-full">
-                <Image
-                  alt="Carlos Rittos dos Santos"
-                  className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/carlos-rittos-dos-santos.jpeg"
-                  width={160}
-                  height={160}
-                  priority
-                />
-              </div>
-              <div className="space-y-2 text-center">
-                <h3 className="text-xl font-bold text-black font-bauhaus">Carlos Rittos dos Santos</h3>
-                <p className="text-sm text-yellow font-semibold">Designer Gráfico</p>
-                <p className="text-sm text-gray-dark">
-                  É especialista em design editorial, identidade visual e conteúdos digitais, com domínio avançado das ferramentas Adobe (Photoshop, Illustrator, InDesign, Premiere), além de experiência em marketing digital e design de interfaces web. Em ABIPTOM, lidera o desenvolvimento de soluções visuais que aliam criatividade, estratégia e funcionalidade.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="overflow-hidden rounded-full">
-                <Image
-                  alt="Arianna Duarte"
-                  className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/arianna.jpg"
-                  width={160}
-                  height={160}
-                  priority
-                />
-              </div>
-              <div className="space-y-2 text-center">
-                <h3 className="text-xl font-bold text-black font-bauhaus">Arianna Duarte</h3>
-                <p className="text-sm text-yellow font-semibold">Gestora de Marketing e B2B</p>
-                <p className="text-sm text-gray-dark">
-                  Com formação em Engenharia de Geociências e especialização em marketing e vendas, lidera a implementação de estratégias comerciais, gestão de redes sociais e captação de novos clientes. Atua no desenvolvimento de propostas, negociação de contratos e análise de métricas, garantindo uma comunicação eficaz e alinhada com os objetivos da empresa.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="overflow-hidden rounded-full">
-                <Image
-                  alt="José"
-                  className="aspect-square object-cover w-40 h-40"
-                  src="/images/team/jose.png"
-                  width={160}
-                  height={160}
-                  priority
-                />
-              </div>
-              <div className="space-y-2 text-center">
-                <h3 className="text-xl font-bold text-black font-bauhaus">José</h3>
-                <p className="text-sm text-yellow font-semibold">Videomaker</p>
-                <p className="text-sm text-gray-dark">
-                  É o videomaker da ABIPTOM, responsável pela captação e edição de conteúdos audiovisuais para projetos institucionais, promocionais e transmissões ao vivo. Com experiência em produção de vídeo e operação de câmaras, traz uma abordagem criativa e técnica ao trabalho.
-                </p>
-              </div>
+        {/* Mission, Vision, Values */}
+        <section className="section-padding bg-obys-dark">
+          <div className="obys-container">
+            <AnimatedSection animation="fade-up">
+              <span className="text-label text-obys-gold mb-6 block">
+                Princípios
+              </span>
+              <h2 className="heading-section text-white mb-20">
+                O que nos move
+              </h2>
+            </AnimatedSection>
+
+            <div className="grid gap-16 md:grid-cols-3">
+              <AnimatedSection animation="fade-up" delay={0}>
+                <div className="border-t border-obys-gold pt-8">
+                  <h3 className="heading-subsection text-white mb-6">Missão</h3>
+                  <p className="body-base text-obys-text-secondary">
+                    Entregar resultados excepcionais que promovem o crescimento das empresas e marcas que confiam em nós. Através de expertise técnica e criativa, oferecemos soluções digitais de alto impacto.
+                  </p>
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection animation="fade-up" delay={150}>
+                <div className="border-t border-obys-gold pt-8">
+                  <h3 className="heading-subsection text-white mb-6">Visão</h3>
+                  <p className="body-base text-obys-text-secondary">
+                    Ser referência indiscutível em tecnologia e design na Guiné-Bissau. Construir uma reputação sólida baseada na entrega consistente de serviços de alta qualidade com impacto real.
+                  </p>
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection animation="fade-up" delay={300}>
+                <div className="border-t border-obys-gold pt-8">
+                  <h3 className="heading-subsection text-white mb-6">Valores</h3>
+                  <ul className="space-y-3">
+                    {[
+                      "Compromisso com a Qualidade",
+                      "Inovação Focada",
+                      "Profissionalismo",
+                      "Integridade",
+                      "Respeito pelo Cliente",
+                    ].map((value) => (
+                      <li key={value} className="flex items-center gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-obys-gold flex-shrink-0" />
+                        <span className="body-base text-obys-text-secondary">{value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimatedSection>
             </div>
           </div>
+        </section>
+
+        {/* Crawling Line */}
+        <div className="border-y border-obys-border-dark bg-obys-near-black">
+          <CrawlingLine
+            items={["Qualidade", "Inovação", "Compromisso", "Excelência", "Integridade"]}
+            speed={35}
+            className="py-6"
+          />
         </div>
-      </section>
-    </div>
+
+        {/* Team */}
+        <section className="section-padding bg-obys-near-black">
+          <div className="obys-container--wide mx-auto px-6 lg:px-10">
+            <AnimatedSection animation="fade-up">
+              <span className="text-label text-obys-gold mb-6 block">
+                Equipa
+              </span>
+              <h2 className="heading-section text-white mb-20">
+                Quem faz acontecer
+              </h2>
+            </AnimatedSection>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+              {team.map((member, i) => (
+                <AnimatedSection key={member.name} animation="fade-up" delay={i * 80}>
+                  <div className="group border border-obys-border-dark p-6 lg:p-8 hover:border-obys-gold transition-colors duration-obys bg-obys-near-black hover:bg-obys-dark/50 h-full">
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden mb-6 border border-obys-border-dark group-hover:border-obys-gold transition-colors duration-obys">
+                      <Image
+                        alt={member.name}
+                        className="object-cover"
+                        src={member.image}
+                        fill
+                        sizes="96px"
+                      />
+                    </div>
+                    <h3 className="font-display text-xl text-white mb-1 group-hover:text-obys-gold transition-colors duration-obys">
+                      {member.name}
+                    </h3>
+                    <p className="text-label text-obys-gold mb-4">{member.role}</p>
+                    <p className="body-base text-obys-text-secondary text-sm">
+                      {member.bio}
+                    </p>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="section-padding bg-obys-dark border-t border-obys-border-dark">
+          <div className="obys-container text-center">
+            <AnimatedSection animation="scale-up">
+              <h2 className="heading-hero text-white mb-8">
+                Vamos trabalhar juntos?
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild variant="obys-primary" size="xl">
+                  <Link href="/contacto" className="flex items-center gap-2">
+                    Fale Conosco <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline-primary" size="xl">
+                  <a href="https://wa.me/245966865331" target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+      </div>
+    </PageTransition>
   )
 }
+
+export default AboutPage

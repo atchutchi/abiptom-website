@@ -25,9 +25,9 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#F7C500", // Yellow primary color
-          foreground: "#000000", // Black text on primary
-          hover: "#e6b800", // Hover state for primary
+          DEFAULT: "#F5B800",
+          foreground: "#000000",
+          hover: "#FFD040",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -53,10 +53,25 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // ABIPTOM color palette
+
+        "obys-black": "#000",
+        "obys-near-black": "#080808",
+        "obys-darkest": "#0b0b0b",
+        "obys-dark": "#151515",
+        "obys-gold": "#F5B800",
+        "obys-gold-hover": "#FFD040",
+        "obys-blue": "#0f5cf1",
+        "obys-blue-hover": "#276df3",
+        "obys-orange": "#ff8f0a",
+        "obys-border-dark": "#3e3e3e",
+        "obys-border-medium": "#4a4a4a",
+        "obys-text-muted": "#575757",
+        "obys-text-secondary": "#a4a4a4",
+        "obys-text-light": "#e6e6e6",
+
         yellow: {
-          DEFAULT: "#F7C500",
-          hover: "#e6b800",
+          DEFAULT: "#F5B800",
+          hover: "#FFD040",
         },
         black: "#000000",
         white: "#FFFFFF",
@@ -83,21 +98,50 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
+        },
+        "crawling-line": {
+          "0%": { transform: "translate3d(0, 0, 0)" },
+          "100%": { transform: "translate3d(-50%, 0, 0)" },
+        },
+        "noise": {
+          "0%, 100%": { backgroundPosition: "0 0" },
+          "10%": { backgroundPosition: "-5% -10%" },
+          "20%": { backgroundPosition: "-15% 5%" },
+          "30%": { backgroundPosition: "7% -25%" },
+          "40%": { backgroundPosition: "-5% 25%" },
+          "50%": { backgroundPosition: "-15% 10%" },
+          "60%": { backgroundPosition: "15% 0%" },
+          "70%": { backgroundPosition: "0% 15%" },
+          "80%": { backgroundPosition: "3% 35%" },
+          "90%": { backgroundPosition: "-10% 10%" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "crawling-line": "crawling-line var(--crawl-duration, 20s) linear infinite",
+        "noise": "noise 0.5s steps(10) infinite",
       },
       fontFamily: {
-        sans: ["var(--font-poppins)", "sans-serif"],
-        bauhaus: ["var(--font-bauhaus)", "sans-serif"],
+        display: ["var(--font-display)", "serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        mono: ["SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        sans: ["var(--font-body)", "sans-serif"],
+        bauhaus: ["var(--font-display)", "serif"],
+      },
+      transitionTimingFunction: {
+        "obys-default": "cubic-bezier(.3, .86, .36, .95)",
+        "obys-page": "cubic-bezier(.4, 0, 0, 1)",
+      },
+      transitionDuration: {
+        "obys": "350ms",
+        "obys-page": "1500ms",
       },
     },
   },
