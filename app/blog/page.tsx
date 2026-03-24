@@ -191,7 +191,7 @@ const BlogPage = () => {
             />
             <AnimatedSection animation="fade-up" delay={400}>
               <p className="body-large text-obys-text-secondary max-w-2xl">
-                Cases de sucesso, tendências e conhecimento sobre design, desenvolvimento e marketing digital.
+                Projectos de sucesso, tendências e conhecimento sobre design, desenvolvimento e marketing digital.
               </p>
             </AnimatedSection>
           </div>

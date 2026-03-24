@@ -33,8 +33,8 @@ O projeto incluiu:
       },
       {
         id: "2",
-        name: "Cases de Sucesso",
-        slug: "cases-de-sucesso",
+        name: "projectos de Sucesso",
+        slug: "projectos-de-sucesso",
         description: "Histórias de projetos bem-sucedidos"
       }
     ],
