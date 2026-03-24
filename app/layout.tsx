@@ -41,6 +41,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "ABIPTOM" }],
   metadataBase: new URL("https://abiptom.gw"),
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     locale: "pt_PT",

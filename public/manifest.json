@@ -1,0 +1,21 @@
+{
+  "name": "ABIPTOM - Guardião das Novas Tecnologias",
+  "short_name": "ABIPTOM",
+  "description": "Agência digital na Guiné-Bissau — Marketing, Design, Web e Software",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#F5B800",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
