@@ -18,7 +18,7 @@ const team = [
     name: "Clayton da Cruz L.J. Correia",
     role: "Chief Technology Officer (CTO)",
     image: "/images/team/clayton.jpg",
-    bio: "Com mais de 15 anos de experiência em desenvolvimento de software, infraestruturas digitais e gestão de sistemas.",
+    bio: "Co Fundador da Abiptom, com mais de 15 anos de experiência em desenvolvimento de software, infraestruturas digitais e gestão de sistemas.",
   },
   {
     name: "Emerson Demésio Mendes",

@@ -102,7 +102,7 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: 'ysb-agenda',
     title: 'YSB Agenda',
-    description: 'Design de materiais para Yunus Social Business.',
+    description: 'Design de materiais para Youth Sounding Board.',
     image: '/images/portfolio/graphicdesign/YSB_Agenda.png',
     category: ['design'],
     tags: ['Design', 'Branding']
@@ -217,7 +217,7 @@ const portfolioItems: PortfolioItem[] = [
   // Social Media
   {
     id: 'ysb-social',
-    title: 'Yunus Social Business',
+    title: 'Youth Sounding Board',
     description: 'Gestão de redes sociais e criação de conteúdo para organização social.',
     image: '/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg',
     category: ['social', 'design'],

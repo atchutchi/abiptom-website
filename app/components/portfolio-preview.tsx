@@ -19,7 +19,7 @@ const projects = [
     description: "Banners e materiais para o fórum de investimentos.",
   },
   {
-    title: "Yunus Social Business",
+    title: "Youth Sounding Board",
     category: "Social Media",
     image: "/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg",
     description: "Gestão de redes sociais e criação de conteúdo.",
