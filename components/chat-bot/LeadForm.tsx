@@ -43,11 +43,11 @@ export const LeadForm = ({ onSubmit, disabled }: LeadFormProps) => {
   }
 
   const inputClass =
-    "w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#F5B800] focus:border-[#F5B800] transition-colors"
+    "w-full px-3 py-2 text-sm bg-[#080808] border border-[#3e3e3e] rounded-lg text-white placeholder:text-[#575757] focus:outline-none focus:ring-1 focus:ring-[#F5B800] focus:border-[#F5B800] transition-colors"
 
   return (
-    <div className="mx-1 mb-3 bg-[#F9FAFB] border border-gray-200 rounded-xl p-4">
-      <p className="text-xs font-semibold text-gray-700 mb-3">
+    <div className="mx-1 mb-3 bg-[#0b0b0b] border border-[#3e3e3e]/50 rounded-xl p-4">
+      <p className="text-xs font-semibold text-[#a4a4a4] mb-3">
         Preenche os teus dados para recebermos a tua cotação:
       </p>
       <form onSubmit={handleSubmit} className="space-y-2.5">
@@ -62,7 +62,7 @@ export const LeadForm = ({ onSubmit, disabled }: LeadFormProps) => {
             aria-label="Nome"
           />
           {errors.name && (
-            <p className="text-[10px] text-red-500 mt-0.5">{errors.name}</p>
+            <p className="text-[10px] text-red-400 mt-0.5">{errors.name}</p>
           )}
         </div>
         <div>
@@ -76,7 +76,7 @@ export const LeadForm = ({ onSubmit, disabled }: LeadFormProps) => {
             aria-label="Email"
           />
           {errors.email && (
-            <p className="text-[10px] text-red-500 mt-0.5">{errors.email}</p>
+            <p className="text-[10px] text-red-400 mt-0.5">{errors.email}</p>
           )}
         </div>
         <input

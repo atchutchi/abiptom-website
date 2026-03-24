@@ -200,14 +200,14 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
       onKeyDown={handleKeyDown}
     >
       <div
-        className="absolute inset-0 bg-black/40 sm:hidden"
+        className="absolute inset-0 bg-black/60 sm:hidden"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      <div className="chat-light-theme relative h-full sm:h-[600px] w-full sm:w-[400px] sm:ml-auto flex flex-col bg-white sm:rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative h-full sm:h-[600px] w-full sm:w-[400px] sm:ml-auto flex flex-col bg-[#080808] sm:rounded-2xl shadow-2xl shadow-black/50 overflow-hidden border border-[#3e3e3e]/50 sm:border">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-[#0A0A0A] border-b border-gray-800 flex-shrink-0">
+        <div className="flex items-center justify-between px-4 py-3 bg-[#0b0b0b] border-b border-[#3e3e3e] flex-shrink-0">
           <div className="flex items-center gap-3">
             <Image
               src="/images/abiptom.png"
@@ -222,7 +222,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
               </p>
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[10px] text-gray-400">Online</span>
+                <span className="text-[10px] text-[#575757]">Online</span>
               </div>
             </div>
           </div>
@@ -230,7 +230,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
             <button
               type="button"
               onClick={handleReset}
-              className="p-1.5 text-gray-400 hover:text-white rounded-full hover:bg-white/10 transition-colors"
+              className="p-1.5 text-[#575757] hover:text-[#F5B800] rounded-full hover:bg-white/5 transition-colors"
               aria-label="Nova conversa"
               title="Nova conversa"
             >
@@ -239,7 +239,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 text-gray-400 hover:text-white rounded-full hover:bg-white/10 transition-colors"
+              className="p-1.5 text-[#575757] hover:text-white rounded-full hover:bg-white/5 transition-colors"
               aria-label="Fechar chat"
             >
               <X className="w-4 h-4" />
@@ -248,25 +248,25 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 bg-white text-gray-800">
+        <div className="flex-1 overflow-y-auto px-4 py-4 bg-[#080808]">
           {messages.map((msg) => (
             <ChatMessageBubble key={msg.id} message={msg} />
           ))}
 
           {isTyping && (
             <div className="flex justify-start mb-3">
-              <div className="bg-[#F3F4F6] rounded-2xl rounded-bl-sm px-4 py-3">
+              <div className="bg-[#151515] border border-[#3e3e3e]/50 rounded-2xl rounded-bl-sm px-4 py-3">
                 <div className="flex gap-1.5">
                   <span
-                    className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+                    className="w-2 h-2 rounded-full bg-[#F5B800] animate-bounce"
                     style={{ animationDelay: "0ms" }}
                   />
                   <span
-                    className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+                    className="w-2 h-2 rounded-full bg-[#F5B800] animate-bounce"
                     style={{ animationDelay: "150ms" }}
                   />
                   <span
-                    className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+                    className="w-2 h-2 rounded-full bg-[#F5B800] animate-bounce"
                     style={{ animationDelay: "300ms" }}
                   />
                 </div>
@@ -283,7 +283,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
 
         {/* Quick Actions */}
         {lastQuickActions.length > 0 && !showLeadForm && (
-          <div className="px-3 py-2 bg-white border-t border-gray-100">
+          <div className="px-3 py-2 bg-[#0b0b0b] border-t border-[#3e3e3e]/50">
             <QuickActions
               actions={lastQuickActions}
               onAction={handleQuickAction}
@@ -295,7 +295,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
         {/* Input */}
         <form
           onSubmit={handleSubmit}
-          className="flex items-center gap-2 px-4 py-3 border-t border-gray-200 bg-white flex-shrink-0"
+          className="flex items-center gap-2 px-4 py-3 border-t border-[#3e3e3e] bg-[#0b0b0b] flex-shrink-0"
         >
           <input
             ref={inputRef}
@@ -304,13 +304,13 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Escreve a tua mensagem..."
             disabled={isTyping}
-            className="flex-1 text-sm text-gray-800 placeholder:text-gray-400 bg-transparent outline-none"
+            className="flex-1 text-sm text-white placeholder:text-[#575757] bg-transparent outline-none"
             aria-label="Mensagem"
           />
           <button
             type="submit"
             disabled={isTyping || !inputValue.trim()}
-            className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full bg-[#F5B800] text-black hover:bg-[#FFD040] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full bg-[#F5B800] text-black hover:bg-[#FFD040] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             aria-label="Enviar mensagem"
           >
             <Send className="w-4 h-4" />
@@ -318,20 +318,20 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
         </form>
 
         {/* Footer links */}
-        <div className="flex items-center justify-center gap-4 px-4 py-2 bg-gray-50 border-t border-gray-100 text-[10px] flex-shrink-0">
+        <div className="flex items-center justify-center gap-4 px-4 py-2 bg-[#080808] border-t border-[#3e3e3e]/30 text-[10px] flex-shrink-0">
           <a
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-gray-500 hover:text-[#25D366] transition-colors"
+            className="flex items-center gap-1 text-[#575757] hover:text-[#25D366] transition-colors"
           >
             <MessageSquare className="w-3 h-3" />
             WhatsApp
           </a>
-          <span className="text-gray-300">|</span>
+          <span className="text-[#3e3e3e]">|</span>
           <a
             href={`mailto:${EMAIL_ADDRESS}`}
-            className="text-gray-500 hover:text-[#F5B800] transition-colors"
+            className="text-[#575757] hover:text-[#F5B800] transition-colors"
           >
             {EMAIL_ADDRESS}
           </a>

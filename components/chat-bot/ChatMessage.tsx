@@ -7,7 +7,7 @@ type ChatMessageProps = {
 }
 
 const formatContent = (content: string, isUser: boolean) => {
-  const textColor = isUser ? "text-black" : "text-gray-800"
+  const textColor = isUser ? "text-black" : "text-[#e6e6e6]"
   const parts = content.split(/(\*\*[^*]+\*\*|\[([^\]]+)\]\(([^)]+)\))/g)
 
   return parts.map((part, i) => {
@@ -16,7 +16,7 @@ const formatContent = (content: string, isUser: boolean) => {
     const boldMatch = part.match(/^\*\*([^*]+)\*\*$/)
     if (boldMatch) {
       return (
-        <strong key={i} className={`font-semibold ${textColor}`}>
+        <strong key={i} className={`font-semibold ${isUser ? "text-black" : "text-white"}`}>
           {boldMatch[1]}
         </strong>
       )
@@ -59,13 +59,13 @@ export const ChatMessageBubble = ({ message }: ChatMessageProps) => {
           className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
             isUser
               ? "bg-[#F5B800] text-black rounded-br-sm"
-              : "bg-[#F3F4F6] text-gray-800 rounded-bl-sm"
+              : "bg-[#151515] border border-[#3e3e3e]/50 text-[#e6e6e6] rounded-bl-sm"
           }`}
         >
           {formatContent(message.content, isUser)}
         </div>
         <span
-          className={`text-[10px] text-gray-400 ${
+          className={`text-[10px] text-[#575757] ${
             isUser ? "text-right" : "text-left"
           }`}
         >
