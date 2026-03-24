@@ -5,7 +5,7 @@ import {
   QUICK_ACTIONS_INITIAL,
   WHATSAPP_LINK,
   EMAIL_ADDRESS,
-  HF_MODELS,
+  GEMINI_MODELS,
 } from "@/lib/chat/chatbot-config"
 
 export async function GET() {
@@ -15,7 +15,7 @@ export async function GET() {
       quickActions: QUICK_ACTIONS_INITIAL,
       whatsappLink: WHATSAPP_LINK,
       email: EMAIL_ADDRESS,
-      models: HF_MODELS,
+      models: GEMINI_MODELS,
       systemPromptLength: SYSTEM_PROMPT.length,
     })
   } catch (error) {

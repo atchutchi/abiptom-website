@@ -19,7 +19,7 @@ The site features an immersive, dark cinematic design inspired by award-winning 
 
 **Key highlights:**
 - 20+ pages covering services, portfolio, blog, careers, and contact
-- AI chatbot powered by HuggingFace Inference API
+- AI chatbot powered by Google Gemini API
 - CMS-driven blog via Contentful
 - Supabase integration for auth, storage, and media
 - Full SEO setup with sitemap, Open Graph, and structured metadata
@@ -49,7 +49,7 @@ The site features an immersive, dark cinematic design inspired by award-winning 
 |---|---|
 | [Supabase](https://supabase.com) | Auth, PostgreSQL, Storage (media uploads) |
 | [Contentful](https://contentful.com) | Headless CMS for blog content |
-| [HuggingFace Inference](https://huggingface.co) | AI chatbot (Mixtral, Llama, Phi-3, Zephyr) |
+| [Google Gemini](https://ai.google.dev) | AI chatbot (Gemini 2.5 Flash, 2.0 Flash, 1.5 Flash) |
 | [EmailJS](https://emailjs.com) | Transactional email (contact + careers forms) |
 | [Nodemailer](https://nodemailer.com) | Server-side email fallback |
 | [Zod](https://zod.dev) | Schema validation |
@@ -147,7 +147,7 @@ The site features an immersive, dark cinematic design inspired by award-winning 
 
 ### AI Chatbot
 
-- HuggingFace Inference API with model fallback chain (Mixtral → Llama → Phi-3 → Zephyr)
+- Google Gemini API with model fallback chain (Gemini 2.5 Flash → 2.0 Flash → 1.5 Flash)
 - Full ABIPTOM context injected via system prompt (services, contacts, clients, pricing rules)
 - Quick action buttons for common queries
 - Inline lead capture form when quotation intent is detected
@@ -268,7 +268,7 @@ abiptom-website/
 
 | Endpoint | Methods | Description |
 |---|---|---|
-| `/api/chat` | POST | AI chatbot with HuggingFace model fallback |
+| `/api/chat` | POST | AI chatbot with Gemini model fallback |
 | `/api/chat/config` | GET | Chatbot configuration (public) |
 | `/api/chat/history` | GET, POST | Conversation history (in-memory) |
 | `/api/contact` | POST | Contact form handler with EmailJS |
@@ -424,8 +424,8 @@ NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT=
 NEXT_PUBLIC_EMAILJS_TEMPLATE_CAREERS=
 EMAILJS_PRIVATE_KEY=
 
-# HuggingFace (Chatbot)
-NEXT_PUBLIC_HUGGINGFACE_API_KEY=
+# Google Gemini (Chatbot)
+GEMINI_API_KEY=
 
 # Auth & Security
 JWT_SECRET=
@@ -505,11 +505,11 @@ npm install --cache /tmp/npm-cache-temp
 
 **Status:** Known issue — sitemap should be updated to reflect actual route structure.
 
-### HuggingFace model availability
+### Gemini API model availability
 
-**Problem:** Primary AI model (Mixtral) may be temporarily unavailable or slow on the free tier.
+**Problem:** Primary AI model (Gemini 2.5 Flash) may be temporarily unavailable or reach rate limits on the free tier.
 
-**Solution:** The chatbot implements a fallback chain across 4 models. If all fail, it displays a friendly message directing users to WhatsApp.
+**Solution:** The chatbot implements a fallback chain across 3 Gemini models. If all fail, it displays a friendly message directing users to WhatsApp.
 
 </details>
 
@@ -524,7 +524,7 @@ npm install --cache /tmp/npm-cache-temp
 - **Smooth scroll:** [Lenis](https://lenis.darkroom.engineering) by Darkroom
 - **CMS:** [Contentful](https://contentful.com)
 - **Database & Auth:** [Supabase](https://supabase.com)
-- **AI:** [HuggingFace](https://huggingface.co)
+- **AI:** [Google Gemini](https://ai.google.dev)
 
 ---
 

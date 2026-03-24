@@ -205,7 +205,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
         aria-hidden="true"
       />
 
-      <div className="relative h-full sm:h-[600px] w-full sm:w-[400px] sm:ml-auto flex flex-col bg-white sm:rounded-2xl shadow-2xl overflow-hidden">
+      <div className="chat-light-theme relative h-full sm:h-[600px] w-full sm:w-[400px] sm:ml-auto flex flex-col bg-white sm:rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 bg-[#0A0A0A] border-b border-gray-800 flex-shrink-0">
           <div className="flex items-center gap-3">
@@ -248,7 +248,7 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 bg-white">
+        <div className="flex-1 overflow-y-auto px-4 py-4 bg-white text-gray-800">
           {messages.map((msg) => (
             <ChatMessageBubble key={msg.id} message={msg} />
           ))}

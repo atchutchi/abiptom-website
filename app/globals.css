@@ -67,6 +67,20 @@
     font-family: var(--font-body);
     color: var(--text-primary);
   }
+
+  /* Reset dark theme colors inside light-themed chat window */
+  .chat-light-theme,
+  .chat-light-theme p,
+  .chat-light-theme span,
+  .chat-light-theme div,
+  .chat-light-theme a,
+  .chat-light-theme button,
+  .chat-light-theme input,
+  .chat-light-theme textarea,
+  .chat-light-theme li,
+  .chat-light-theme label {
+    color: inherit;
+  }
 }
 
 @layer components {

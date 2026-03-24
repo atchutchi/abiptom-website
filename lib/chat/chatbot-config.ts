@@ -107,9 +107,8 @@ export const EMAIL_ADDRESS = "info@abiptom.gw"
 export const FALLBACK_MESSAGE =
   "Peço desculpa, estou com dificuldades técnicas de momento. Podes contactar-nos directamente pelo WhatsApp (+245 966 865 331) ou email (info@abiptom.gw). A nossa equipa terá todo o gosto em ajudar-te!"
 
-export const HF_MODELS = [
-  "mistralai/Mixtral-8x7B-Instruct-v0.1",
-  "meta-llama/Meta-Llama-3.1-8B-Instruct",
-  "microsoft/Phi-3-mini-4k-instruct",
-  "HuggingFaceH4/zephyr-7b-beta",
+export const GEMINI_MODELS = [
+  "gemini-2.5-flash",
+  "gemini-2.0-flash",
+  "gemini-1.5-flash",
 ] as const
