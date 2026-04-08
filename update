@@ -1,0 +1,252 @@
+#!/usr/bin/env bash
+# ============================================================
+#  ABIPTOM Website — Security & Dependency Update Script
+#  Uso: ./update [--dry-run] [--skip-build] [--skip-lint]
+# ============================================================
+
+set -euo pipefail
+
+# ── Cores ────────────────────────────────────────────────────
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+# ── Flags ────────────────────────────────────────────────────
+DRY_RUN=false
+SKIP_BUILD=false
+SKIP_LINT=false
+
+for arg in "$@"; do
+  case $arg in
+    --dry-run)    DRY_RUN=true ;;
+    --skip-build) SKIP_BUILD=true ;;
+    --skip-lint)  SKIP_LINT=true ;;
+  esac
+done
+
+# ── Logs ─────────────────────────────────────────────────────
+LOG_DIR="logs/security"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/update-$(date +%Y%m%d-%H%M%S).log"
+
+log() { echo -e "$1" | tee -a "$LOG_FILE"; }
+
+# ── Banner ───────────────────────────────────────────────────
+log ""
+log "${BOLD}${CYAN}╔══════════════════════════════════════════════════╗${RESET}"
+log "${BOLD}${CYAN}║     ABIPTOM — Varredura & Atualização de Segurança ║${RESET}"
+log "${BOLD}${CYAN}╚══════════════════════════════════════════════════╝${RESET}"
+log "  Data: $(date '+%d/%m/%Y %H:%M:%S')"
+log "  Log:  $LOG_FILE"
+$DRY_RUN && log "  ${YELLOW}[MODO DRY-RUN — nenhuma alteração será feita]${RESET}"
+log ""
+
+# ── Verificações iniciais ────────────────────────────────────
+section() { log "\n${BOLD}${BLUE}══ $1 ══${RESET}"; }
+
+section "1/7 · Verificação do Ambiente"
+
+if ! command -v node &>/dev/null; then
+  log "${RED}✗ Node.js não encontrado. Instale antes de continuar.${RESET}"; exit 1
+fi
+if ! command -v npm &>/dev/null; then
+  log "${RED}✗ npm não encontrado.${RESET}"; exit 1
+fi
+
+NODE_VER=$(node --version)
+NPM_VER=$(npm --version)
+log "${GREEN}✓ Node.js ${NODE_VER}   npm ${NPM_VER}${RESET}"
+
+# Verifica branch git
+if git rev-parse --git-dir &>/dev/null; then
+  BRANCH=$(git branch --show-current)
+  log "${GREEN}✓ Branch: ${BRANCH}${RESET}"
+  if [[ -n "$(git status --porcelain)" ]]; then
+    log "${YELLOW}⚠  Há alterações não commitadas — recomendado fazer commit antes de continuar.${RESET}"
+  fi
+else
+  log "${YELLOW}⚠  Não é um repositório git.${RESET}"
+fi
+
+# ── Auditoria de segurança ───────────────────────────────────
+section "2/7 · Auditoria de Vulnerabilidades (npm audit)"
+
+AUDIT_JSON=$(npm audit --json 2>/dev/null || true)
+VULN_COUNT=$(echo "$AUDIT_JSON" | node -e "
+  let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>{
+    try {
+      const a=JSON.parse(d);
+      const m=a.metadata?.vulnerabilities || {};
+      console.log((m.critical||0)+' crítica(s), '+(m.high||0)+' alta(s), '+(m.moderate||0)+' moderada(s), '+(m.low||0)+' baixa(s)');
+    } catch { console.log('N/A'); }
+  });
+" 2>/dev/null <<< "$AUDIT_JSON" || echo "N/A")
+
+log "  Vulnerabilidades encontradas: ${YELLOW}${VULN_COUNT}${RESET}"
+
+CRIT=$(echo "$AUDIT_JSON" | node -e "
+  let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>{
+    try { const a=JSON.parse(d); console.log(a.metadata?.vulnerabilities?.critical||0); }
+    catch { console.log(0); }
+  });
+" 2>/dev/null <<< "$AUDIT_JSON" || echo 0)
+
+HIGH=$(echo "$AUDIT_JSON" | node -e "
+  let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>{
+    try { const a=JSON.parse(d); console.log(a.metadata?.vulnerabilities?.high||0); }
+    catch { console.log(0); }
+  });
+" 2>/dev/null <<< "$AUDIT_JSON" || echo 0)
+
+# ── Corrigir vulnerabilidades automáticas ────────────────────
+section "3/7 · Correção Automática de Vulnerabilidades"
+
+if $DRY_RUN; then
+  log "  ${YELLOW}[dry-run] npm audit fix (ignorado)${RESET}"
+else
+  log "  Executando npm audit fix (sem breaking changes)..."
+  if npm audit fix 2>&1 | tee -a "$LOG_FILE"; then
+    log "${GREEN}  ✓ npm audit fix concluído${RESET}"
+  else
+    log "${YELLOW}  ⚠  audit fix retornou avisos (verifique o log)${RESET}"
+  fi
+
+  # Se ainda há críticas/altas, tenta force (com aviso)
+  AUDIT_AFTER=$(npm audit --json 2>/dev/null || true)
+  CRIT_AFTER=$(echo "$AUDIT_AFTER" | node -e "
+    let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>{
+      try { const a=JSON.parse(d); console.log(a.metadata?.vulnerabilities?.critical||0); }
+      catch { console.log(0); }
+    });
+  " 2>/dev/null <<< "$AUDIT_AFTER" || echo 0)
+
+  if [[ "$CRIT_AFTER" -gt 0 ]]; then
+    log "${YELLOW}  ⚠  Ainda existem ${CRIT_AFTER} vulnerabilidade(s) crítica(s) que requerem breaking changes.${RESET}"
+    log "     Execute manualmente: ${CYAN}npm audit fix --force${RESET} (pode quebrar dependências)"
+    log "     Ou atualize manualmente os pacotes listados acima."
+  fi
+fi
+
+# ── Pacotes desatualizados ───────────────────────────────────
+section "4/7 · Verificação de Pacotes Desatualizados"
+
+# Pacotes prioritários de segurança neste projeto
+SECURITY_PKGS=(
+  "next"
+  "react"
+  "react-dom"
+  "@supabase/supabase-js"
+  "@supabase/ssr"
+  "jsonwebtoken"
+  "nodemailer"
+  "next-intl"
+  "@anthropic-ai/sdk"
+  "@google/genai"
+  "contentful"
+  "zod"
+)
+
+log "  Verificando pacotes críticos de segurança..."
+OUTDATED_JSON=$(npm outdated --json 2>/dev/null || echo "{}")
+
+UPDATES_FOUND=0
+for pkg in "${SECURITY_PKGS[@]}"; do
+  INFO=$(echo "$OUTDATED_JSON" | node -e "
+    let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>{
+      try {
+        const a=JSON.parse(d);
+        const p=a['$pkg'];
+        if(p) console.log(p.current + ' → ' + p.latest);
+        else console.log('ok');
+      } catch { console.log('ok'); }
+    });
+  " 2>/dev/null <<< "$OUTDATED_JSON" || echo "ok")
+
+  if [[ "$INFO" == "ok" ]]; then
+    log "  ${GREEN}✓ ${pkg}${RESET}"
+  else
+    log "  ${YELLOW}↑ ${pkg}: ${INFO}${RESET}"
+    UPDATES_FOUND=$((UPDATES_FOUND + 1))
+  fi
+done
+
+if [[ $UPDATES_FOUND -gt 0 ]]; then
+  log ""
+  log "  ${YELLOW}⚠  ${UPDATES_FOUND} pacote(s) crítico(s) com atualização disponível.${RESET}"
+  log "  Para atualizar (respeitando semver): ${CYAN}npm update${RESET}"
+  log "  Para ver todos outdated:             ${CYAN}npm outdated${RESET}"
+fi
+
+# ── Atualizar patches e minors seguros ──────────────────────
+section "5/7 · Aplicar Atualizações Seguras (patch + minor)"
+
+if $DRY_RUN; then
+  log "  ${YELLOW}[dry-run] npm update (ignorado)${RESET}"
+else
+  log "  Aplicando atualizações dentro dos ranges do package.json..."
+  if npm update 2>&1 | tee -a "$LOG_FILE"; then
+    log "${GREEN}  ✓ Dependências atualizadas${RESET}"
+  else
+    log "${YELLOW}  ⚠  npm update retornou avisos${RESET}"
+  fi
+fi
+
+# ── Lint ─────────────────────────────────────────────────────
+section "6/7 · Verificação de Qualidade de Código (ESLint)"
+
+if $SKIP_LINT; then
+  log "  ${YELLOW}[--skip-lint] Lint ignorado${RESET}"
+else
+  log "  Executando next lint..."
+  if $DRY_RUN; then
+    log "  ${YELLOW}[dry-run] lint (ignorado)${RESET}"
+  elif npm run lint 2>&1 | tee -a "$LOG_FILE"; then
+    log "${GREEN}  ✓ Sem erros de lint${RESET}"
+  else
+    log "${YELLOW}  ⚠  Lint encontrou problemas — verifique o log${RESET}"
+  fi
+fi
+
+# ── Build de verificação ─────────────────────────────────────
+section "7/7 · Build de Verificação"
+
+if $SKIP_BUILD; then
+  log "  ${YELLOW}[--skip-build] Build ignorado${RESET}"
+else
+  log "  Verificando se o projeto compila sem erros..."
+  if $DRY_RUN; then
+    log "  ${YELLOW}[dry-run] build (ignorado)${RESET}"
+  elif npm run build 2>&1 | tee -a "$LOG_FILE"; then
+    log "${GREEN}  ✓ Build concluído com sucesso${RESET}"
+  else
+    log "${RED}  ✗ Build falhou — verifique o log em ${LOG_FILE}${RESET}"
+    log "${YELLOW}  Dica: as atualizações podem ter introduzido breaking changes.${RESET}"
+    log "  Execute ${CYAN}git diff package-lock.json${RESET} para ver o que mudou."
+    exit 1
+  fi
+fi
+
+# ── Resumo final ─────────────────────────────────────────────
+log ""
+log "${BOLD}${CYAN}╔══════════════════════════════════════════════════╗${RESET}"
+log "${BOLD}${CYAN}║                  RESUMO FINAL                     ║${RESET}"
+log "${BOLD}${CYAN}╚══════════════════════════════════════════════════╝${RESET}"
+log "  Vulnerabilidades antes:  ${YELLOW}${VULN_COUNT}${RESET}"
+log "  Pacotes críticos a atualizar: ${YELLOW}${UPDATES_FOUND}${RESET}"
+log "  Log completo: ${CYAN}${LOG_FILE}${RESET}"
+log ""
+
+if [[ "$CRIT" -gt 0 || "$HIGH" -gt 0 ]]; then
+  log "${YELLOW}  ⚠  Revisão manual recomendada para vulnerabilidades restantes.${RESET}"
+  log "  Relatório detalhado: ${CYAN}npm audit${RESET}"
+else
+  log "${GREEN}  ✓ Nenhuma vulnerabilidade crítica/alta detectada.${RESET}"
+fi
+
+log ""
+log "${GREEN}  Varredura concluída em $(date '+%H:%M:%S')${RESET}"
+log ""

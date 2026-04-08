@@ -74,3 +74,6 @@ Thumbs.db
 
 # Swap files
 *.swp
+
+# Security update logs
+logs/security/
