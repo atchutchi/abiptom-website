@@ -197,7 +197,7 @@ const Home = () => {
                     id="portfolio-heading"
                     className="heading-section text-white"
                   >
-                    Cases
+                    Projectos
                   </h2>
                 </div>
                 <p className="body-base text-obys-text-secondary max-w-md">

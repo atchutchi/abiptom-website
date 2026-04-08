@@ -65,7 +65,7 @@ const team = [
   {
     name: "Abdul Karim",
     role: "Designer Gráfico",
-    image: "/images/team/abdul-karim.jpg",
+    image: "/images/team/abdul.jpeg",
     bio: "Criativo e versátil, traz uma visão contemporânea ao design da ABIPTOM, aliando sensibilidade estética e domínio técnico na criação de identidades visuais, materiais gráficos e conteúdos digitais de impacto.",
   },
   {
