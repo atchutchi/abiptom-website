@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, type Variants } from "framer-motion"
 
 type TextSplitterProps = {
   text: string
@@ -27,7 +27,7 @@ export const TextSplitter = ({
 
   const parts = splitBy === "word" ? text.split(" ") : text.split("")
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -37,7 +37,7 @@ export const TextSplitter = ({
     },
   }
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: {
       y: "100%",
       opacity: 0,
@@ -47,7 +47,7 @@ export const TextSplitter = ({
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.3, 0.86, 0.36, 0.95],
+        ease: [0.3, 0.86, 0.36, 0.95] as const,
       },
     },
   }

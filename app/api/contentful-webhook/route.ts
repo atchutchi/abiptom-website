@@ -68,10 +68,17 @@ export async function POST(request: NextRequest) {
     // Disparar revalidação do Next.js (ISR)
     // Isso vai regenerar as páginas estáticas
     if (process.env.REVALIDATE_SECRET) {
-      const revalidateUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}&path=/blog`
+      const revalidateUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate`
       
       try {
-        await fetch(revalidateUrl, { method: 'POST' })
+        await fetch(revalidateUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-revalidate-secret': process.env.REVALIDATE_SECRET,
+          },
+          body: JSON.stringify({ path: '/blog' }),
+        })
         console.log('✅ Revalidation triggered')
       } catch (error) {
         console.error('❌ Revalidation failed:', error)
@@ -100,4 +107,3 @@ export async function GET() {
     timestamp: new Date().toISOString()
   })
 }
-

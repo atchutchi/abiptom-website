@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useState, useEffect } from "react"
-import emailjs from "@emailjs/browser"
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -89,14 +88,7 @@ const CareersPage = () => {
         body: JSON.stringify(data),
       })
       const result = await res.json()
-      if (!res.ok) throw new Error(result.error || "Erro ao validar candidatura")
-
-      const { serviceId, templateId, publicKey, templateParams } = result.emailjs
-      if (!serviceId || !templateId || !publicKey) throw new Error("Configuração ausente")
-
-      emailjs.init(publicKey)
-      const emailRes = await emailjs.send(serviceId, templateId, templateParams, publicKey)
-      if (emailRes.status !== 200) throw new Error("Falha ao enviar email.")
+      if (!res.ok) throw new Error(result.error || "Erro ao enviar candidatura")
 
       setSubmitSuccess(true)
       toast({ title: "Candidatura enviada!", description: "Envie também o currículo para info@abiptom.gw." })

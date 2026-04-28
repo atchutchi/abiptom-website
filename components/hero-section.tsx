@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Facebook, Instagram, Linkedin, Youtube } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { TextSplitter } from "@/components/text-splitter"
 import { CrawlingLine } from "@/components/crawling-line"
@@ -17,7 +17,7 @@ const socialLinks = [
   { label: "TikTok", href: "https://www.tiktok.com/@abiptomsarl", icon: TikTokIcon },
 ]
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
@@ -25,7 +25,7 @@ const fadeUp = {
     transition: {
       duration: 0.7,
       delay: i * 0.15,
-      ease: [0.3, 0.86, 0.36, 0.95],
+      ease: [0.3, 0.86, 0.36, 0.95] as const,
     },
   }),
 }

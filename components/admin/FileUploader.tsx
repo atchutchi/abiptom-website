@@ -2,7 +2,8 @@
 
 import { useCallback, useState } from 'react'
 import { useDropzone, Accept } from 'react-dropzone'
-import { useFileUpload, useImageUpload, usePdfUpload } from '@/hooks/useFileUpload'
+import { useFileUpload } from '@/hooks/useFileUpload'
+import { STORAGE_BUCKETS } from '@/lib/supabase/storage'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,12 +24,11 @@ export function FileUploader({ type = 'any', onUploadComplete, className }: File
     type: string
   }>>([])
 
-  // Select appropriate hook based on type
-  const upload = type === 'image' 
-    ? useImageUpload({ onSuccess: handleUploadSuccess })
-    : type === 'pdf'
-    ? usePdfUpload({ onSuccess: handleUploadSuccess })
-    : useFileUpload({ onSuccess: handleUploadSuccess })
+  const upload = useFileUpload({
+    bucket: getBucket(type),
+    allowedTypes: getAllowedTypes(type),
+    onSuccess: handleUploadSuccess,
+  })
 
   function handleUploadSuccess(url: string, path: string) {
     onUploadComplete?.(url, path)
@@ -171,6 +171,30 @@ export function FileUploader({ type = 'any', onUploadComplete, className }: File
       </Card>
     </div>
   )
+}
+
+function getBucket(type: string) {
+  if (type === 'image') return STORAGE_BUCKETS.IMAGES
+  if (type === 'pdf' || type === 'document') return STORAGE_BUCKETS.DOCUMENTS
+  return STORAGE_BUCKETS.ASSETS
+}
+
+function getAllowedTypes(type: string) {
+  switch (type) {
+    case 'image':
+      return ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+    case 'pdf':
+      return ['application/pdf']
+    case 'document':
+      return [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain',
+      ]
+    default:
+      return ['image/*', 'application/pdf', 'text/*']
+  }
 }
 
 function getAcceptTypes(type: string): Accept | undefined {

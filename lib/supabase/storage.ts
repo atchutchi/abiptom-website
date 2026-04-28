@@ -38,6 +38,10 @@ export async function uploadFile(
 
 // Get public URL for a file
 export function getPublicUrl(bucket: string, path: string): string {
+  if (!supabase) {
+    return path.startsWith('/') ? path : `/${path}`
+  }
+
   const { data } = supabase.storage
     .from(bucket)
     .getPublicUrl(path)

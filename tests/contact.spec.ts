@@ -5,12 +5,12 @@ test.describe('Contact Page', () => {
     await page.goto('/contacto')
     
     // Verificar se o formulário de contato está presente
-    await expect(page.getByRole('heading', { name: /contacto/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Vamos conversar' })).toBeVisible()
     
     // Verificar campos do formulário
-    await expect(page.getByLabel(/nome/i)).toBeVisible()
-    await expect(page.getByLabel(/email/i)).toBeVisible()
-    await expect(page.getByLabel(/mensagem/i)).toBeVisible()
+    await expect(page.getByRole('textbox', { name: 'Nome', exact: true })).toBeVisible()
+    await expect(page.getByRole('textbox', { name: 'Email', exact: true })).toBeVisible()
+    await expect(page.getByRole('textbox', { name: 'Mensagem', exact: true })).toBeVisible()
   })
 
   test('should show validation errors for empty form', async ({ page }) => {
@@ -29,7 +29,6 @@ test.describe('Contact Page', () => {
     
     // Verificar se informações de contato estão visíveis
     // Ajuste baseado no seu conteúdo real
-    await expect(page.getByText(/guiné-bissau/i)).toBeVisible()
+    await expect(page.locator('#main-content').getByText(/guiné-bissau/i)).toBeVisible()
   })
 })
-

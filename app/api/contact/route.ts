@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
 import { headers } from 'next/headers';
-import { sign } from 'jsonwebtoken'; // Usando JWT para gerar token
-// import nodemailer from 'nodemailer'; // Não usado se for EmailJS
+import { supabaseAdmin } from '@/lib/supabase/client';
 
 // Função para sanitizar texto (remover scripts e caracteres especiais)
 function sanitizeText(text: string): string {
@@ -80,7 +79,6 @@ function isValidText(text: string, maxLength: number = 1000): boolean {
   return text.length <= maxLength && text.trim().length > 0;
 }
 
-// Função para enviar email via EmailJS REST API
 async function sendEmailWithEmailJS(templateParams: Record<string, string>): Promise<boolean> {
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT || 'template_1hp9d3k';
@@ -130,75 +128,29 @@ async function sendEmailWithEmailJS(templateParams: Record<string, string>): Pro
   }
 }
 
-// Função para fazer backup das mensagens
-async function saveMessageBackup(data: Record<string, string>) {
+async function saveLead(data: Record<string, string>) {
   try {
-    const timestamp = new Date().toISOString();
-    const message = { timestamp, ...data };
-    const fs = require('fs').promises;
-    const path = require('path');
-    const backupDir = path.join(process.cwd(), 'backup', 'messages');
-    await fs.mkdir(backupDir, { recursive: true });
-    const backupFile = path.join(backupDir, `messages_${timestamp.split('T')[0]}.json`);
-    let messagesArray = [];
-    try {
-      const existingData = await fs.readFile(backupFile, 'utf8');
-      messagesArray = JSON.parse(existingData);
-    } catch (readError: any) {
-      if (readError.code !== 'ENOENT') console.error('Erro ao ler arquivo de backup:', readError);
+    if (!supabaseAdmin) {
+      console.warn('Supabase admin não configurado. Lead de contacto não foi persistido.');
+      return;
     }
-    messagesArray.push(message);
-    await fs.writeFile(backupFile, JSON.stringify(messagesArray, null, 2));
-  } catch (error) {
-    console.error('Erro ao salvar backup da mensagem:', error);
-  }
-}
 
-// Função para gerar um token simples para autorizar o cliente a enviar o email
-function generateClientToken(data: Record<string, any>): string {
-  // Em produção, use uma chave secreta forte armazenada em variáveis de ambiente
-  const secret = process.env.JWT_SECRET;
-  
-  // Verificar se existe uma chave JWT
-  if (!secret) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('JWT_SECRET não configurado no ambiente de produção');
-    } else {
-      // Apenas em desenvolvimento usamos uma chave padrão
-      const devSecret = 'temp_development_secret';
-      console.warn('⚠️ Atenção: Usando chave JWT temporária para desenvolvimento. Não use em produção!');
-      
-      return sign(
-        { 
-          data, 
-          iat: Math.floor(Date.now() / 1000),
-          exp: Math.floor(Date.now() / 1000) + 5 * 60 // 5 minutos
-        }, 
-        devSecret
-      );
+    const { error } = await supabaseAdmin.from('leads').insert({
+      type: 'contact',
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      subject: data.subject,
+      message: data.message,
+      source: 'website',
+    });
+
+    if (error) {
+      console.error('Erro ao guardar lead de contacto no Supabase:', error.message);
     }
-  }
-  
-  try {
-    return sign(
-      { 
-        data, 
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 5 * 60 // 5 minutos
-      }, 
-      secret
-    );
   } catch (error) {
-    console.error('Erro ao gerar token:', error);
-    // Como fallback, apenas em desenvolvimento
-    if (process.env.NODE_ENV !== 'production') {
-      return Buffer.from(JSON.stringify({
-        data,
-        exp: Date.now() + 5 * 60 * 1000
-      })).toString('base64');
-    } else {
-      throw new Error('Falha na geração do token JWT');
-    }
+    console.error('Erro ao guardar lead de contacto:', error);
   }
 }
 
@@ -242,16 +194,21 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { firstName, lastName, email, phone, subject, message } = body;
+    const fullName = typeof body.name === 'string' ? body.name.trim() : '';
+    const [derivedFirstName, ...derivedLastNameParts] = fullName.split(/\s+/).filter(Boolean);
+    const isChatbotLead = fullName.length > 0;
+    const firstName = body.firstName || derivedFirstName;
+    const lastName = body.lastName || derivedLastNameParts.join(' ') || 'Chatbot';
+    const { email, phone, subject, message } = body;
 
     // 4. Validação dos Dados do Formulário
-    if (!firstName || !lastName || !email || !subject || !message || !phone) {
+    if (!firstName || !lastName || !email || !subject || !message || (!phone && !isChatbotLead)) {
       return NextResponse.json({ error: 'Todos os campos obrigatórios devem ser preenchidos' }, { status: 400, headers: corsHeaders });
     }
     if (!isValidText(firstName, 100)) return NextResponse.json({ error: 'Nome inválido' }, { status: 400, headers: corsHeaders });
     if (!isValidText(lastName, 100)) return NextResponse.json({ error: 'Sobrenome inválido' }, { status: 400, headers: corsHeaders });
     if (!isValidEmail(email)) return NextResponse.json({ error: 'Formato de email inválido' }, { status: 400, headers: corsHeaders });
-    if (!isValidPhone(phone)) return NextResponse.json({ error: 'Formato de telefone inválido' }, { status: 400, headers: corsHeaders });
+    if (phone && !isValidPhone(phone)) return NextResponse.json({ error: 'Formato de telefone inválido' }, { status: 400, headers: corsHeaders });
     if (!isValidText(subject, 200)) return NextResponse.json({ error: 'Assunto inválido ou muito longo' }, { status: 400, headers: corsHeaders });
     if (!isValidText(message, 5000)) return NextResponse.json({ error: 'Mensagem inválida ou muito longa' }, { status: 400, headers: corsHeaders });
 
@@ -260,29 +217,20 @@ export async function POST(request: Request) {
       firstName: sanitizeText(firstName),
       lastName: sanitizeText(lastName),
       email: sanitizeText(email),
-      phone: sanitizeText(phone),
+      phone: sanitizeText(phone || 'Não informado'),
       subject: sanitizeText(subject),
       message: sanitizeText(message)
     };
 
-    // 6. Salvar Backup (Opcional, mas mantido)
-    await saveMessageBackup(sanitizedData);
+    await saveLead(sanitizedData);
 
-    // 7. Em vez de enviar o email do servidor, retornar dados necessários para o cliente enviar
-    const clientToken = generateClientToken(sanitizedData);
-    
-    // Preparar os dados de EmailJS para o cliente
-    const emailjsData = {
-      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CONTACT || 'template_1hp9d3k',
-      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-      templateParams: sanitizedData
-    };
+    const emailSent = await sendEmailWithEmailJS(sanitizedData);
+    if (!emailSent) {
+      return NextResponse.json({ error: 'Não foi possível enviar a mensagem' }, { status: 502, headers: corsHeaders });
+    }
 
     return NextResponse.json({ 
-      message: 'Contato validado com sucesso!', 
-      token: clientToken,
-      emailjs: emailjsData,
+      message: 'Mensagem enviada com sucesso!',
       remainingTokens: remaining 
     }, { status: 200, headers: corsHeaders });
 

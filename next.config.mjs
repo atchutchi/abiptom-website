@@ -2,23 +2,17 @@ let userConfig = undefined
 try {
   // try to import ESM first
   userConfig = await import('./v0-user-next.config.mjs')
-} catch (e) {
+} catch {
   try {
     // fallback to CJS import
     userConfig = await import("./v0-user-next.config");
-  } catch (innerError) {
+  } catch {
     // ignore error
   }
 }
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true, // Temporário: permitir build com warnings
-  },
-  typescript: {
-    ignoreBuildErrors: true, // Temporário: permitir build com erros de tipo
-  },
   images: {
     remotePatterns: [
       {

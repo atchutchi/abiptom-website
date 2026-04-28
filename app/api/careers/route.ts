@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
 import { headers } from 'next/headers';
-import { sign } from 'jsonwebtoken'; // Se não tiver jsonwebtoken instalado, precisará instalá-lo
+import { supabaseAdmin } from '@/lib/supabase/client';
 
 // Função para sanitizar texto (remover scripts e caracteres especiais)
 function sanitizeText(text: string): string {
@@ -70,93 +70,71 @@ function isValidText(text: string, maxLength: number = 1000): boolean {
   return text.length <= maxLength && text.trim().length > 0;
 }
 
-// Esta função não será mais usada para enviar emails diretamente
-// async function sendEmailWithEmailJS(templateParams: Record<string, any>): Promise<boolean> {
-//   // (código removido pois não estamos mais enviando emails do servidor)
-// }
+async function sendEmailWithEmailJS(templateParams: Record<string, string>): Promise<boolean> {
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CAREERS || 'template_07ea88j';
+  const privateKey = process.env.EMAILJS_PRIVATE_KEY;
+  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-async function saveCandidatureBackup(data: any) {
+  if (!serviceId || !templateId || !privateKey || !publicKey) {
+    console.error('Variáveis de ambiente do EmailJS não configuradas para candidaturas.');
+    return false;
+  }
+
+  const sanitizedParams: Record<string, string | number | boolean> = {};
+  Object.entries(templateParams).forEach(([key, value]) => {
+    sanitizedParams[key] = sanitizeText(value);
+  });
+
   try {
-    console.log('Iniciando backup da candidatura...');
-    const timestamp = new Date().toISOString();
-    const fs = require('fs').promises;
-    const path = require('path');
-    
-    // Criar diretório de backup se não existir
-    const backupDir = path.join(process.cwd(), 'backup', 'careers');
-    await fs.mkdir(backupDir, { recursive: true });
+    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        service_id: serviceId,
+        template_id: templateId,
+        user_id: publicKey,
+        template_params: sanitizedParams,
+        accessToken: privateKey,
+      }),
+    });
 
-    // Salvar informações da candidatura
-    const candidatureData = {
-      timestamp,
-      ...data,
-    };
-
-    // Salvar dados em JSON
-    const backupFile = path.join(backupDir, `candidatures_${timestamp.split('T')[0]}.json`);
-    let candidatures = [];
-    try {
-      const existingData = await fs.readFile(backupFile, 'utf8');
-      candidatures = JSON.parse(existingData);
-    } catch (readError: any) {
-      if (readError.code !== 'ENOENT') { // Ignorar erro se o arquivo não existir
-        console.error('Erro ao ler arquivo de backup:', readError);
-      }
+    if (response.status !== 200) {
+      const errorText = await response.text();
+      console.error(`Erro EmailJS candidaturas (${response.status}): ${errorText}`);
     }
-    candidatures.push(candidatureData);
-    await fs.writeFile(backupFile, JSON.stringify(candidatures, null, 2));
-    console.log('Backup da candidatura realizado com sucesso');
+    return response.status === 200;
   } catch (error) {
-    console.error('Erro ao salvar backup da candidatura:', error);
-    // Não lançamos o erro para não afetar o fluxo principal
+    console.error('Erro ao enviar candidatura via EmailJS:', error);
+    return false;
   }
 }
 
-// Função para gerar um token simples para autorizar o cliente a enviar o email
-function generateClientToken(data: Record<string, any>): string {
-  // Em produção, use uma chave secreta forte armazenada em variáveis de ambiente
-  const secret = process.env.JWT_SECRET;
-  
-  // Verificar se existe uma chave JWT
-  if (!secret) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('JWT_SECRET não configurado no ambiente de produção');
-    } else {
-      // Apenas em desenvolvimento usamos uma chave padrão
-      const devSecret = 'temp_development_secret';
-      console.warn('⚠️ Atenção: Usando chave JWT temporária para desenvolvimento. Não use em produção!');
-      
-      return sign(
-        { 
-          data, 
-          iat: Math.floor(Date.now() / 1000),
-          exp: Math.floor(Date.now() / 1000) + 5 * 60 // 5 minutos
-        }, 
-        devSecret
-      );
-    }
-  }
-  
+async function saveLead(data: Record<string, string>) {
   try {
-    return sign(
-      { 
-        data, 
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 5 * 60 // 5 minutos
-      }, 
-      secret
-    );
-  } catch (error) {
-    console.error('Erro ao gerar token:', error);
-    // Como fallback, apenas em desenvolvimento
-    if (process.env.NODE_ENV !== 'production') {
-      return Buffer.from(JSON.stringify({
-        data,
-        exp: Date.now() + 5 * 60 * 1000
-      })).toString('base64');
-    } else {
-      throw new Error('Falha na geração do token JWT');
+    if (!supabaseAdmin) {
+      console.warn('Supabase admin não configurado. Lead de candidatura não foi persistido.');
+      return;
     }
+
+    const { error } = await supabaseAdmin.from('leads').insert({
+      type: 'career',
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      subject: data.position,
+      message: data.message,
+      source: 'website',
+    });
+
+    if (error) {
+      console.error('Erro ao guardar lead de candidatura no Supabase:', error.message);
+    }
+  } catch (error) {
+    console.error('Erro ao guardar lead de candidatura:', error);
   }
 }
 
@@ -260,27 +238,20 @@ export async function POST(request: Request) {
       message: sanitizeText(body.message)
     };
 
-    // 6. Salvar backup da candidatura (mantendo isso do lado do servidor)
-    await saveCandidatureBackup(sanitizedData);
+    await saveLead(sanitizedData);
 
-    // 7. Em vez de enviar o email do lado do servidor, vamos gerar um token
-    // para que o cliente possa enviar o email usando o SDK EmailJS
-    const clientToken = generateClientToken(sanitizedData);
+    const emailSent = await sendEmailWithEmailJS(sanitizedData);
+    if (!emailSent) {
+      return NextResponse.json(
+        { error: 'Não foi possível enviar a candidatura' },
+        { status: 502, headers: corsHeaders }
+      );
+    }
 
-    // Preparar os dados de EmailJS para o cliente
-    const emailjsData = {
-      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_CAREERS || 'template_07ea88j',
-      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-      templateParams: sanitizedData
-    };
-
-    console.log('Candidatura processada com sucesso. Cliente autorizado a enviar email.');
+    console.log('Candidatura processada com sucesso.');
     return NextResponse.json(
       { 
-        message: 'Candidatura validada com sucesso!',
-        token: clientToken,
-        emailjs: emailjsData,
+        message: 'Candidatura enviada com sucesso!',
         remaining 
       },
       { status: 200, headers: corsHeaders }

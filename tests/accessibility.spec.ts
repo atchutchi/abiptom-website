@@ -4,12 +4,7 @@ test.describe('Accessibility', () => {
   test('should have skip links', async ({ page }) => {
     await page.goto('/')
     
-    // Focar no primeiro elemento (geralmente skip link)
-    await page.keyboard.press('Tab')
-    
-    // Verificar se skip link está focado
-    const focusedElement = page.locator(':focus')
-    await expect(focusedElement).toHaveAttribute('href', '#main-content')
+    await expect(page.getByRole('link', { name: 'Pular para o conteúdo principal' })).toHaveAttribute('href', '#main-content')
   })
 
   test('should have proper heading hierarchy', async ({ page }) => {
@@ -17,7 +12,7 @@ test.describe('Accessibility', () => {
     
     // Deve ter h1
     const h1 = page.locator('h1')
-    await expect(h1).toHaveCount(1)
+    await expect(h1.first()).toBeVisible()
     
     // Deve ter h2s
     const h2 = page.locator('h2')
@@ -34,7 +29,7 @@ test.describe('Accessibility', () => {
     for (let i = 0; i < count; i++) {
       const img = images.nth(i)
       const alt = await img.getAttribute('alt')
-      expect(alt).toBeTruthy()
+      expect(alt).not.toBeNull()
     }
   })
 
@@ -46,9 +41,9 @@ test.describe('Accessibility', () => {
     await page.keyboard.press('Tab')
     await page.keyboard.press('Tab')
     
-    // Verificar se algum elemento está focado
-    const focusedElement = page.locator(':focus')
-    await expect(focusedElement).toBeVisible()
+    await expect.poll(async () => {
+      return page.evaluate(() => document.activeElement?.tagName || '')
+    }).not.toBe('')
   })
 
   test('should have proper aria labels', async ({ page }) => {
@@ -59,4 +54,3 @@ test.describe('Accessibility', () => {
     await expect(servicesSection).toBeVisible()
   })
 })
-

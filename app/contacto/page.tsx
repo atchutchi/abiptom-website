@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useState, useEffect } from "react"
-import emailjs from "@emailjs/browser"
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -101,14 +100,7 @@ const ContactPage = () => {
       })
 
       const validationResult = await validationResponse.json()
-      if (!validationResponse.ok) throw new Error(validationResult.error || "Erro ao validar formulário")
-
-      const { serviceId, templateId, publicKey, templateParams } = validationResult.emailjs
-      if (!serviceId || !templateId || !publicKey) throw new Error("Configuração do EmailJS ausente")
-
-      emailjs.init(publicKey)
-      const emailResponse = await emailjs.send(serviceId, templateId, templateParams, publicKey)
-      if (emailResponse.status !== 200) throw new Error("Falha ao enviar email.")
+      if (!validationResponse.ok) throw new Error(validationResult.error || "Erro ao enviar mensagem")
 
       setSubmitSuccess(true)
       toast({ title: "Mensagem enviada!", description: "Entraremos em contacto em breve." })

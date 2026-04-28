@@ -1,11 +1,8 @@
 import { config } from 'dotenv';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
 // Load environment variables at module level
 try {
   config({ path: '.env.local' });
-} catch (e) {
+} catch {
   console.warn('Could not load .env.local');
 }
 
@@ -115,13 +112,6 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: [
-      'www.google-analytics.com',
-      'maps.googleapis.com',
-      'img.youtube.com',
-      'i.ytimg.com',
-      'smakmuyzyaoifhpjapkj.supabase.co'
-    ],
     remotePatterns: (() => {
       const patterns = [
         {

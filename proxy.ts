@@ -24,7 +24,6 @@ function buildCSP(nonce?: string): string {
     'https://www.googletagmanager.com',
     'https://www.google-analytics.com',
     'https://ssl.google-analytics.com',
-    'https://cdn.emailjs.com',
     'https://www.youtube.com',
     'https://*.youtube.com',
     'https://maps.googleapis.com',
@@ -35,7 +34,6 @@ function buildCSP(nonce?: string): string {
     "'self'",
     'https://www.google-analytics.com',
     'https://analytics.google.com',
-    'https://api.emailjs.com',
     'https://maps.googleapis.com',
     'https://*.googleapis.com',
     supabaseUrl,
@@ -144,7 +142,7 @@ function getSecurityHeaders(): Record<string, string> {
   }
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next()
   
   // Tentar atualizar a sessão do Supabase

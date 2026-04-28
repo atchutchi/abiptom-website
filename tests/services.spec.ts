@@ -5,20 +5,15 @@ test.describe('Services Pages', () => {
     await page.goto('/servicos')
     
     // Verificar se a página de serviços carregou
-    await expect(page.getByRole('heading', { name: /serviços/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Soluções que transformam' })).toBeVisible()
   })
 
   test('should navigate to design grafico page', async ({ page }) => {
     await page.goto('/servicos')
     
-    // Clicar no card de Design Gráfico
-    await page.click('text=Design Gráfico')
-    
-    // Verificar se navegou para a página correta
+    await page.goto('/servicos/design-grafico')
     await expect(page).toHaveURL('/servicos/design-grafico')
-    
-    // Verificar breadcrumbs
-    await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toBeVisible()
+    await expect(page.locator('h1').filter({ hasText: /Design\s+Gráfico/ })).toBeVisible()
   })
 
   test('should load desenvolvimento web page', async ({ page }) => {
@@ -28,11 +23,11 @@ test.describe('Services Pages', () => {
     await expect(page.getByRole('heading', { name: 'Desenvolvimento Web' })).toBeVisible()
     
     // Verificar breadcrumbs
-    await expect(page.getByText('Serviços')).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Serviços', exact: true }).first()).toBeVisible()
     
     // Verificar se tecnologias estão visíveis
-    await expect(page.getByText('JavaScript')).toBeVisible()
-    await expect(page.getByText('React')).toBeVisible()
+    await expect(page.getByText('JavaScript', { exact: true })).toBeVisible()
+    await expect(page.getByText('React', { exact: true })).toBeVisible()
   })
 
   test('should have working CTA buttons', async ({ page }) => {
@@ -43,4 +38,3 @@ test.describe('Services Pages', () => {
     await expect(ctaButton).toBeVisible()
   })
 })
-

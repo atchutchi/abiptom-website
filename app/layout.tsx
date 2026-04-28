@@ -10,6 +10,8 @@ import { SmoothScroll } from "@/components/smooth-scroll"
 import { CustomCursor } from "@/components/custom-cursor"
 import { PageNoize } from "@/components/page-noize"
 import { Preloader } from "@/components/preloader"
+import CSRFToken from "@/components/csrf-token"
+import { BackToTop } from "@/components/back-to-top"
 import GoogleAnalytics from "./components/GoogleAnalytics"
 
 const playfairDisplay = Playfair_Display({
@@ -102,6 +104,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       >
         {gaId && <GoogleAnalytics GA_MEASUREMENT_ID={gaId} />}
         <Preloader />
+        <CSRFToken />
         <CustomCursor />
         <PageNoize />
         <SmoothScroll>
@@ -112,6 +115,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </main>
             <SiteFooter />
             <ChatBot />
+            <BackToTop />
           </div>
         </SmoothScroll>
       </body>
