@@ -154,7 +154,7 @@ const Home = () => {
                   <Image
                     alt="Equipa ABIPTOM"
                     className="object-cover"
-                    src="/images/foto_1.jpg"
+                    src="/images/foto_1.png"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
