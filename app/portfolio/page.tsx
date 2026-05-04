@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ClientLogos } from "@/components/client-logos"
@@ -11,16 +10,44 @@ import { AnimatedSection } from "@/components/animated-section"
 import { TextSplitter } from "@/components/text-splitter"
 import { PageTransition } from "@/components/page-transition"
 
-type PortfolioItem = {
+type PortfolioBaseItem = {
   title: string
   category: string
-  type: "image" | "video"
-  src: string
-  videoUrl?: string
   description: string
 }
 
+type ImagePortfolioItem = PortfolioBaseItem & {
+  type: "image"
+  src: string
+}
+
+type VideoPortfolioItem = PortfolioBaseItem & {
+  type: "video"
+  videoUrl: string
+}
+
+type PortfolioItem = ImagePortfolioItem | VideoPortfolioItem
+
 const categories = ["Todos", "Websites", "Design", "Social Media", "Vídeo", "Documentos"]
+
+const getYouTubeVideoId = (videoUrl: string) => {
+  try {
+    const pathnameParts = new URL(videoUrl).pathname.split("/")
+    const embedIndex = pathnameParts.indexOf("embed")
+    return embedIndex >= 0 ? pathnameParts[embedIndex + 1] : null
+  } catch {
+    return null
+  }
+}
+
+const getVideoThumbnailUrl = (videoUrl: string) => {
+  const videoId = getYouTubeVideoId(videoUrl)
+  return videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "/placeholder.jpg"
+}
+
+const getPortfolioCover = (item: PortfolioItem) => {
+  return item.type === "video" ? getVideoThumbnailUrl(item.videoUrl) : item.src
+}
 
 const portfolioItems: PortfolioItem[] = [
   { title: "Website ARN", category: "Websites", type: "image", src: "/images/portfolio/websites/arn.png", description: "Website institucional com CMS." },
@@ -42,12 +69,12 @@ const portfolioItems: PortfolioItem[] = [
   { title: "Creative Industry", category: "Design", type: "image", src: "/images/portfolio/graphicdesign/flyer-evento-bissau-rising-criative-industry.png", description: "Flyer para indústria criativa." },
   { title: "Youth Sounding Board", category: "Social Media", type: "image", src: "/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg", description: "Gestão de redes sociais e criação de conteúdo." },
   { title: "Bissau Rising Social", category: "Social Media", type: "image", src: "/images/portfolio/graphicdesign/flyer-bissau_rising_novembro_2022-07.jpg", description: "Estratégia digital para evento." },
-  { title: "BISSAU RISING", category: "Vídeo", type: "video", src: "/images/portfolio/graphicdesign/bissaurising-banner.png", videoUrl: "https://www.youtube.com/embed/N_Oq4NavzGA", description: "Impact Investment & Trade Forum." },
-  { title: "Accelerator Lab", category: "Vídeo", type: "video", src: "/images/portfolio/graphicdesign/capa-documento-UNDP.jpg", videoUrl: "https://www.youtube.com/embed/Rg8RjicC89Y", description: "Stakeholder Workshop and Launch." },
-  { title: "DARLING Bissau", category: "Vídeo", type: "video", src: "/images/portfolio/graphicdesign/atelie-afrochic-salao.png", videoUrl: "https://www.youtube.com/embed/caVDyyjDCtA", description: "Produção audiovisual promocional." },
-  { title: "Domínio .gw", category: "Vídeo", type: "video", src: "/images/portfolio/graphicdesign/gw-banner.png", videoUrl: "https://www.youtube.com/embed/rKKBUsQvJrQ", description: "Campanha de promoção do domínio nacional." },
-  { title: "UN-HABITAT", category: "Vídeo", type: "video", src: "/images/portfolio/graphicdesign/capa-documento-UNDP.jpg", videoUrl: "https://www.youtube.com/embed/IAuD98YppLQ", description: "Animação 2D informativa para eventos." },
-  { title: "Aldeias SOS", category: "Vídeo", type: "video", src: "/images/portfolio/graphicdesign/capa-documento-UNDP.jpg", videoUrl: "https://www.youtube.com/embed/O45iNfSO4tQ", description: "Animação 2D para campanha escolar." },
+  { title: "BISSAU RISING", category: "Vídeo", type: "video", videoUrl: "https://www.youtube.com/embed/N_Oq4NavzGA", description: "Impact Investment & Trade Forum." },
+  { title: "Accelerator Lab", category: "Vídeo", type: "video", videoUrl: "https://www.youtube.com/embed/Rg8RjicC89Y", description: "Stakeholder Workshop and Launch." },
+  { title: "DARLING Bissau", category: "Vídeo", type: "video", videoUrl: "https://www.youtube.com/embed/caVDyyjDCtA", description: "Produção audiovisual promocional." },
+  { title: "Domínio .gw", category: "Vídeo", type: "video", videoUrl: "https://www.youtube.com/embed/rKKBUsQvJrQ", description: "Campanha de promoção do domínio nacional." },
+  { title: "UN-HABITAT", category: "Vídeo", type: "video", videoUrl: "https://www.youtube.com/embed/IAuD98YppLQ", description: "Animação 2D informativa para eventos." },
+  { title: "Aldeias SOS", category: "Vídeo", type: "video", videoUrl: "https://www.youtube.com/embed/O45iNfSO4tQ", description: "Animação 2D para campanha escolar." },
 ]
 
 const PortfolioPage = () => {
@@ -130,7 +157,7 @@ const PortfolioPage = () => {
                         ) : (
                           <>
                             <Image
-                              src={item.src}
+                              src={getPortfolioCover(item)}
                               alt={item.title}
                               fill
                               className="object-cover transition-transform duration-700 ease-obys-default group-hover:scale-105"
