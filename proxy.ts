@@ -12,7 +12,7 @@ import { updateSession } from '@/utils/supabase/middleware'
  */
 
 // Configuração do CSP baseada no ambiente
-function buildCSP(nonce?: string): string {
+function buildCSP(): string {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://smakmuyzyaoifhpjapkj.supabase.co'
   
   // Em produção, idealmente usaríamos nonces, mas por compatibilidade mantemos unsafe-inline

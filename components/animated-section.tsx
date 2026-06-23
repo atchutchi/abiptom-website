@@ -12,8 +12,8 @@ type AnimatedSectionProps = {
 
 const animationMap = {
   "fade-up": { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } },
-  "fade-left": { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0 } },
-  "fade-right": { hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0 } },
+  "fade-left": { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } },
+  "fade-right": { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } },
   "fade-in": { hidden: { opacity: 0 }, visible: { opacity: 1 } },
   "scale-up": { hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } },
 }

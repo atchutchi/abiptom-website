@@ -65,9 +65,10 @@ export function SiteHeader() {
             <Image
               src="/images/abiptom.png"
               alt="ABIPTOM"
-              width={48}
+              width={72}
               height={48}
               className="h-12 w-auto"
+              style={{ width: "auto" }}
               priority
             />
           </Link>

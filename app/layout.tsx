@@ -1,7 +1,7 @@
 import type React from "react"
 import "@/app/globals.css"
 import type { Metadata } from "next"
-import { Playfair_Display, Inter } from "next/font/google"
+import { Barlow, Barlow_Condensed } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -14,14 +14,14 @@ import CSRFToken from "@/components/csrf-token"
 import { BackToTop } from "@/components/back-to-top"
 import GoogleAnalytics from "./components/GoogleAnalytics"
 
-const playfairDisplay = Playfair_Display({
+const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-display",
   display: "swap",
 })
 
-const inter = Inter({
+const barlow = Barlow({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body",
@@ -98,8 +98,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body
         className={cn(
           "min-h-screen font-body antialiased bg-obys-near-black text-white",
-          playfairDisplay.variable,
-          inter.variable
+          barlowCondensed.variable,
+          barlow.variable
         )}
       >
         {gaId && <GoogleAnalytics GA_MEASUREMENT_ID={gaId} />}

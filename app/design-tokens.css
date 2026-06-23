@@ -26,8 +26,8 @@
   --near-white: #f2f2f2;
 
   /* Typography */
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
 
   /* Transitions */

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { uploadToMedia, ALLOWED_FILE_TYPES, MAX_FILE_SIZES } from '@/lib/supabase/media-storage'
 import { rateLimit } from '@/lib/rate-limit'
-import { headers } from 'next/headers'
 
 /**
  * API de Upload Segura
@@ -92,9 +91,9 @@ function validateExtension(filename: string, mimeType: string): boolean {
 /**
  * Sanitiza o nome do arquivo
  */
-function sanitizeFilename(filename: string): string {
+export function sanitizeFilename(filename: string): string {
   // Remover path traversal attempts
-  let safe = filename.replace(/[\/\\]/g, '')
+  let safe = filename.replace(/[\/\\]/g, '').replace(/\.\./g, '')
   
   // Remover caracteres especiais perigosos
   safe = safe.replace(/[<>:"|?*\x00-\x1F]/g, '')
@@ -107,7 +106,7 @@ function sanitizeFilename(filename: string): string {
   }
   
   // Garantir que não está vazio
-  if (!safe || safe === '.') {
+  if (!safe || /^[.]+$/.test(safe)) {
     safe = 'file'
   }
   
@@ -226,10 +225,12 @@ export async function POST(request: NextRequest) {
 
     // 8. Sanitizar nome e folder
     const safeFolder = validateFolder(folder)
+    const safeFileName = sanitizeFilename(file.name)
     
     // 9. Fazer upload
     const result = await uploadToMedia(file, {
       folder: safeFolder,
+      fileName: safeFileName,
       upsert: false
     })
 

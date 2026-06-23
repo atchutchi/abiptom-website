@@ -32,9 +32,10 @@ export function SiteFooter() {
                 <Image
                   src="/images/abiptom.png"
                   alt="ABIPTOM"
-                  width={64}
+                  width={96}
                   height={64}
                   className="h-16 w-auto"
+                  style={{ width: "auto" }}
                 />
               </Link>
               <p className="body-base text-obys-text-secondary max-w-sm mb-8">

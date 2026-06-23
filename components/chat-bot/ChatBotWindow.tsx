@@ -212,9 +212,10 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
             <Image
               src="/images/abiptom.png"
               alt="ABIPTOM"
-              width={32}
+              width={48}
               height={32}
               className="h-8 w-auto rounded-full"
+              style={{ width: "auto" }}
             />
             <div>
               <p className="text-white text-sm font-semibold leading-tight">

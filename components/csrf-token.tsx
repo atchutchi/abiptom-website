@@ -38,7 +38,8 @@ function getCookie(name: string): string {
 // Função para definir cookie
 function setCookie(name: string, value: string, maxAge: number = 3600): void {
   if (typeof document === 'undefined') return
-  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Strict`
+  const secure = window.location.protocol === 'https:' ? '; Secure' : ''
+  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Strict${secure}`
 }
 
 export default function CSRFToken() {

@@ -112,7 +112,7 @@ export function HeroSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-obys-text-muted hover:text-obys-gold transition-colors duration-obys ease-obys-default"
+                className="inline-flex h-11 w-11 items-center justify-center text-obys-text-muted hover:text-obys-gold transition-colors duration-obys ease-obys-default"
                 aria-label={label}
               >
                 <Icon className="w-5 h-5" />

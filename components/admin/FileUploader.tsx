@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Upload, File, Image, FileText, CheckCircle, AlertCircle } from 'lucide-react'
+import { Upload, File, Image as ImageIcon, FileText, CheckCircle, AlertCircle } from 'lucide-react'
 
 interface FileUploaderProps {
   type?: 'any' | 'image' | 'pdf' | 'document'
@@ -252,7 +252,7 @@ function getAcceptedFormats(type: string) {
 function getUploadIcon(type: string) {
   switch (type) {
     case 'image':
-      return <Image className="h-8 w-8 mx-auto text-gray-400" />
+      return <ImageIcon className="h-8 w-8 mx-auto text-gray-400" />
     case 'pdf':
     case 'document':
       return <FileText className="h-8 w-8 mx-auto text-gray-400" />
@@ -263,7 +263,7 @@ function getUploadIcon(type: string) {
 
 function getFileIcon(mimeType: string) {
   if (mimeType.startsWith('image/')) {
-    return <Image className="h-4 w-4 text-blue-500" />
+    return <ImageIcon className="h-4 w-4 text-blue-500" />
   }
   if (mimeType === 'application/pdf') {
     return <FileText className="h-4 w-4 text-red-500" />
