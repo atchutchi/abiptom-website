@@ -51,6 +51,12 @@ const team = [
     bio: "A energia e a voz por trás das campanhas digitais da ABIPTOM, com carisma e presença cativante, representa as marcas em frente às câmaras e participa na criação de roteiros e conteúdos.",
   },
   {
+    name: "Brinsan da Costa",
+    role: "Host de Social Media e Criadora de Conteúdo",
+    image: "/images/team/brinsan-da-costa.jpg",
+    bio: "Apresentadora, criadora de conteúdo e influenciadora digital. Traz experiência em entrevistas, rádio, publicidade e campanhas para marcas, com mais de 4.7M gostos no TikTok e 111.5k seguidores.",
+  },
+  {
     name: "Amelissa Barreto Duarte",
     role: "Designer Gráfico",
     image: "/images/team/amelissa.svg",
@@ -80,7 +86,7 @@ const metrics = [
   { value: "10+", label: "Anos de experiência" },
   { value: "200+", label: "Projectos entregues" },
   { value: "50+", label: "Clientes satisfeitos" },
-  { value: "11", label: "Especialistas na equipa" },
+  { value: "12", label: "Especialistas na equipa" },
 ]
 
 const AboutPage = () => {
