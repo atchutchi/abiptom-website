@@ -57,6 +57,12 @@ const team = [
     bio: "Apresentadora, criadora de conteúdo e influenciadora digital. Traz experiência em entrevistas, rádio, publicidade e campanhas para marcas, com mais de 4.7M gostos no TikTok e 111.5k seguidores.",
   },
   {
+    name: "Adjania Iaia Gomes",
+    role: "Host de Social Media",
+    image: "/images/team/adjania-iaia-gomes.jpg",
+    bio: "Profissional de Comunicação e Jornalismo, com experiência em apresentação, produção de conteúdos, mediação pública e gestão de redes sociais. Reforça a presença das marcas em vídeo, eventos e campanhas digitais.",
+  },
+  {
     name: "Amelissa Barreto Duarte",
     role: "Designer Gráfico",
     image: "/images/team/amelissa.svg",
@@ -86,7 +92,7 @@ const metrics = [
   { value: "10+", label: "Anos de experiência" },
   { value: "200+", label: "Projectos entregues" },
   { value: "50+", label: "Clientes satisfeitos" },
-  { value: "12", label: "Especialistas na equipa" },
+  { value: "13", label: "Especialistas na equipa" },
 ]
 
 const AboutPage = () => {
