@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getAllBlogPosts } from '@/lib/contentful/client'
-import { projectBlogPosts } from '@/lib/data/project-blog-posts'
+import { publishedBlogPosts } from '@/lib/data/published-blog-posts'
 
 export const revalidate = 60 // Revalidar a cada 60 segundos
 
@@ -32,12 +32,13 @@ export async function GET() {
       })) || [],
     }))
     
-    const localSlugs = new Set(projectBlogPosts.map(post => post.slug))
-    return NextResponse.json([...projectBlogPosts, ...posts.filter((post: { slug: string }) => !localSlugs.has(post.slug))])
+    const localSlugs = new Set(publishedBlogPosts.map(post => post.slug))
+    return NextResponse.json([...publishedBlogPosts, ...posts.filter((post: { slug: string }) => !localSlugs.has(post.slug))]
+      .sort((a, b) => Date.parse(b.date) - Date.parse(a.date)))
   } catch (error) {
     console.error('❌ Error fetching blog posts:', error)
-    // Retornar array vazio em caso de erro
-    return NextResponse.json(projectBlogPosts)
+    // Preservar todos os artigos locais se o CMS estiver indisponível.
+    return NextResponse.json(publishedBlogPosts)
   }
 }
 

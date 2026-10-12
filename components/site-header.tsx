@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { BrandIcon } from "./icons/brands"
+import { socialLinks } from "@/lib/social-links"
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -42,6 +44,15 @@ export function SiteHeader() {
     }
   }, [isMenuOpen])
 
+  useEffect(() => {
+    if (!isMenuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false)
+    }
+    window.addEventListener("keydown", closeOnEscape)
+    return () => window.removeEventListener("keydown", closeOnEscape)
+  }, [isMenuOpen])
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
@@ -54,8 +65,8 @@ export function SiteHeader() {
       </a>
 
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-obys ease-obys-default ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-obys ease-obys-default ${
+          isScrolled && !isMenuOpen
             ? "bg-obys-near-black/95 backdrop-blur-sm"
             : "bg-transparent"
         }`}
@@ -78,6 +89,7 @@ export function SiteHeader() {
             className="relative z-[60] flex flex-col items-center justify-center w-10 h-10 gap-[5px] group"
             aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={isMenuOpen}
+            aria-controls="site-menu"
             type="button"
           >
             <span
@@ -102,13 +114,15 @@ export function SiteHeader() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[55] bg-obys-near-black"
+            id="site-menu"
+            data-lenis-prevent
+            className="fixed inset-0 z-[55] overflow-y-auto bg-obys-near-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.4, 0, 0, 1] }}
           >
-            <div className="h-full flex flex-col lg:flex-row pt-24 pb-12">
+            <div className="min-h-full flex flex-col lg:flex-row pt-24 pb-12">
               <div className="flex-1 flex flex-col justify-center px-8 lg:px-20">
                 <nav aria-label="Menu de navegação">
                   {navLinks.map((link, i) => (
@@ -167,13 +181,16 @@ export function SiteHeader() {
                 </div>
 
                 <div className="flex gap-6 pt-4">
-                  {["Facebook", "Instagram", "LinkedIn", "YouTube"].map((social) => (
+                  {socialLinks.map(({ label, href, brand }) => (
                     <a
-                      key={social}
-                      href="#"
-                      className="text-label text-obys-text-muted hover:text-obys-gold transition-colors"
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="inline-flex h-10 w-10 items-center justify-center text-white hover:text-obys-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-obys-gold transition-colors"
                     >
-                      {social.slice(0, 2).toUpperCase()}
+                      <BrandIcon brand={brand} className="h-6 w-6" />
                     </a>
                   ))}
                 </div>

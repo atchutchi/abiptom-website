@@ -20,7 +20,7 @@ import Image from "next/image"
 import { AnimatedSection } from "@/components/animated-section"
 import { TextSplitter } from "@/components/text-splitter"
 import { PageTransition } from "@/components/page-transition"
-import { projectBlogPosts } from "@/lib/data/project-blog-posts"
+import { publishedBlogPosts } from "@/lib/data/published-blog-posts"
 
 const getPosts = async (): Promise<BlogPost[]> => {
   try {
@@ -28,20 +28,20 @@ const getPosts = async (): Promise<BlogPost[]> => {
       '/api/blog/posts',
       { cache: "no-store", next: { revalidate: 0 } }
     )
-    if (!response.ok) return projectBlogPosts
+    if (!response.ok) return publishedBlogPosts
     return await response.json()
   } catch {
-    return projectBlogPosts
+    return publishedBlogPosts
   }
 }
 
 const BlogContent = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [posts, setPosts] = useState<BlogPost[]>(projectBlogPosts)
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(projectBlogPosts)
-  const [categories, setCategories] = useState(getAllCategories(projectBlogPosts))
-  const [tags, setTags] = useState(getAllTags(projectBlogPosts))
+  const [posts, setPosts] = useState<BlogPost[]>(publishedBlogPosts)
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(publishedBlogPosts)
+  const [categories, setCategories] = useState(getAllCategories(publishedBlogPosts))
+  const [tags, setTags] = useState(getAllTags(publishedBlogPosts))
   const [currentPage, setCurrentPage] = useState(1)
 
   const category = searchParams.get("categoria")

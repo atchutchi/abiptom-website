@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { featuredBlogPost } from "@/lib/data/published-blog-posts"
 import { pageMetadata } from "@/lib/seo"
 
 export const metadata = pageMetadata('/')
@@ -298,26 +299,26 @@ const Home = () => {
             </AnimatedSection>
 
             <AnimatedSection animation="fade-up" delay={100}>
-              <Link href="/blog/branding-unido-amae-guine-bissau" className="group block">
+              <Link href={`/blog/${featuredBlogPost.slug}`} className="group block">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   <div className="relative aspect-video overflow-hidden bg-obys-near-black">
                     <Image
-                      alt="Projeto de Branding UNIDO e AMAE"
+                      alt={featuredBlogPost.title}
                       className="object-cover transition-transform duration-700 ease-obys-default group-hover:scale-105"
-                      src="/images/blog/reuniao-com-unido-e-amae-branding.jpg"
+                      src={featuredBlogPost.coverImage}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                   <div className="py-4">
                     <span className="text-label text-obys-text-muted mb-4 block">
-                      15 Março, 2024
+                      {new Date(featuredBlogPost.date).toLocaleDateString("pt-PT", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
                     </span>
                     <h3 className="heading-subsection text-white mb-4 group-hover:text-obys-gold transition-colors duration-obys">
-                      Concluímos com Sucesso o Projeto de Branding para 21 Marcas
+                      {featuredBlogPost.title}
                     </h3>
                     <p className="body-base text-obys-text-secondary">
-                      Em colaboração com a UNIDO e a AMAE, desenvolvemos identidades visuais para 21 marcas de mulheres empreendedoras.
+                      {featuredBlogPost.excerpt}
                     </p>
                   </div>
                 </div>

@@ -1,9 +1,9 @@
 import { generateRSSFeed } from "@/lib/utils/blog";
 import { NextResponse } from "next/server";
-import { projectBlogPosts } from "@/lib/data/project-blog-posts";
+import { publishedBlogPosts } from "@/lib/data/published-blog-posts";
 
 export async function GET() {
-  const rss = generateRSSFeed(projectBlogPosts);
+  const rss = generateRSSFeed(publishedBlogPosts);
 
   return new NextResponse(rss, {
     headers: {

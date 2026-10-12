@@ -1,7 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react"
-import { TikTokIcon } from "./icons/tiktok"
+import { Mail, MapPin, Phone } from "lucide-react"
+import { BrandIcon } from "./icons/brands"
+import { socialLinks } from "@/lib/social-links"
 
 const footerLinks = [
   { href: "/", label: "Início" },
@@ -11,14 +12,6 @@ const footerLinks = [
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
   { href: "/trabalhe-conosco", label: "Carreiras" },
-]
-
-const socialLinks = [
-  { href: "https://www.facebook.com/abiptomsarl", icon: Facebook, label: "Facebook" },
-  { href: "https://www.instagram.com/abiptom_gb", icon: Instagram, label: "Instagram" },
-  { href: "https://www.linkedin.com/company/abiptom-sarl", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://youtube.com/@abiptom", icon: Youtube, label: "YouTube" },
-  { href: "https://www.tiktok.com/@abiptomsarl", icon: TikTokIcon, label: "TikTok" },
 ]
 
 import { CookiePreferencesButton } from './tracking-consent'
@@ -44,7 +37,7 @@ export function SiteFooter() {
                 Consultores especializados em Marketing, Design Gráfico, Web Design e Desenvolvimento de Software.
               </p>
               <div className="flex gap-5">
-                {socialLinks.map(({ href, icon: Icon, label }) => (
+                {socialLinks.map(({ href, brand, label }) => (
                   <a
                     key={label}
                     href={href}
@@ -53,7 +46,7 @@ export function SiteFooter() {
                     className="text-obys-text-muted hover:text-obys-gold transition-colors duration-obys ease-obys-default"
                     aria-label={label}
                   >
-                    <Icon className="w-5 h-5" />
+                    <BrandIcon brand={brand} className="w-5 h-5" />
                   </a>
                 ))}
               </div>

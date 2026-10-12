@@ -2,20 +2,13 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Facebook, Instagram, Linkedin, Youtube } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion, type Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { TextSplitter } from "@/components/text-splitter"
 import { CrawlingLine } from "@/components/crawling-line"
-import { TikTokIcon } from "./icons/tiktok"
-
-const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/abiptomsarl", icon: Facebook },
-  { label: "Instagram", href: "https://www.instagram.com/abiptom_gb", icon: Instagram },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/abiptom-sarl", icon: Linkedin },
-  { label: "YouTube", href: "https://youtube.com/@abiptom", icon: Youtube },
-  { label: "TikTok", href: "https://www.tiktok.com/@abiptomsarl", icon: TikTokIcon },
-]
+import { BrandIcon } from "./icons/brands"
+import { socialLinks } from "@/lib/social-links"
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -106,7 +99,7 @@ export function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            {socialLinks.map(({ label, href, icon: Icon }) => (
+            {socialLinks.map(({ label, href, brand }) => (
               <a
                 key={label}
                 href={href}
@@ -115,7 +108,7 @@ export function HeroSection() {
                 className="inline-flex h-11 w-11 items-center justify-center text-obys-text-muted hover:text-obys-gold transition-colors duration-obys ease-obys-default"
                 aria-label={label}
               >
-                <Icon className="w-5 h-5" />
+                <BrandIcon brand={brand} className="w-5 h-5" />
               </a>
             ))}
           </motion.div>

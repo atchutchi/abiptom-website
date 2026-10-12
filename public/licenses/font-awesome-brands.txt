@@ -1,0 +1,8 @@
+Social network brand icons: Font Awesome Free 7.3.1
+Copyright 2026 Fonticons, Inc.
+Source: https://github.com/FortAwesome/Font-Awesome/tree/7.x/svgs/brands
+Icons licence: Creative Commons Attribution 4.0 International (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+https://fontawesome.com/license/free
+The SVG paths are unchanged. They are rendered in the site's foreground colour.
+Brand names and logos remain trademarks of their respective owners.
