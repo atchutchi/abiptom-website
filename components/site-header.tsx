@@ -180,7 +180,7 @@ export function SiteHeader() {
                   </p>
                 </div>
 
-                <div className="flex gap-6 pt-4">
+                <div className="flex flex-wrap gap-3 sm:gap-6 pt-4">
                   {socialLinks.map(({ label, href, brand }) => (
                     <a
                       key={label}
