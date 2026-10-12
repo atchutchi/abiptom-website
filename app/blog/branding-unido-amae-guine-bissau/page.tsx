@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/blog/branding-unido-amae-guine-bissau')
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 

@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/servicos/marketing-digital')
+
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, CheckCircle } from "lucide-react"

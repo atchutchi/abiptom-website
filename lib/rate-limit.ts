@@ -147,7 +147,8 @@ export interface RateLimitResult {
  */
 export async function rateLimit(
   identifier: string,
-  customConfig?: Partial<RateLimitConfig>
+  customConfig?: Partial<RateLimitConfig>,
+  requestHeaders?: Headers
 ): Promise<RateLimitResult> {
   const now = Date.now();
   
@@ -159,7 +160,7 @@ export async function rateLimit(
   const config = { ...baseConfig, ...customConfig };
   
   // Obter IP do cliente
-  const headersList = await headers();
+  const headersList = requestHeaders ?? await headers();
   const ip = getClientIP(headersList);
   
   // Criar chave única

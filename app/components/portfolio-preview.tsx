@@ -4,39 +4,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { caseStudies } from "@/lib/case-studies"
 
-const projects = [
-  {
-    title: "Website ARN",
-    category: "Desenvolvimento Web",
-    image: "/images/portfolio/websites/arn.png",
-    description: "Website institucional com sistema de gestão de conteúdo.",
-  },
-  {
-    title: "Bissau Rising",
-    category: "Design Gráfico",
-    image: "/images/portfolio/graphicdesign/bissaurising-banner.png",
-    description: "Banners e materiais para o fórum de investimentos.",
-  },
-  {
-    title: "Youth Sounding Board",
-    category: "Social Media",
-    image: "/images/portfolio/graphicdesign/ysb-design-social-media-1.jpg",
-    description: "Gestão de redes sociais e criação de conteúdo.",
-  },
-  {
-    title: "Campanha MTN Boss",
-    category: "Design Gráfico",
-    image: "/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg",
-    description: "Campanha publicitária da MTN Guiné-Bissau.",
-  },
-  {
-    title: "Hotel Uaque",
-    category: "Desenvolvimento Web",
-    image: "/images/portfolio/websites/hotel-uque.png",
-    description: "Site com sistema de reservas e gestão hoteleira.",
-  },
-]
+const projects = caseStudies.map(item => ({
+  title: item.client, category: item.category, image: item.image, imageAlt: item.imageAlt,
+  description: item.description, href: `/portfolio/${item.slug}`,
+}))
 
 export function PortfolioPreview() {
   return (
@@ -54,11 +27,11 @@ export function PortfolioPreview() {
           }}
           className={i === 0 ? "md:col-span-2" : ""}
         >
-          <Link href="/portfolio" className="group relative block overflow-hidden">
+          <Link href={project.href} className="group relative block overflow-hidden">
             <div className={`relative ${i === 0 ? "aspect-[21/9]" : "aspect-video"} overflow-hidden bg-obys-dark`}>
               <Image
                 src={project.image}
-                alt={project.title}
+                alt={project.imageAlt}
                 fill
                 className="object-cover transition-transform duration-700 ease-obys-default group-hover:scale-105"
                 sizes={i === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw"}

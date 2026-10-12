@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/servicos')
+
 import Link from "next/link"
 import { CheckCircle, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"

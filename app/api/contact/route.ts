@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
-import { headers } from 'next/headers';
+import { getSiteOrigin, isAllowedFormOrigin } from '@/lib/site';
 import { supabaseAdmin } from '@/lib/supabase/client';
 
 // Função para sanitizar texto (remover scripts e caracteres especiais)
@@ -21,7 +21,7 @@ function sanitizeText(text: string): string {
 // Configuração do CORS - restrito ao domínio do site
 const corsHeaders = {
   'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
-    ? process.env.NEXT_PUBLIC_SITE_URL || 'https://abiptom.gw' 
+    ? getSiteOrigin()
     : '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token',
@@ -155,28 +155,15 @@ async function saveLead(data: Record<string, string>) {
 }
 
 export async function POST(request: Request) {
-  // Aguarda a resolução da Promise de headers() uma vez no início.
-  const currentHeaders = await headers(); 
+  // Usar os headers do pedido, sem depender do contexto global do Next.js.
+  const currentHeaders = request.headers;
 
   try {
     // 1. Validar Origem (CORS)
-    const origin = currentHeaders.get('origin');
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://abiptom.gw';
-    const allowedOrigins = [siteUrl];
-    // Em desenvolvimento, permitir localhost e outras origens comuns de desenvolvimento
-    if (process.env.NODE_ENV !== 'production') {
-      allowedOrigins.push('http://localhost:3000');
-      allowedOrigins.push('http://192.168.17.16:3000'); // Adicionar seu IP local
-      // Adicione outras origens de desenvolvimento se necessário
+    if (!isAllowedFormOrigin(currentHeaders.get('origin'))) {
+      return NextResponse.json({ error: 'Origem não autorizada' }, { status: 403, headers: corsHeaders });
     }
 
-    if (!origin || !allowedOrigins.includes(origin)) {
-      // Em produção, bloquear requisições de origens não permitidas
-      if (process.env.NODE_ENV === 'production') {
-          return NextResponse.json({ error: 'Origem não autorizada' }, { status: 403, headers: corsHeaders });
-      }
-    }
-    
     // 2. Validação CSRF (Sempre ativa)
     if (!validateCSRF(currentHeaders)) { 
         // Em desenvolvimento, permitir bypass, mas em produção bloquear
@@ -188,12 +175,22 @@ export async function POST(request: Request) {
     }
 
     // 3. Rate Limiting
-    const { success: rateLimitSuccess, remaining } = await rateLimit('contact');
+    const { success: rateLimitSuccess, remaining } = await rateLimit('contact', undefined, currentHeaders);
     if (!rateLimitSuccess) {
       return NextResponse.json({ error: 'Muitas tentativas. Tente novamente mais tarde.' }, { status: 429, headers: corsHeaders });
     }
 
-    const body = await request.json();
+    let body;
+    try { body = await request.json(); } catch {
+      return NextResponse.json({ error: 'JSON inválido' }, { status: 400, headers: corsHeaders });
+    }
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return NextResponse.json({ error: 'Dados inválidos' }, { status: 400, headers: corsHeaders });
+    }
+    const textFields = ['name', 'firstName', 'lastName', 'email', 'phone', 'subject', 'position', 'message'];
+    if (textFields.some(field => body[field] !== undefined && typeof body[field] !== 'string')) {
+      return NextResponse.json({ error: 'Os campos devem ser texto' }, { status: 400, headers: corsHeaders });
+    }
     const fullName = typeof body.name === 'string' ? body.name.trim() : '';
     const [derivedFirstName, ...derivedLastNameParts] = fullName.split(/\s+/).filter(Boolean);
     const isChatbotLead = fullName.length > 0;
@@ -241,4 +238,4 @@ export async function POST(request: Request) {
       details: process.env.NODE_ENV === 'development' ? error.message : 'Ocorreu um erro inesperado.' 
     }, { status: 500, headers: corsHeaders });
   }
-} 
+}

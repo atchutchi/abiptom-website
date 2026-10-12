@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/servicos/redes-cablagem-helpdesk')
+
 import Link from "next/link"
 import { CheckCircle } from "lucide-react"
 

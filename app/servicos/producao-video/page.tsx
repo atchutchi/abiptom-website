@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/servicos/producao-video')
+
 import Link from "next/link"
 import { ArrowRight, CheckCircle } from "lucide-react"
 

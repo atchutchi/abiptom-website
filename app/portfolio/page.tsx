@@ -9,6 +9,7 @@ import { ClientLogos } from "@/components/client-logos"
 import { AnimatedSection } from "@/components/animated-section"
 import { TextSplitter } from "@/components/text-splitter"
 import { PageTransition } from "@/components/page-transition"
+import { CaseStudyList } from "@/components/case-study-list"
 
 type PortfolioBaseItem = {
   title: string
@@ -109,6 +110,7 @@ const PortfolioPage = () => {
           </div>
         </section>
 
+        <CaseStudyList />
         {/* Filters + Gallery */}
         <section className="section-padding bg-obys-dark">
           <div className="obys-container--wide mx-auto px-6 lg:px-10">

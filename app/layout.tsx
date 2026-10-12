@@ -1,6 +1,7 @@
 import type React from "react"
 import "@/app/globals.css"
 import type { Metadata } from "next"
+import { getSiteOrigin } from "@/lib/site"
 import { Barlow, Barlow_Condensed } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
@@ -12,7 +13,8 @@ import { PageNoize } from "@/components/page-noize"
 import { Preloader } from "@/components/preloader"
 import CSRFToken from "@/components/csrf-token"
 import { BackToTop } from "@/components/back-to-top"
-import GoogleAnalytics from "./components/GoogleAnalytics"
+import { TrackingConsent } from "@/components/tracking-consent"
+import { organizationSchema } from "@/lib/seo"
 
 const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
@@ -42,7 +44,8 @@ export const metadata: Metadata = {
     "guiné-bissau",
   ],
   authors: [{ name: "ABIPTOM" }],
-  metadataBase: new URL("https://abiptom.gw"),
+  metadataBase: new URL(getSiteOrigin()),
+  verification: { google: 'rc9CmD3fhwtfrIQKKjs4lqG5CtvkzWjGEkPL3i14vTI' },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32" },
@@ -56,16 +59,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_PT",
-    url: "https://abiptom.gw",
+    url: getSiteOrigin(),
     title: "ABIPTOM - Guardião das Novas Tecnologias",
     description:
       "Somos a ABIPTOM, SARL, especialistas em Marketing Digital, Design e Desenvolvimento.",
     siteName: "ABIPTOM",
     images: [
       {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "/images/abiptom.png",
+        width: 1772,
+        height: 1181,
         alt: "ABIPTOM - Guardião das Novas Tecnologias",
       },
     ],
@@ -75,7 +78,7 @@ export const metadata: Metadata = {
     title: "ABIPTOM - Guardião das Novas Tecnologias",
     description:
       "Somos a ABIPTOM, SARL, especialistas em Marketing Digital, Design e Desenvolvimento.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/abiptom.png"],
   },
   robots: {
     index: true,
@@ -91,10 +94,13 @@ export const metadata: Metadata = {
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  // Ativar depois de desativar os eventos automáticos no data stream GA4.
+  const gaId = process.env.NEXT_PUBLIC_GA_MANUAL_MEASUREMENT_READY === '1'
+    ? process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+    : undefined
 
   return (
-    <html lang="pt" suppressHydrationWarning>
+    <html lang="pt-PT" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen font-body antialiased bg-obys-near-black text-white",
@@ -102,7 +108,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           barlow.variable
         )}
       >
-        {gaId && <GoogleAnalytics GA_MEASUREMENT_ID={gaId} />}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()).replace(/</g, '\\u003c') }} />
+        <TrackingConsent gaId={gaId} />
         <Preloader />
         <CSRFToken />
         <CustomCursor />

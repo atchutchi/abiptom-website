@@ -73,6 +73,7 @@ supabase/.temp/
 
 # OS
 Thumbs.db
+._*
 
 # Swap files
 *.swp

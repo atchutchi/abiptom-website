@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/quem-somos')
+
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
@@ -83,8 +86,14 @@ const team = [
   {
     name: "José",
     role: "Videomaker",
-    image: "/images/team/jose.png",
+    image: "/images/team/jose_new.jpeg",
     bio: "Responsável pela captação e edição de conteúdos audiovisuais para projetos institucionais e promocionais.",
+  },
+  {
+    name: "Milano Ornélio Clussé",
+    role: "Criador de Conteúdo e Videomaker",
+    image: "/images/team/milano.png",
+    bio: "Responsável pela criação de conteúdos e produção audiovisual, contribuindo para campanhas, projectos institucionais e comunicação digital da ABIPTOM.",
   },
 ]
 
@@ -92,7 +101,7 @@ const metrics = [
   { value: "10+", label: "Anos de experiência" },
   { value: "200+", label: "Projectos entregues" },
   { value: "50+", label: "Clientes satisfeitos" },
-  { value: "13", label: "Especialistas na equipa" },
+  { value: "14", label: "Especialistas na equipa" },
 ]
 
 const AboutPage = () => {

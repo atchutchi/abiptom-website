@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/servicos/desenvolvimento-software')
+
 import Link from "next/link"
 import Image from "next/image"
 import { CheckCircle } from "lucide-react"

@@ -21,6 +21,8 @@ const socialLinks = [
   { href: "https://www.tiktok.com/@abiptomsarl", icon: TikTokIcon, label: "TikTok" },
 ]
 
+import { CookiePreferencesButton } from './tracking-consent'
+
 export function SiteFooter() {
   return (
     <footer id="footer" className="bg-obys-near-black border-t border-obys-border-dark">
@@ -110,7 +112,7 @@ export function SiteFooter() {
             &copy; {new Date().getFullYear()} ABIPTOM, SARL. Todos os direitos reservados.
           </p>
           <p className="font-body text-obys-text-muted text-xs">
-            Bissau, Guiné-Bissau
+            <CookiePreferencesButton />
           </p>
         </div>
       </div>

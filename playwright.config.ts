@@ -6,6 +6,7 @@ import { defineConfig, devices } from '@playwright/test'
  */
 export default defineConfig({
   testDir: './tests',
+  globalSetup: './scripts/assert-review-server.ts',
   
   /* Rodar testes em paralelo */
   fullyParallel: true,
@@ -64,11 +65,10 @@ export default defineConfig({
 
   /* Rodar seu servidor local antes de iniciar os testes */
   webServer: {
-    command: 'npm run dev',
+    command: 'npm run dev:review',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     stdout: 'ignore',
     stderr: 'pipe',
   },
 })
-

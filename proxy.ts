@@ -1,3 +1,4 @@
+import { buildContentSecurityPolicy } from './lib/security-csp.mjs'
 import { NextResponse, NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 
@@ -13,94 +14,10 @@ import { updateSession } from '@/utils/supabase/middleware'
 
 // Configuração do CSP baseada no ambiente
 function buildCSP(): string {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://smakmuyzyaoifhpjapkj.supabase.co'
-  
-  // Em produção, idealmente usaríamos nonces, mas por compatibilidade mantemos unsafe-inline
-  // TODO: Migrar para nonces quando possível
-  const scriptSrc = [
-    "'self'",
-    "'unsafe-inline'", // Necessário para Next.js e GA
-    "'unsafe-eval'",   // Necessário para algumas libs
-    'https://www.googletagmanager.com',
-    'https://www.google-analytics.com',
-    'https://ssl.google-analytics.com',
-    'https://www.youtube.com',
-    'https://*.youtube.com',
-    'https://maps.googleapis.com',
-    'https://*.googleapis.com',
-  ].join(' ')
-
-  const connectSrc = [
-    "'self'",
-    'https://www.google-analytics.com',
-    'https://analytics.google.com',
-    'https://maps.googleapis.com',
-    'https://*.googleapis.com',
-    supabaseUrl,
-    `${supabaseUrl}/storage/v1/*`,
-    `wss://${supabaseUrl.replace('https://', '')}`,
-  ].join(' ')
-
-  const imgSrc = [
-    "'self'",
-    'data:',
-    'blob:',
-    'https://www.google-analytics.com',
-    'https://maps.googleapis.com',
-    'https://*.googleapis.com',
-    'https://img.youtube.com',
-    'https://*.ytimg.com',
-    'https://i.ytimg.com',
-    supabaseUrl,
-    `${supabaseUrl}/storage/v1/*`,
-  ].join(' ')
-
-  const mediaSrc = [
-    "'self'",
-    'blob:',
-    supabaseUrl,
-    `${supabaseUrl}/storage/v1/*`,
-  ].join(' ')
-
-  const styleSrc = [
-    "'self'",
-    "'unsafe-inline'", // Necessário para styled-components e Tailwind
-    'https://fonts.googleapis.com',
-    'https://*.googleapis.com',
-  ].join(' ')
-
-  const fontSrc = [
-    "'self'",
-    'https://fonts.gstatic.com',
-    'https://fonts.googleapis.com',
-  ].join(' ')
-
-  const frameSrc = [
-    "'self'",
-    'https://www.google.com',
-    'https://*.google.com',
-    'https://www.youtube.com',
-    'https://*.youtube.com',
-    'https://youtube.com',
-    'https://maps.google.com',
-    'https://www.google.com/maps',
-  ].join(' ')
-
-  return [
-    `default-src 'self'`,
-    `script-src ${scriptSrc}`,
-    `connect-src ${connectSrc}`,
-    `img-src ${imgSrc}`,
-    `media-src ${mediaSrc}`,
-    `style-src ${styleSrc}`,
-    `font-src ${fontSrc}`,
-    `frame-src ${frameSrc}`,
-    `object-src 'none'`,
-    `base-uri 'self'`,
-    `form-action 'self'`,
-    `frame-ancestors 'self'`,
-    `upgrade-insecure-requests`,
-  ].join('; ')
+  return buildContentSecurityPolicy({
+    development: process.env.NODE_ENV !== 'production',
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  })
 }
 
 // Headers de segurança adicionais
@@ -143,6 +60,21 @@ function getSecurityHeaders(): Record<string, string> {
 }
 
 export async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname === '/api/review-status' && ['GET', 'HEAD'].includes(request.method)) {
+    const reviewOnly = process.env.ABIPTOM_REVIEW_ONLY === '1'
+    return NextResponse.json({ reviewOnly }, {
+      status: reviewOnly ? 200 : 404,
+      headers: { 'Cache-Control': 'no-store', 'x-abiptom-review-only': reviewOnly ? '1' : '0' },
+    })
+  }
+  if (process.env.ABIPTOM_REVIEW_ONLY === '1' &&
+      request.nextUrl.pathname.startsWith('/api/') &&
+      !['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
+    return NextResponse.json({ error: 'Operações de escrita desactivadas nesta revisão local.' }, {
+      status: 503,
+      headers: { 'Cache-Control': 'no-store' },
+    })
+  }
   let response = NextResponse.next()
   
   // Tentar atualizar a sessão do Supabase

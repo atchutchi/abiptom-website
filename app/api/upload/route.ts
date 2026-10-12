@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { uploadToMedia, ALLOWED_FILE_TYPES, MAX_FILE_SIZES } from '@/lib/supabase/media-storage'
 import { rateLimit } from '@/lib/rate-limit'
+import { getSiteOrigin } from '@/lib/site'
 
 /**
  * API de Upload Segura
@@ -19,7 +20,7 @@ import { rateLimit } from '@/lib/rate-limit'
 // CORS headers
 const corsHeaders = {
   'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
-    ? process.env.NEXT_PUBLIC_SITE_URL || 'https://abiptom.gw' 
+    ? getSiteOrigin()
     : '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',

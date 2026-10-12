@@ -14,6 +14,7 @@ import MapEmbed from "@/components/MapEmbed"
 import { AnimatedSection } from "@/components/animated-section"
 import { TextSplitter } from "@/components/text-splitter"
 import { PageTransition } from "@/components/page-transition"
+import { trackLead } from "@/lib/tracking"
 
 const formSchema = z.object({
   firstName: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
@@ -103,6 +104,7 @@ const ContactPage = () => {
       if (!validationResponse.ok) throw new Error(validationResult.error || "Erro ao enviar mensagem")
 
       setSubmitSuccess(true)
+      trackLead('contact_form')
       toast({ title: "Mensagem enviada!", description: "Entraremos em contacto em breve." })
       reset()
       generateMathProblem()

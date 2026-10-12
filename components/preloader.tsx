@@ -47,14 +47,14 @@ export const Preloader = () => {
           exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.4, 0, 0, 1] } }}
         >
           <div className="flex flex-col items-center gap-8">
-            <motion.h1
+            <motion.p
               className="font-display text-obys-gold text-5xl md:text-7xl font-light tracking-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.3, 0.86, 0.36, 0.95] }}
             >
               ABIPTOM
-            </motion.h1>
+            </motion.p>
             <motion.p
               className="font-body text-obys-text-secondary text-sm tracking-[0.2em] uppercase"
               initial={{ opacity: 0 }}

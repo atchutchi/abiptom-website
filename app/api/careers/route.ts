@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
-import { headers } from 'next/headers';
+import { getSiteOrigin, isAllowedFormOrigin } from '@/lib/site';
 import { supabaseAdmin } from '@/lib/supabase/client';
 
 // Função para sanitizar texto (remover scripts e caracteres especiais)
@@ -14,7 +14,7 @@ function sanitizeText(text: string): string {
 // Configuração do CORS com headers de segurança
 const corsHeaders = {
   'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
-    ? process.env.NEXT_PUBLIC_SITE_URL || 'https://abiptom.gw' 
+    ? getSiteOrigin()
     : '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token',
@@ -139,31 +139,16 @@ async function saveLead(data: Record<string, string>) {
 }
 
 export async function POST(request: Request) {
-  // Aguarda a resolução da Promise de headers() uma vez no início
-  const currentHeaders = await headers();
+  // Usar os headers do pedido, sem depender do contexto global do Next.js.
+  const currentHeaders = request.headers;
   console.log('Recebendo nova requisição POST em /api/careers');
   
   try {
     // 1. Validar Origem (CORS)
-    const origin = currentHeaders.get('origin');
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://abiptom.gw';
-    const allowedOrigins = [siteUrl];
-    // Em desenvolvimento, permitir localhost e outras origens comuns
-    if (process.env.NODE_ENV !== 'production') {
-      allowedOrigins.push('http://localhost:3000');
-      allowedOrigins.push('http://192.168.17.16:3000'); // Adicionado seu IP local
-      // Adicione outras origens de desenvolvimento se necessário
+    if (!isAllowedFormOrigin(currentHeaders.get('origin'))) {
+      return NextResponse.json({ error: 'Origem não autorizada' }, { status: 403, headers: corsHeaders });
     }
 
-    if (!origin || !allowedOrigins.includes(origin)) {
-      // Em produção, bloquear requisições de origens não permitidas
-      if (process.env.NODE_ENV === 'production') {
-          console.warn('Origem não permitida em produção:', origin);
-          return NextResponse.json({ error: 'Origem não autorizada' }, { status: 403, headers: corsHeaders });
-      }
-      console.log('Origem permitida em desenvolvimento (ou não definida):', origin);
-    }
-    
     // 2. Validação CSRF (obrigatória em produção)
     if (!validateCSRF(currentHeaders)) {
         // Em produção, bloquear requisições sem CSRF válido
@@ -175,14 +160,24 @@ export async function POST(request: Request) {
     }
 
     // 3. Rate Limiting
-    const { success: rateLimitSuccess, remaining } = await rateLimit('careers');
+    const { success: rateLimitSuccess, remaining } = await rateLimit('careers', undefined, currentHeaders);
     if (!rateLimitSuccess) {
       console.warn('Rate limit excedido para /api/careers');
       return NextResponse.json({ error: 'Muitas tentativas. Tente novamente mais tarde.' }, { status: 429, headers: corsHeaders });
     }
     console.log('Rate limit passou. Tokens restantes:', remaining);
 
-    const body = await request.json();
+    let body;
+    try { body = await request.json(); } catch {
+      return NextResponse.json({ error: 'JSON inválido' }, { status: 400, headers: corsHeaders });
+    }
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return NextResponse.json({ error: 'Dados inválidos' }, { status: 400, headers: corsHeaders });
+    }
+    const textFields = ['name', 'firstName', 'lastName', 'email', 'phone', 'subject', 'position', 'message'];
+    if (textFields.some(field => body[field] !== undefined && typeof body[field] !== 'string')) {
+      return NextResponse.json({ error: 'Os campos devem ser texto' }, { status: 400, headers: corsHeaders });
+    }
     // Evitar logar dados sensíveis
     if (process.env.NODE_ENV === 'development') {
       console.log('Requisição recebida com campos:', Object.keys(body).join(', '));
@@ -201,12 +196,12 @@ export async function POST(request: Request) {
     }
 
     if (!isValidEmail(body.email)) {
-      console.log('Email inválido:', body.email);
+      console.warn('Formato de email inválido.');
       return NextResponse.json({ error: 'Formato de email inválido' }, { status: 400, headers: corsHeaders });
     }
 
     if (!isValidPhone(body.phone)) {
-      console.log('Telefone inválido:', body.phone);
+      console.warn('Formato de telefone inválido.');
       return NextResponse.json({ error: 'Formato de telefone inválido' }, { status: 400, headers: corsHeaders });
     }
 
@@ -266,4 +261,4 @@ export async function POST(request: Request) {
       { status: 500, headers: corsHeaders }
     );
   }
-} 
+}

@@ -1,14 +1,21 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Homepage', () => {
+  test('logo image decodes successfully', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' })
+    await expect.poll(async () => page.locator('header img').evaluate((image) =>
+      (image as HTMLImageElement).naturalWidth
+    )).toBeGreaterThan(0)
+  })
+
   test('should load successfully', async ({ page }) => {
     await page.goto('/')
     
     // Verificar se o título está presente
     await expect(page).toHaveTitle(/ABIPTOM/)
     
-    // Verificar se o logo está visível
-    await expect(page.getByRole('heading', { name: 'ABIPTOM' })).toBeVisible()
+    // Validar o conteúdo da página, não o texto temporário do preloader.
+    await expect(page.locator('main h1')).toBeVisible()
   })
 
   test('should have working navigation', async ({ page }) => {

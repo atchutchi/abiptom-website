@@ -1,4 +1,5 @@
 import { BlogPost, Category, Tag, BlogPagination } from "../types/blog";
+import { getSiteOrigin } from "../site";
 
 export function calculateReadingTime(content: string): string {
   const wordsPerMinute = 200;
@@ -92,7 +93,7 @@ export function getAllTags(posts: BlogPost[]): Tag[] {
 }
 
 export function generateRSSFeed(posts: BlogPost[]): string {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://abiptom.gw';
+  const baseUrl = getSiteOrigin();
   
   const rssItems = posts.map(post => `
     <item>
@@ -122,4 +123,4 @@ export function generateRSSFeed(posts: BlogPost[]): string {
     ${rssItems}
   </channel>
 </rss>`;
-} 
+}

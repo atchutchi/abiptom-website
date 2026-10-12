@@ -1,98 +1,36 @@
-/**
- * Script para configurar webhook no Contentful automaticamente
- * 
- * Uso:
- * 1. Certifique-se de ter CONTENTFUL_SPACE_ID e CMA_TOKENS no .env.local
- * 2. Execute: npx tsx scripts/setup-contentful-webhook.ts
- */
-
+/** Default: local plan only. --apply requires separately authorised external configuration. */
 import { createClient } from 'contentful-management'
 import * as dotenv from 'dotenv'
+import { requireExistingSigning, webhookPlan } from '../lib/contentful/webhook-setup'
 
-dotenv.config({ path: '.env.local' })
-
-const SPACE_ID = process.env.CONTENTFUL_SPACE_ID
-const CMA_TOKEN = process.env.CMA_TOKENS
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+dotenv.config({ path: '.env.local', quiet: true })
 
 async function setupWebhook() {
-  if (!SPACE_ID || !CMA_TOKEN) {
-    console.error('❌ CONTENTFUL_SPACE_ID ou CMA_TOKENS não configurado no .env.local')
-    process.exit(1)
+  const plan = webhookPlan()
+  if (!process.argv.includes('--apply')) {
+    console.log('Plano local; nenhuma chamada ao Contentful nem alteração externa.')
+    console.log(JSON.stringify(plan, null, 2))
+    console.log('Requer assinatura nativa ativa no espaço e CONTENTFUL_WEBHOOK_SECRET correspondente no servidor. Ver REVIEW-PHASE1.md.')
+    return
   }
-
-  console.log('🚀 Configurando webhook no Contentful...\n')
-
-  try {
-    const client = createClient({
-      accessToken: CMA_TOKEN
-    })
-
-    const space = await client.getSpace(SPACE_ID)
-
-    // Webhooks são do Space, não do Environment
-    const existingWebhooks = await space.getWebhooks()
-    const webhookName = 'ABIPTOM Auto Deploy'
-    
-    const existing = existingWebhooks.items.find(
-      (wh: any) => wh.name === webhookName
-    )
-
-    if (existing) {
-      console.log('⚠️  Webhook já existe. Atualizando...')
-      
-      existing.url = `${SITE_URL}/api/contentful-webhook`
-      existing.topics = [
-        'Entry.publish',
-        'Entry.unpublish',
-        'Entry.delete'
-      ]
-      
-      await existing.update()
-      console.log('✅ Webhook atualizado com sucesso!')
-    } else {
-      // Criar novo webhook
-      const webhook = await space.createWebhook({
-        name: webhookName,
-        url: `${SITE_URL}/api/contentful-webhook`,
-        topics: [
-          'Entry.publish',
-          'Entry.unpublish',
-          'Entry.delete'
-        ],
-        filters: [
-          {
-            equals: [
-              { doc: 'sys.contentType.sys.id' },
-              'abiptomBlog'
-            ]
-          }
-        ]
-      })
-
-      console.log('✅ Webhook criado com sucesso!')
-      console.log('\n📋 Detalhes do Webhook:')
-      console.log(`   Nome: ${webhook.name}`)
-      console.log(`   URL: ${webhook.url}`)
-      console.log(`   ID: ${webhook.sys.id}`)
-    }
-
-    console.log('\n🎉 Configuração concluída!')
-    console.log('\n📝 Próximos passos:')
-    console.log('   1. Publique um post no Contentful')
-    console.log('   2. Verifique os logs do servidor')
-    console.log('   3. O site será atualizado automaticamente!')
-
-  } catch (error: any) {
-    console.error('❌ Erro ao configurar webhook:', error.message)
-    
-    if (error.message.includes('401')) {
-      console.error('\n💡 Dica: Verifique se o CMA_TOKENS está correto')
-    }
-    
-    process.exit(1)
+  const spaceId = process.env.CONTENTFUL_SPACE_ID ?? ''
+  const token = process.env.CMA_TOKENS ?? ''
+  await requireExistingSigning(spaceId, token, process.env.CONTENTFUL_WEBHOOK_SECRET ?? '')
+  const space = await createClient({ accessToken: token }).getSpace(spaceId)
+  const webhooks = await space.getWebhooks()
+  const matches = webhooks.items.filter(webhook => webhook.name === plan.name)
+  if (matches.length > 1) throw new Error('Existem webhooks duplicados; rever manualmente antes de alterar.')
+  if (matches[0]) {
+    Object.assign(matches[0], plan)
+    await matches[0].update()
+  } else {
+    await space.createWebhook(plan)
   }
+  console.log('Webhook configurado. Validar uma entrega assinada autorizada; a CMA não permite verificar a correspondência completa do segredo.')
 }
 
-setupWebhook()
-
+setupWebhook().catch(() => {
+  // SDK errors may contain request headers or credentials. Do not print them.
+  console.error('Configuração interrompida. Confirmar credenciais, assinatura ativa e ausência de webhooks duplicados; ver REVIEW-PHASE1.md.')
+  process.exitCode = 1
+})

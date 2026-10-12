@@ -1,11 +1,17 @@
-# Allow all web crawlers (search engine bots)
+# Public pages and rendering assets are crawlable.
 User-agent: *
 Allow: /
 
 # Disallow certain directories
 Disallow: /admin/
 Disallow: /api/
-Disallow: /_next/
+Disallow: /admin
+
+# ChatGPT Search: keep the same exclusions as other search crawlers.
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
 
 # Sitemap location
-Sitemap: https://abiptom.gw/sitemap.xml 
+Sitemap: https://www.abiptom.gw/sitemap.xml

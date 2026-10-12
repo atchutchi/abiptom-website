@@ -1,3 +1,6 @@
+import { pageMetadata } from '@/lib/seo'
+export const metadata = pageMetadata('/servicos/animacao-2d')
+
 import Link from "next/link"
 import { CheckCircle } from "lucide-react"
 

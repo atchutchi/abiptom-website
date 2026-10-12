@@ -75,7 +75,7 @@ export function HeroSection() {
               animate="visible"
             >
               <p className="body-large text-obys-text-secondary max-w-md">
-                Soluções digitais de alto calibre para marcas que querem liderar. Design, desenvolvimento e estratégia sob medida.
+                Criamos websites e software para empresas em Bissau, Guiné-Bissau. Fale connosco sobre o que a sua empresa precisa.
               </p>
             </motion.div>
 
@@ -88,13 +88,13 @@ export function HeroSection() {
             >
               <div className="flex flex-wrap gap-4">
                 <Button asChild variant="obys-primary" size="lg">
-                  <Link href="/servicos" className="flex items-center gap-2">
-                    Nossos Serviços
+                  <Link href="/contacto" className="flex items-center gap-2">
+                    Pedir um orçamento
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline-primary" size="lg">
-                  <Link href="/contacto">Fale Conosco</Link>
+                  <Link href="/servicos">Conhecer os serviços</Link>
                 </Button>
               </div>
             </motion.div>

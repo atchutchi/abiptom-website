@@ -1,109 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server'
-import crypto from 'crypto'
+import { isSigningSecret, verifyWebhook } from '@/lib/contentful/verify-webhook'
+import { getSiteOrigin } from '@/lib/site'
 
-// Função para validar a assinatura do webhook do Contentful
-function verifyContentfulWebhook(
-  body: string,
-  signature: string,
-  secret: string
-): boolean {
-  const hash = crypto
-    .createHmac('sha256', secret)
-    .update(body)
-    .digest('base64')
-  
-  return hash === signature
-}
+const response = (error: string, status: number) =>
+  NextResponse.json({ error }, { status, headers: { 'Cache-Control': 'no-store' } })
 
 export async function POST(request: NextRequest) {
+  const secret = process.env.CONTENTFUL_WEBHOOK_SECRET
+  if (!secret || !isSigningSecret(secret)) return response('Webhook authentication is not configured', 503)
+
   try {
-    const signature = request.headers.get('x-contentful-signature')
-    const topic = request.headers.get('x-contentful-topic')
-    
-    // Ler o body como texto para validação
     const body = await request.text()
-    
-    // Verificar assinatura (se configurada)
-    const webhookSecret = process.env.CONTENTFUL_WEBHOOK_SECRET
-    
-    // Verificar assinatura para segurança (opcional se não configurado)
-    if (webhookSecret && signature) {
-      const isValid = verifyContentfulWebhook(body, signature, webhookSecret)
-      
-      if (!isValid) {
-        console.error('❌ Invalid webhook signature')
-        console.log('📋 Debug: Secret length:', webhookSecret.length)
-        console.log('📋 Debug: Signature length:', signature.length)
-        return NextResponse.json(
-          { error: 'Invalid signature' },
-          { status: 401 }
-        )
-      }
-      console.log('✅ Webhook signature verified')
-    } else {
-      console.warn('⚠️ Webhook signature validation skipped (not configured)')
+    if (!verifyWebhook(request, body, secret)) {
+      return response('Invalid signature', 401)
     }
-    
-    // Parse do body
-    const data = JSON.parse(body)
-    
-    console.log('📝 Contentful Webhook received:', {
-      topic,
-      entryId: data?.sys?.id,
-      contentType: data?.sys?.contentType?.sys?.id,
-      timestamp: new Date().toISOString()
+    let data: unknown
+    try { data = JSON.parse(body) } catch { return response('Invalid JSON', 400) }
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      return response('Invalid webhook payload', 400)
+    }
+    const revalidateSecret = process.env.REVALIDATE_SECRET
+    if (!revalidateSecret) return response('Revalidation is not configured', 503)
+
+    // Never send the secret through a redirect to another origin.
+    const revalidated = await fetch(`${getSiteOrigin()}/api/revalidate`, {
+      method: 'POST', redirect: 'error', signal: AbortSignal.timeout(10_000),
+      headers: { 'Content-Type': 'application/json', 'x-revalidate-secret': revalidateSecret },
+      body: JSON.stringify({ path: '/blog' }),
     })
-    
-    // Verificar se é um Blog Post
-    if (data?.sys?.contentType?.sys?.id === 'abiptomBlog') {
-      console.log('📰 Blog post updated:', data?.fields?.title?.['pt'] || data?.fields?.title)
-      
-      // Aqui você pode adicionar lógica adicional, como:
-      // - Limpar cache
-      // - Notificar equipe
-      // - Gerar sitemap
-      // - etc.
-    }
-    
-    // Disparar revalidação do Next.js (ISR)
-    // Isso vai regenerar as páginas estáticas
-    if (process.env.REVALIDATE_SECRET) {
-      const revalidateUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate`
-      
-      try {
-        await fetch(revalidateUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-revalidate-secret': process.env.REVALIDATE_SECRET,
-          },
-          body: JSON.stringify({ path: '/blog' }),
-        })
-        console.log('✅ Revalidation triggered')
-      } catch (error) {
-        console.error('❌ Revalidation failed:', error)
-      }
-    }
-    
-    return NextResponse.json({
-      message: 'Webhook processed successfully',
-      topic,
-      received: true
+    if (!revalidated.ok) return response('Revalidation failed', 502)
+    return NextResponse.json({ received: true, revalidated: true }, {
+      headers: { 'Cache-Control': 'no-store' },
     })
-    
-  } catch (error) {
-    console.error('❌ Webhook processing error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+  } catch {
+    return response('Webhook processing failed', 502)
   }
 }
 
-// GET para testar se o endpoint está acessível
 export async function GET() {
-  return NextResponse.json({
-    message: 'Contentful webhook endpoint is active',
-    timestamp: new Date().toISOString()
+  return NextResponse.json({ message: 'Use authenticated POST requests.' }, {
+    headers: { 'Cache-Control': 'no-store' },
   })
 }

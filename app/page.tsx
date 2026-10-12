@@ -1,11 +1,13 @@
 import Link from "next/link"
+import { pageMetadata } from "@/lib/seo"
+
+export const metadata = pageMetadata('/')
 import Image from "next/image"
 import { ArrowRight, CheckCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { ServiceCard } from "@/components/service-card"
 import { PortfolioPreview } from "@/app/components/portfolio-preview"
-import { TestimonialSlider } from "@/components/testimonial-slider"
 import { ClientLogos } from "@/components/client-logos"
 import { HeroSection } from "@/components/hero-section"
 import { AnimatedSection } from "@/components/animated-section"
@@ -217,31 +219,6 @@ const Home = () => {
                   </Link>
                 </Button>
               </div>
-            </AnimatedSection>
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section
-          className="section-padding bg-obys-dark"
-          aria-labelledby="testimonials-heading"
-        >
-          <div className="obys-container">
-            <AnimatedSection animation="fade-up">
-              <div className="text-center mb-16 md:mb-24">
-                <span className="text-label text-obys-gold mb-4 block">
-                  Depoimentos
-                </span>
-                <h2
-                  id="testimonials-heading"
-                  className="heading-section text-white"
-                >
-                  Confiança
-                </h2>
-              </div>
-            </AnimatedSection>
-            <AnimatedSection animation="fade-up" delay={200}>
-              <TestimonialSlider />
             </AnimatedSection>
           </div>
         </section>

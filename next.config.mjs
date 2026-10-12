@@ -20,7 +20,8 @@ const nextConfig = {
         hostname: 'www.google-analytics.com',
       },
     ],
-    formats: ['image/avif', 'image/webp'],
+    // WebP decodes reliably in the locally verified browser; AVIF returned an invalid MIME response.
+    formats: ['image/webp'],
   },
   experimental: {
     webpackBuildWorker: true,

@@ -18,6 +18,8 @@ import { WHATSAPP_LINK, EMAIL_ADDRESS } from "@/lib/chat/chatbot-config"
 import { ChatMessageBubble } from "./ChatMessage"
 import { QuickActions } from "./QuickActions"
 import { LeadForm } from "./LeadForm"
+import { submitChatLead } from "@/lib/chat/submit-lead"
+import { trackLead } from "@/lib/tracking"
 
 type ChatBotWindowProps = {
   isOpen: boolean
@@ -142,26 +144,15 @@ export function ChatBotWindow({ isOpen, onClose }: ChatBotWindowProps) {
   const handleLeadSubmit = async (info: LeadInfo) => {
     setShowLeadForm(false)
 
-    try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: info.name,
-          email: info.email,
-          phone: info.phone || "",
-          subject: "Pedido de Cotação via Chatbot",
-          message: info.interest || "Pedido de cotação via chatbot",
-        }),
-      })
-    } catch {
-      // silently fail — bot will still confirm
-    }
+    const submitted = await submitChatLead(info)
+    if (submitted) trackLead('chatbot')
 
     const confirmMsg: ChatMessage = {
       id: generateId(),
       role: "assistant",
-      content: `Obrigado, ${info.name}! Recebemos o teu pedido. A nossa equipa vai contactar-te em breve via ${info.email}. Se preferires, podes também falar connosco directamente:`,
+      content: submitted
+        ? `Obrigado, ${info.name}! Recebemos o teu pedido. A nossa equipa vai contactar-te em breve via ${info.email}. Se preferires, podes também falar connosco directamente:`
+        : 'Não foi possível enviar o teu pedido. Tenta novamente ou contacta-nos por WhatsApp ou email:',
       timestamp: Date.now(),
       quickActions: [
         { label: "WhatsApp", value: "Quero falar pelo WhatsApp" },
