@@ -12,8 +12,8 @@ test('o sitemap inclui apenas páginas públicas existentes e todos os serviços
   assert.ok(paths.includes('/blog/branding-unido-amae-guine-bissau'))
   assert.ok(!paths.includes('/servicos/web-design'))
   for (const path of paths) {
-    const publishedCase = path.startsWith('/portfolio/') && getCaseStudy(path.split('/')[2])
-    assert.ok(existsSync(`app${path === '/' ? '' : path}/page.tsx`) || (publishedCase && existsSync('app/portfolio/[slug]/page.tsx')), path)
+    const publishedCase = path.startsWith('/blog/') && getCaseStudy(path.split('/')[2])
+    assert.ok(existsSync(`app${path === '/' ? '' : path}/page.tsx`) || (publishedCase && existsSync('app/blog/[slug]/page.tsx')), path)
     assert.ok(!path.startsWith('/admin'))
   }
 })

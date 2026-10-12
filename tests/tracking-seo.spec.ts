@@ -4,7 +4,7 @@ test('um estudo de caso mostra conteúdo sem esperar pelo JavaScript', async ({ 
   const context = await browser.newContext({ javaScriptEnabled: false })
   const page = await context.newPage()
   try {
-    await page.goto('http://localhost:3000/portfolio/apgb', { waitUntil: 'domcontentloaded' })
+    await page.goto('http://localhost:3000/blog/apgb', { waitUntil: 'domcontentloaded' })
     await expect(page.locator('article h1')).toBeVisible()
     await expect(page.getByRole('link', { name: 'Visitar o website', exact: true })).toBeVisible()
     expect(await page.locator('article h1').evaluate(element => {
@@ -17,12 +17,12 @@ test('um estudo de caso mostra conteúdo sem esperar pelo JavaScript', async ({ 
   }
 })
 
-test('os estudos de caso têm páginas próprias, capturas e contacto contextual', async ({ page, request }) => {
-  for (const slug of ['dacosta-music', 'apgb', 'santos-global-group']) {
-    await page.goto(`/portfolio/${slug}`)
+test('os artigos Sites têm capturas, canonical e contacto contextual', async ({ page, request }) => {
+  for (const slug of ['dacosta-music', 'apgb', 'santos-global-group', 'abiptom-admin', 'inunde-call-center']) {
+    await page.goto(`/blog/${slug}`)
     await expect(page.locator('article h1')).toBeVisible()
     await expect(page.getByRole('heading', { name: 'O resultado verificável', exact: true })).toHaveCount(1)
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.abiptom.gw/portfolio/${slug}`)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.abiptom.gw/blog/${slug}`)
     const image = page.locator('figure img')
     await image.scrollIntoViewIfNeeded()
     await expect(image).toBeVisible()
@@ -30,10 +30,41 @@ test('os estudos de caso têm páginas próprias, capturas e contacto contextual
     await expect(page.getByRole('link', { name: 'Pedir um orçamento', exact: true })).toHaveAttribute('href', '/contacto')
     await expect(page.getByRole('link', { name: 'Falar sobre uma solução semelhante', exact: true })).toHaveAttribute('href', /wa\.me\/245966865331\?text=/)
     const schema = JSON.parse(await page.locator('article script[type="application/ld+json"]').innerText())
-    expect(schema['@type']).toBe('CreativeWork')
+    expect(schema['@type']).toBe('BlogPosting')
+    expect(schema.articleSection).toBe('Sites')
+    expect(schema.url).toBe(`https://www.abiptom.gw/blog/${slug}`)
     expect(schema.citation.length).toBeGreaterThan(0)
+    const legacy = await request.get(`/portfolio/${slug}`, { maxRedirects: 0 })
+    expect(legacy.status()).toBe(308)
+    expect(legacy.headers().location).toBe(`/blog/${slug}`)
   }
   expect((await request.get('/portfolio/projecto-inexistente')).status()).toBe(404)
+  expect((await request.get('/blog/projecto-inexistente')).status()).toBe(404)
+})
+
+test('a grelha Websites mantém o padrão de dispositivos e inclui as aplicações', async ({ page, request }) => {
+  await page.goto('/portfolio')
+  await expect(page.getByRole('heading', { name: 'Do projecto ao resultado', exact: true })).toHaveCount(0)
+  await page.getByRole('button', { name: 'Websites', exact: true }).click()
+  for (const [client,slug] of [['Da Costa Music','dacosta-music'], ['APGB','apgb'], ['Santos Global Group','santos-global-group'], ['ABIPTOM Core','abiptom-admin'], ['INUNDE Call Center','inunde-call-center']]) {
+    const link = page.getByRole('link', { name: `${client}: ler artigo`, exact: true })
+    await expect(link).toHaveAttribute('href', `/blog/${slug}`)
+    await expect.poll(() => link.locator('..').locator('img').evaluate(img => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+  }
+  const posts = await (await request.get('/api/blog/posts')).json()
+  expect(posts.filter((post: {categories: {slug:string}[]})=>post.categories.some(cat=>cat.slug==='sites'))).toHaveLength(5)
+  await page.goto('/blog')
+  await page.getByRole('link',{ name:'Sites', exact:true }).click()
+  await expect(page).toHaveURL(/categoria=sites/)
+  await expect(page.getByRole('link', { name: /ABIPTOM Core: Uma aplicação web/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /INUNDE Call Center: Uma aplicação web/ })).toBeVisible()
+  await page.getByRole('searchbox').fill('call center')
+  await page.getByRole('searchbox').press('Enter')
+  await expect(page.locator('article')).toHaveCount(1)
+  await expect(page.locator('article')).toContainText('INUNDE Call Center')
+  await page.getByRole('link',{name:'#Software',exact:true}).click()
+  await expect(page).toHaveURL(/tag=software/)
+  await expect(page.locator('article')).toHaveCount(2)
 })
 
 test.beforeEach(async ({ page }) => {
@@ -43,7 +74,7 @@ test.beforeEach(async ({ page }) => {
 
 test('o Analytics só arranca após consentimento e envia visitas sem parâmetros pessoais', async ({ page }) => {
   test.skip(process.env.NEXT_PUBLIC_GA_MANUAL_MEASUREMENT_READY !== '1', 'O ambiente de teste não ativou a medição GA4 manual.')
-  await page.goto('/portfolio/apgb?email=teste@example.invalid#contacto')
+  await page.goto('/blog/apgb?email=teste@example.invalid#contacto')
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0)
   await page.getByRole('button', { name: 'Aceitar medição', exact: true }).click()
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(1)
@@ -53,7 +84,7 @@ test('o Analytics só arranca após consentimento e envia visitas sem parâmetro
   expect(config?.[2]).toMatchObject({ send_page_view: false, allow_google_signals: false })
   const visits = commands.filter(command => command[0] === 'event' && command[1] === 'page_view')
   expect(visits).toHaveLength(1)
-  expect(visits[0][2]).toMatchObject({ page_location: `${new URL(page.url()).origin}/portfolio/apgb` })
+  expect(visits[0][2]).toMatchObject({ page_location: `${new URL(page.url()).origin}/blog/apgb` })
   expect(JSON.stringify(commands)).not.toContain('teste@example.invalid')
 })
 

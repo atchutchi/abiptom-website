@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getAllBlogPosts } from '@/lib/contentful/client'
+import { projectBlogPosts } from '@/lib/data/project-blog-posts'
 
 export const revalidate = 60 // Revalidar a cada 60 segundos
 
@@ -13,6 +14,7 @@ export async function GET() {
       title: post.fields.title,
       slug: post.fields.slug,
       excerpt: post.fields.excerpt || '',
+      content: post.fields.excerpt || '',
       coverImage: post.fields.featuredImage?.fields?.file?.url 
         ? `https:${post.fields.featuredImage.fields.file.url}`
         : '/images/blog/default.jpg',
@@ -30,11 +32,12 @@ export async function GET() {
       })) || [],
     }))
     
-    return NextResponse.json(posts)
+    const localSlugs = new Set(projectBlogPosts.map(post => post.slug))
+    return NextResponse.json([...projectBlogPosts, ...posts.filter((post: { slug: string }) => !localSlugs.has(post.slug))])
   } catch (error) {
     console.error('❌ Error fetching blog posts:', error)
     // Retornar array vazio em caso de erro
-    return NextResponse.json([])
+    return NextResponse.json(projectBlogPosts)
   }
 }
 

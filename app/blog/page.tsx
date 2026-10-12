@@ -20,27 +20,28 @@ import Image from "next/image"
 import { AnimatedSection } from "@/components/animated-section"
 import { TextSplitter } from "@/components/text-splitter"
 import { PageTransition } from "@/components/page-transition"
+import { projectBlogPosts } from "@/lib/data/project-blog-posts"
 
 const getPosts = async (): Promise<BlogPost[]> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.abiptom.gw"}/api/blog/posts`,
+      '/api/blog/posts',
       { cache: "no-store", next: { revalidate: 0 } }
     )
-    if (!response.ok) return []
+    if (!response.ok) return projectBlogPosts
     return await response.json()
   } catch {
-    return []
+    return projectBlogPosts
   }
 }
 
 const BlogContent = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([])
-  const [categories, setCategories] = useState(getAllCategories([]))
-  const [tags, setTags] = useState(getAllTags([]))
+  const [posts, setPosts] = useState<BlogPost[]>(projectBlogPosts)
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(projectBlogPosts)
+  const [categories, setCategories] = useState(getAllCategories(projectBlogPosts))
+  const [tags, setTags] = useState(getAllTags(projectBlogPosts))
   const [currentPage, setCurrentPage] = useState(1)
 
   const category = searchParams.get("categoria")
@@ -150,7 +151,7 @@ const BlogContent = () => {
                           <div className="flex items-center gap-3 text-xs text-obys-text-muted">
                             <span>{post.readingTime}</span>
                             <span>•</span>
-                            <span>{new Date(post.date).toLocaleDateString("pt-BR")}</span>
+                            <span>{new Date(post.date).toLocaleDateString("pt-PT")}</span>
                           </div>
                         </div>
                       </div>

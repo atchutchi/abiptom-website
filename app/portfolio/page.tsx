@@ -9,7 +9,7 @@ import { ClientLogos } from "@/components/client-logos"
 import { AnimatedSection } from "@/components/animated-section"
 import { TextSplitter } from "@/components/text-splitter"
 import { PageTransition } from "@/components/page-transition"
-import { CaseStudyList } from "@/components/case-study-list"
+import { caseStudies } from "@/lib/case-studies"
 
 type PortfolioBaseItem = {
   title: string
@@ -20,6 +20,7 @@ type PortfolioBaseItem = {
 type ImagePortfolioItem = PortfolioBaseItem & {
   type: "image"
   src: string
+  href?: string
 }
 
 type VideoPortfolioItem = PortfolioBaseItem & {
@@ -58,7 +59,7 @@ const portfolioItems: PortfolioItem[] = [
   { title: "Website FUNDEI", category: "Websites", type: "image", src: "/images/portfolio/websites/fundei.png", description: "Portal com área de projectos e notícias." },
   { title: "Website Magui", category: "Websites", type: "image", src: "/images/portfolio/websites/magui.png", description: "E-commerce com catálogo de produtos." },
   { title: "Website ABIPTOM", category: "Websites", type: "image", src: "/images/portfolio/websites/abiptom.png", description: "Website institucional próprio." },
-  { title: "Website Dacosta Music", category: "Websites", type: "image", src: "/images/portfolio/websites/dacosta-music.png", description: "Site para agência de artista." },
+  ...caseStudies.map(item => ({ title: item.client, category: 'Websites', type: 'image' as const, src: item.portfolioImage, description: item.description, href: `/blog/${item.slug}` })),
   { title: "Bissau Rising", category: "Design", type: "image", src: "/images/portfolio/graphicdesign/bissaurising-banner.png", description: "Banners para fórum de investimentos." },
   { title: "Campanha MTN Boss", category: "Design", type: "image", src: "/images/portfolio/graphicdesign/campanha-boss-mtn-guine-bissau.jpg", description: "Campanha publicitária MTN." },
   { title: "Caiiro Tour", category: "Design", type: "image", src: "/images/portfolio/graphicdesign/Caiiro-tour-setembro-social-media.png", description: "Material promocional para turnê musical." },
@@ -110,7 +111,6 @@ const PortfolioPage = () => {
           </div>
         </section>
 
-        <CaseStudyList />
         {/* Filters + Gallery */}
         <section className="section-padding bg-obys-dark">
           <div className="obys-container--wide mx-auto px-6 lg:px-10">
@@ -146,7 +146,7 @@ const PortfolioPage = () => {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.4, ease: [0.3, 0.86, 0.36, 0.95] }}
                   >
-                    <div className="group relative overflow-hidden bg-obys-near-black">
+                    <div className="group relative overflow-hidden bg-obys-near-black focus-within:ring-2 focus-within:ring-obys-gold">
                       <div className="relative aspect-video overflow-hidden">
                         {item.type === "video" && playingVideo === item.title ? (
                           <iframe
@@ -165,12 +165,15 @@ const PortfolioPage = () => {
                               className="object-cover transition-transform duration-700 ease-obys-default group-hover:scale-105"
                               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-obys" />
-                            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-obys-default">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-obys" />
+                            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform duration-500 ease-obys-default">
                               <span className="text-label text-obys-gold mb-1 block">{item.category}</span>
                               <h3 className="font-display text-lg text-white mb-1">{item.title}</h3>
                               <p className="font-body text-xs text-obys-text-secondary">{item.description}</p>
                             </div>
+                            {item.type === 'image' && item.href && (
+                              <Link href={item.href} className="absolute inset-0" aria-label={`${item.title}: ler artigo`} />
+                            )}
                             {item.type === "video" && (
                               <button
                                 onClick={() => setPlayingVideo(item.title)}

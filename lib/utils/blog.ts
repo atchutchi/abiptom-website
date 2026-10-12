@@ -117,7 +117,7 @@ export function generateRSSFeed(posts: BlogPost[]): string {
     <title>ABIPTOM Blog</title>
     <link>${baseUrl}/blog</link>
     <description>Últimas notícias e insights sobre design, desenvolvimento web e marketing digital da ABIPTOM</description>
-    <language>pt-BR</language>
+    <language>pt-PT</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml"/>
     ${rssItems}

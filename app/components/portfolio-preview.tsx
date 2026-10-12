@@ -7,8 +7,8 @@ import { motion } from "framer-motion"
 import { caseStudies } from "@/lib/case-studies"
 
 const projects = caseStudies.map(item => ({
-  title: item.client, category: item.category, image: item.image, imageAlt: item.imageAlt,
-  description: item.description, href: `/portfolio/${item.slug}`,
+  title: item.client, category: 'Websites', image: item.portfolioImage, imageAlt: `Apresentação de ${item.client} em dispositivos`,
+  description: item.description, href: `/blog/${item.slug}`,
 }))
 
 export function PortfolioPreview() {
@@ -25,20 +25,19 @@ export function PortfolioPreview() {
             delay: i * 0.1,
             ease: [0.3, 0.86, 0.36, 0.95],
           }}
-          className={i === 0 ? "md:col-span-2" : ""}
         >
           <Link href={project.href} className="group relative block overflow-hidden">
-            <div className={`relative ${i === 0 ? "aspect-[21/9]" : "aspect-video"} overflow-hidden bg-obys-dark`}>
+            <div className="relative aspect-video overflow-hidden bg-obys-dark">
               <Image
                 src={project.image}
                 alt={project.imageAlt}
                 fill
                 className="object-cover transition-transform duration-700 ease-obys-default group-hover:scale-105"
-                sizes={i === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw"}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-obys" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-obys" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 translate-y-full group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform duration-obys">
                 <div className="flex items-end justify-between">
                   <div>
                     <span className="text-label text-obys-gold mb-2 block">

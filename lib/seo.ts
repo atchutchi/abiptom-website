@@ -7,7 +7,7 @@ export const publicPages = [
   { path: '/', title: 'ABIPTOM | Marketing digital, websites e software em Bissau', description: 'A ABIPTOM, SARL presta serviços de marketing digital, design gráfico, desenvolvimento web e software em Bissau, Guiné-Bissau. Fale connosco sobre o seu projecto.' },
   { path: '/servicos', title: 'Serviços digitais em Bissau', description: 'Conheça os serviços da ABIPTOM na Guiné-Bissau: marketing digital, design, websites, software, redes sociais, fotografia, vídeo e infraestrutura técnica.' },
   { path: '/portfolio', title: 'Portfólio de projectos', description: 'Explore os projectos de websites, design gráfico, redes sociais e produção audiovisual apresentados pela ABIPTOM.' },
-  ...caseStudies.map(item => ({ path: `/portfolio/${item.slug}`, title: `${item.client}: ${item.title}`, description: item.description })),
+  ...caseStudies.map(item => ({ path: `/blog/${item.slug}`, title: `${item.client}: ${item.title}`, description: item.description })),
   { path: '/quem-somos', title: 'A nossa equipa em Bissau', description: 'Conheça a ABIPTOM, SARL e a sua equipa de consultores em marketing, design, desenvolvimento web e software na Guiné-Bissau.' },
   { path: '/blog', title: 'Blog sobre tecnologia e comunicação', description: 'Artigos e projectos da ABIPTOM sobre marketing digital, design, desenvolvimento web e tecnologia na Guiné-Bissau.' },
   { path: '/contacto', title: 'Contacto e pedidos de orçamento', description: 'Fale com a ABIPTOM sobre o seu projecto. Contacte-nos pelo formulário, WhatsApp +245 966 865 331 ou info@abiptom.gw. Estamos em Bissau, Guiné-Bissau.' },

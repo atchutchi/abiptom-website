@@ -1,17 +1,9 @@
 import { generateRSSFeed } from "@/lib/utils/blog";
-import { BlogPost } from "@/lib/types/blog";
 import { NextResponse } from "next/server";
-
-// This would typically come from your database or CMS
-const getPosts = async (): Promise<BlogPost[]> => {
-  // For now, return an empty array
-  // You'll need to implement this to fetch your actual blog posts
-  return [];
-};
+import { projectBlogPosts } from "@/lib/data/project-blog-posts";
 
 export async function GET() {
-  const posts = await getPosts();
-  const rss = generateRSSFeed(posts);
+  const rss = generateRSSFeed(projectBlogPosts);
 
   return new NextResponse(rss, {
     headers: {
@@ -19,4 +11,4 @@ export async function GET() {
       "Cache-Control": "s-maxage=3600, stale-while-revalidate",
     },
   });
-} 
+}

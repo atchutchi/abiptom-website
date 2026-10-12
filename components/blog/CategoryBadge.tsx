@@ -9,10 +9,10 @@ interface CategoryBadgeProps {
 export function CategoryBadge({ category, className = "" }: CategoryBadgeProps) {
   return (
     <Link
-      href={`/blog/categoria/${category.slug}`}
+      href={`/blog?categoria=${encodeURIComponent(category.slug)}`}
       className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors ${className}`}
     >
       {category.name}
     </Link>
   );
-} 
+}
