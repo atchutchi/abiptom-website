@@ -10,7 +10,6 @@ import { ChatBot } from "@/components/chat-bot/ChatBot"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { CustomCursor } from "@/components/custom-cursor"
 import { PageNoize } from "@/components/page-noize"
-import { Preloader } from "@/components/preloader"
 import CSRFToken from "@/components/csrf-token"
 import { BackToTop } from "@/components/back-to-top"
 import { TrackingConsent } from "@/components/tracking-consent"
@@ -110,7 +109,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()).replace(/</g, '\\u003c') }} />
         <TrackingConsent gaId={gaId} />
-        <Preloader />
         <CSRFToken />
         <CustomCursor />
         <PageNoize />

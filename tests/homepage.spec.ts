@@ -23,13 +23,14 @@ test.describe('Homepage', () => {
     
     // Verificar links de navegação
     await page.getByRole('button', { name: 'Abrir menu' }).click({ force: true })
+    const menu = page.getByRole('navigation', { name: 'Menu de navegação' })
 
-    await expect(page.getByRole('link', { name: 'Início', exact: true })).toBeAttached()
-    await expect(page.getByRole('link', { name: 'Quem Somos', exact: true })).toBeAttached()
-    await expect(page.getByRole('link', { name: 'Serviços', exact: true })).toBeAttached()
-    await expect(page.getByRole('link', { name: 'Portfólio', exact: true })).toBeAttached()
-    await expect(page.getByRole('link', { name: 'Blog', exact: true })).toBeAttached()
-    await expect(page.getByRole('link', { name: 'Contacto', exact: true })).toBeAttached()
+    await expect(menu.getByRole('link', { name: 'Início', exact: true })).toBeVisible()
+    await expect(menu.getByRole('link', { name: 'Quem Somos', exact: true })).toBeVisible()
+    await expect(menu.getByRole('link', { name: 'Serviços', exact: true })).toBeVisible()
+    await expect(menu.getByRole('link', { name: 'Portfólio', exact: true })).toBeVisible()
+    await expect(menu.getByRole('link', { name: 'Blog', exact: true })).toBeVisible()
+    await expect(menu.getByRole('link', { name: 'Contacto', exact: true })).toBeVisible()
   })
 
   test('should display services section', async ({ page }) => {

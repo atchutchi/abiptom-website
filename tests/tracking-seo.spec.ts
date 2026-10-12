@@ -1,5 +1,22 @@
 import { test, expect } from '@playwright/test'
 
+test('um estudo de caso mostra conteúdo sem esperar pelo JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false })
+  const page = await context.newPage()
+  try {
+    await page.goto('http://localhost:3000/portfolio/apgb', { waitUntil: 'domcontentloaded' })
+    await expect(page.locator('article h1')).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Visitar o website', exact: true })).toBeVisible()
+    expect(await page.locator('article h1').evaluate(element => {
+      const rect = element.getBoundingClientRect()
+      const topElement = document.elementFromPoint(rect.left + 4, rect.top + 4)
+      return topElement === element || element.contains(topElement)
+    })).toBe(true)
+  } finally {
+    await context.close()
+  }
+})
+
 test('os estudos de caso têm páginas próprias, capturas e contacto contextual', async ({ page, request }) => {
   for (const slug of ['dacosta-music', 'apgb', 'santos-global-group']) {
     await page.goto(`/portfolio/${slug}`)
