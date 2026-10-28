@@ -65,10 +65,10 @@ export const caseStudies = [
     description: 'Aplicação de gestão interna da ABIPTOM para clientes, projectos, facturação, despesas, tarefas e relatórios.',
     problem: 'A gestão de uma empresa envolve informação que precisa de estar relacionada: clientes, projectos, facturas, despesas e tarefas. O ABIPTOM Core foi desenvolvido para reunir estes processos numa aplicação interna, com acessos adequados às funções da equipa.',
     work: 'A ABIPTOM desenvolveu a sua plataforma operacional interna, cujo repositório tem o nome técnico abiptom-admin. A documentação do projecto descreve módulos de clientes e projectos, facturação, despesas, stock, tarefas e relatórios. Inclui emissão de documentos em PDF e perfis de acesso para a equipa.',
-    result: 'A aplicação está publicada no endereço abiptom-admin.vercel.app e apresenta-se como ABIPTOM Core. A captura fornecida pela ABIPTOM mostra o painel com acesso a clientes, facturas, projectos, despesas, tarefas e relatórios. Os dados financeiros e o nome do utilizador foram ocultados na imagem publicada. A aplicação exige início de sessão para consultar as áreas internas.',
-    siteUrl: 'https://abiptom-admin.vercel.app/', verifiedOn: '2026-10-12',
+    result: 'A aplicação está disponível na área de acesso restrito de www.abiptom.gw e apresenta-se como ABIPTOM Core. A captura fornecida pela ABIPTOM mostra o painel com acesso a clientes, facturas, projectos, despesas, tarefas e relatórios. Os dados financeiros e o nome do utilizador foram ocultados na imagem publicada. A aplicação exige início de sessão para consultar as áreas internas.',
+    siteUrl: 'https://www.abiptom.gw/login', verifiedOn: '2026-10-28',
     sources: [
-      { label: 'Entrada pública do ABIPTOM Core', url: 'https://abiptom-admin.vercel.app/' },
+      { label: 'Área de acesso restrito do ABIPTOM Core', url: 'https://www.abiptom.gw/login' },
       { label: 'Captura do painel fornecida pela ABIPTOM, com dados ocultados', url: 'https://www.abiptom.gw/images/case-studies/abiptom-core-dashboard.png' },
     ],
     request: 'Precisa de reunir clientes, projectos, facturação e tarefas numa aplicação? Diga-nos como trabalha a sua equipa e quais são os processos que pretende centralizar.',
