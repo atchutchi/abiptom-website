@@ -41,7 +41,7 @@ export function AuthShell({
           <h1 className="text-2xl font-bold tracking-tight text-[color:var(--brand-ink)]">
             {title}
           </h1>
-          <p className="mt-2 text-sm text-[color:var(--brand-muted)]">{description}</p>
+          {description ? <p className="mt-2 text-sm text-[color:var(--brand-muted)]">{description}</p> : null}
         </div>
         {children}
         <div className="border-t border-[color:var(--brand-line)] pt-4 text-center text-sm"><Link href="/" prefetch={false} className="text-[color:var(--brand-muted)] underline-offset-4 hover:underline">Voltar ao site ABIPTOM</Link></div>
