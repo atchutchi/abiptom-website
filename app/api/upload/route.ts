@@ -1,3 +1,4 @@
+import { sanitizeFilename } from "@/lib/upload-filename"
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { uploadToMedia, ALLOWED_FILE_TYPES, MAX_FILE_SIZES } from '@/lib/supabase/media-storage'
@@ -92,27 +93,6 @@ function validateExtension(filename: string, mimeType: string): boolean {
 /**
  * Sanitiza o nome do arquivo
  */
-export function sanitizeFilename(filename: string): string {
-  // Remover path traversal attempts
-  let safe = filename.replace(/[\/\\]/g, '').replace(/\.\./g, '')
-  
-  // Remover caracteres especiais perigosos
-  safe = safe.replace(/[<>:"|?*\x00-\x1F]/g, '')
-  
-  // Limitar comprimento
-  if (safe.length > 200) {
-    const ext = safe.split('.').pop() || ''
-    const name = safe.slice(0, 200 - ext.length - 1)
-    safe = `${name}.${ext}`
-  }
-  
-  // Garantir que não está vazio
-  if (!safe || /^[.]+$/.test(safe)) {
-    safe = 'file'
-  }
-  
-  return safe
-}
 
 /**
  * Valida o folder path

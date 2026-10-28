@@ -1,0 +1,81 @@
+INTEGRAÇÃO DO ABIPTOM CORE NO SITE
+Estado de 28 de Outubro de 2026
+
+Esta versão está preparada para revisão local. A publicação em produção continua pendente de validação expressa do utilizador.
+
+Localização
+C:\Users\binta\Documents\Abiptom\abiptom-integrado-test
+Branch: codex/integracao-core
+Base do site: 01f0be6
+Base do Core: 28d8fe2
+
+O que foi integrado
+O botão Login abre /login. O título visível é Área de acesso restrito, conforme a alteração pedida pelo utilizador.
+Os módulos internos estão em /admin e /staff. Mantêm-se os perfis ca, dg, coord e staff e as permissões por operação do Core.
+Os layouts públicos e internos estão separados. As páginas públicas mantêm os respectivos endereços.
+Os estilos Tailwind 3 do site e Tailwind 4 do Core são compilados separadamente para evitar a conversão visual do site inteiro.
+As fontes Barlow e Barlow Condensed usam os mesmos ficheiros Latin da compilação original do site. A licença OFL acompanha os ficheiros.
+
+Preservação dos dados
+Não foram executados comandos de seed, migration, restauro, limpeza ou alteração das bases de produção.
+Não foram copiadas credenciais de produção para esta worktree.
+O esquema de dados do Core mantém-se. Esta integração não exige recriar tabelas, utilizadores, identificadores ou anexos.
+As ligações ao Supabase do site e ao Supabase do Core têm nomes separados. Não se devem substituir as variáveis do site pelas do Core.
+Não foi criado nem validado um backup de produção nesta fase, porque os serviços de produção não foram utilizados. O backup recuperável é um requisito da passagem a produção, não uma confirmação desta entrega.
+
+Pré-visualização
+Executar npm ci e npm run build na pasta da worktree. O .npmrc conserva a resolução de dependências usada nesta integração.
+Executar npm run preview para abrir a compilação validada com as escritas bloqueadas. npm run dev:review continua disponível para desenvolvimento.
+O script compila o CSS Core e inicia o servidor local. A porta é 3000 por defeito. Para usar a porta 3100 em PowerShell, definir $env:ABIPTOM_REVIEW_PORT='3100' antes do comando.
+O servidor escuta apenas em 127.0.0.1.
+O script remove variáveis de serviços externos do ambiente herdado. O modo de revisão impede escritas, Server Actions, confirmação Auth, crons e acesso directo à base do Core.
+O login e a recuperação de palavra-passe estão explicitamente desactivados na interface. Não existe conta de demonstração nem bypass.
+O utilizador confirmou que não existe, ou não conhece, uma instância Supabase de testes. Por isso os fluxos autenticados reais ainda não foram ensaiados.
+As publicações Vercel com VERCEL_ENV=preview também ficam em modo de revisão. Não colocar credenciais reais nessas publicações.
+
+Controlos de segurança
+O utilizador é validado com Supabase getUser. O perfil e o estado activo são obtidos da tabela interna, não de valores enviados pelo navegador.
+As APIs e as operações mantêm autorização própria. O proxy faz uma validação adicional antes de servir as rotas privadas.
+As sessões Core usam um cookie próprio e sem domínio alargado. Não se reutiliza a sessão do site público.
+Pedidos de escrita do Core exigem a origem exacta configurada. Redireccionamentos externos e caminhos com barras ou caracteres de controlo são recusados.
+As páginas internas usam CSP com nonce por pedido, bloqueio de enquadramento, noindex e no-store.
+Os limites persistentes de tentativas e o registo sanitizado de eventos existentes no Core foram preservados.
+O endpoint de seed fica indisponível. Os crons estão desactivados e só podem ser activados expressamente com CORE_CRON_ENABLED=1 e CRON_SECRET de pelo menos 32 caracteres.
+MFA e políticas de palavra-passe do serviço Auth não foram alterados. A configuração real do Supabase e as respectivas políticas RLS terão de ser verificadas antes da publicação.
+Os testes e a revisão reduzem o risco. Não constituem um teste de intrusão completo nem uma garantia de ausência de vulnerabilidades.
+
+Variáveis para a integração futura
+Site: conservar NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY e restantes configurações actuais do site.
+Core: o antigo NEXT_PUBLIC_SUPABASE_URL passa a NEXT_PUBLIC_CORE_SUPABASE_URL.
+Core: o antigo NEXT_PUBLIC_SUPABASE_ANON_KEY passa a NEXT_PUBLIC_CORE_SUPABASE_ANON_KEY.
+Core: o antigo SUPABASE_SERVICE_ROLE_KEY passa a CORE_SUPABASE_SERVICE_ROLE_KEY.
+Core: o antigo DATABASE_URL passa a CORE_DATABASE_URL.
+Core: o antigo DATABASE_DIRECT_URL passa a CORE_DATABASE_DIRECT_URL.
+Conservar também as configurações Core de email, rate limiting e backup, sem as expor ao navegador.
+NEXT_PUBLIC_SITE_URL deve corresponder à origem final, actualmente https://www.abiptom.gw.
+O ficheiro .env.integration.example contém apenas nomes e valores não secretos.
+
+O que falta antes de publicar
+Identificar o projecto e a conta Vercel que servem o domínio público. A ligação disponível nesta sessão apenas confirmou o projecto abiptom-admin.
+Preparar uma instância de testes separada e contas por perfil. Usar dados fictícios ou dados anonimizados quando forem necessários.
+Verificar login, recuperação, saída de sessão, renovação de cookies e recusa de contas inactivas nessa instância.
+Validar acesso e isolamento por perfil nos módulos, APIs, PDFs, exportações e ficheiros. Confirmar as políticas RLS existentes e impedir registo público de utilizadores internos.
+Verificar envio de email para destinatários de teste e evitar envio para contactos reais.
+Preparar backup da base, Auth e Storage e verificar o restauro numa instância isolada. Guardar inventário e contagens de registos e anexos.
+Validar a versão integrada com o utilizador.
+Configurar as variáveis existentes no projecto Vercel correcto e os endereços de recuperação permitidos no Supabase. Não recriar contas ou bases.
+Só depois da aprovação, publicar a versão validada e verificar os registos e os principais fluxos no domínio final.
+Transferir os agendamentos de backup, relatório mensal e mensagens, activando cada um num único projecto. O vercel.json desta versão tem crons vazio propositadamente.
+Actualizar os links públicos do caso ABIPTOM Core que ainda apontam para abiptom-admin.vercel.app quando a nova entrada estiver publicada.
+Conservar o alojamento antigo durante a validação inicial. Retirá-lo apenas depois de confirmada a nova versão. Conservar o repositório como histórico.
+Um regresso à publicação anterior deve reutilizar os mesmos serviços de dados. Não restaurar uma cópia antiga sobre registos novos como forma de reverter código.
+
+Verificação disponível
+npm run test:security
+npm run test:core
+npm run lint
+npm run build
+node scripts/verify-core-preview.mjs
+npm test -- --project=chromium
+
+Os resultados finais desta sessão estão registados em docs/VALIDACAO-INTEGRACAO-20261028.txt.

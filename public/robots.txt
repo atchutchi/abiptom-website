@@ -6,11 +6,21 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /admin
+Disallow: /staff
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /update-password
+Disallow: /auth/
 
 # ChatGPT Search: keep the same exclusions as other search crawlers.
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /admin
+Disallow: /staff
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /update-password
+Disallow: /auth/
 Disallow: /api/
 
 # Sitemap location

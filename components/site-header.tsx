@@ -84,6 +84,8 @@ export function SiteHeader() {
             />
           </Link>
 
+          <div className="relative z-[60] flex items-center gap-4 sm:gap-6">
+            <a href="/login" className="inline-flex min-h-11 items-center rounded border border-obys-gold/60 px-4 font-body text-sm text-white transition-colors hover:border-obys-gold hover:text-obys-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-obys-gold">Login</a>
           <button
             onClick={toggleMenu}
             className="relative z-[60] flex flex-col items-center justify-center w-10 h-10 gap-[5px] group"
@@ -108,6 +110,7 @@ export function SiteHeader() {
               }`}
             />
           </button>
+          </div>
         </div>
       </header>
 

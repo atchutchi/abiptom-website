@@ -1,0 +1,14 @@
+Plano: docs/superpowers/plans/2026-10-28-integracao-core.md
+Origem site: 01f0be6. Origem Core: 28d8fe2.
+Passo 1 completo: worktree codex/integracao-core. Ferramenta nativa não aceita o repositório numa subpasta do workspace. Worktree Git criado e confirmado, apesar de aviso do hook sh no Windows. Ficheiro update já aparece modificado na referência e não será incluído nos commits.
+Base site: 49/49 checks passaram.
+Base Core: 91/91 testes passaram. Primeira tentativa falhou por permissões no TEMP do sandbox. Repetição com TEMP dentro do workspace passou.
+Decisão: preservar Tailwind 3 do site e gerar CSS Core Tailwind 4 com compilação separada. Evita uma conversão visual de todo o site. Os layouts raiz separados garantem carregamento completo ao atravessar áreas.
+Decisão: teste visual local sem credenciais. Não será introduzido login de demonstração ou bypass. Testes autenticados com dados isolados dependem da configuração de uma instância de teste.
+Passos 2 e 3 completos: aplicação única com layouts distintos, Login e perfis conservados. Cookie Core independente. Nonce CSP, origem de escrita exacta e redireccionamentos internos normalizados. Seed e crons indisponíveis.
+Decisão: credenciais Core com prefixo próprio. Conserva serviços e dados existentes sem misturar o Supabase do site e o do Core.
+Decisão: fontes locais a partir dos binários originais do site, com OFL. Mantém a tipografia e permite compilar sem Google Fonts.
+Revisão independente concluída. Lacuna de testes do proxy configurado corrigida com sete cenários sem rede. Alternativa de ligação directa alinhada e testada. Normalização de redireccionamentos reproduzida em RED e corrigida em GREEN.
+Passo 4 completo no âmbito sem dados reais: 56 checks, 103 unitários Core, 24 HTTP e 31 Chromium passaram. Um teste GA4 omitido por configuração. Build e tipos passaram. Lint com zero erros e 38 avisos. Auditoria npm com zero vulnerabilidades reportadas.
+Passo 5: pré-visualização compilada em 127.0.0.1:3100, com título Área de acesso restrito. Capturas em output/playwright. Sem publicação.
+Pendente externo: não existe base Supabase de testes identificada. Docker local instalado mas motor indisponível. Sem ensaios autenticados reais, backup/restauro ou confirmação do projecto Vercel do site. Estes requisitos continuam a bloquear a passagem a produção.

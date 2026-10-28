@@ -1,120 +1,103 @@
+import { NextResponse, type NextRequest } from 'next/server'
 import { buildContentSecurityPolicy } from './lib/security-csp.mjs'
-import { NextResponse, NextRequest } from 'next/server'
-import { updateSession } from '@/utils/supabase/middleware'
-
-/**
- * Middleware de Segurança
- * 
- * Implementa:
- * - Headers de segurança HTTP
- * - Content Security Policy (CSP)
- * - Proteção contra ataques comuns
- * - Gestão de sessão Supabase
- */
-
-// Configuração do CSP baseada no ambiente
-function buildCSP(): string {
-  return buildContentSecurityPolicy({
-    development: process.env.NODE_ENV !== 'production',
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  })
-}
-
-// Headers de segurança adicionais
-function getSecurityHeaders(): Record<string, string> {
-  return {
-    // Prevenir MIME type sniffing
-    'X-Content-Type-Options': 'nosniff',
-    
-    // Proteção XSS (legado, mas ainda útil para navegadores antigos)
-    'X-XSS-Protection': '1; mode=block',
-    
-    // Prevenir clickjacking
-    'X-Frame-Options': 'SAMEORIGIN',
-    
-    // Política de referenciamento
-    'Referrer-Policy': 'strict-origin-when-cross-origin',
-    
-    // HTTP Strict Transport Security
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-    
-    // Permissions Policy (anteriormente Feature Policy)
-    'Permissions-Policy': [
-      'accelerometer=()',
-      'camera=()',
-      'geolocation=(self)',
-      'gyroscope=()',
-      'magnetometer=()',
-      'microphone=()',
-      'payment=()',
-      'usb=()',
-    ].join(', '),
-    
-    // Cross-Origin policies
-    'Cross-Origin-Opener-Policy': 'same-origin',
-    'Cross-Origin-Resource-Policy': 'same-origin',
-    
-    // Content Security Policy
-    'Content-Security-Policy': buildCSP(),
-  }
-}
+import { updateSession as updatePublicSession } from './utils/supabase/middleware'
+import { getCoreRouteKind, isAllowedCoreOrigin, shouldBlockPreviewRequest } from './lib/core-request-policy'
+import { getSiteOrigin } from './lib/site'
+import { isCoreConfigured, isCoreReviewMode } from './core/lib/environment'
+import { buildSecurityHeaders } from './core/lib/security/headers'
+import { resolveProtectedRouteAccess } from './core/lib/auth/session-gate'
+import type { UserRole } from './core/lib/db/schema'
 
 export async function proxy(request: NextRequest) {
-  if (request.nextUrl.pathname === '/api/review-status' && ['GET', 'HEAD'].includes(request.method)) {
-    const reviewOnly = process.env.ABIPTOM_REVIEW_ONLY === '1'
-    return NextResponse.json({ reviewOnly }, {
-      status: reviewOnly ? 200 : 404,
-      headers: { 'Cache-Control': 'no-store', 'x-abiptom-review-only': reviewOnly ? '1' : '0' },
-    })
-  }
-  if (process.env.ABIPTOM_REVIEW_ONLY === '1' &&
-      request.nextUrl.pathname.startsWith('/api/') &&
-      !['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
-    return NextResponse.json({ error: 'Operações de escrita desactivadas nesta revisão local.' }, {
-      status: 503,
-      headers: { 'Cache-Control': 'no-store' },
-    })
-  }
-  let response = NextResponse.next()
-  
-  // Tentar atualizar a sessão do Supabase
-  try {
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      response = await updateSession(request)
-    }
-  } catch (error) {
-    console.warn('Erro ao atualizar sessão do Supabase:', error)
-    // Continuar com a resposta padrão se houver erro
-  }
-
-  // Adicionar headers de segurança
-  const securityHeaders = getSecurityHeaders()
-  for (const [key, value] of Object.entries(securityHeaders)) {
-    response.headers.set(key, value)
-  }
-
-  // Headers adicionais baseados no tipo de request
   const pathname = request.nextUrl.pathname
-  
-  // Para assets estáticos, adicionar cache headers
-  if (pathname.startsWith('/_next/static') || pathname.startsWith('/images') || pathname.startsWith('/fonts')) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-  }
-  
-  // Para páginas dinâmicas, evitar cache de dados sensíveis
-  if (pathname.startsWith('/admin')) {
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
-    response.headers.set('Pragma', 'no-cache')
-    response.headers.set('Expires', '0')
+  const kind = getCoreRouteKind(pathname)
+  const reviewOnly = isCoreReviewMode()
+  const nonce = btoa(crypto.randomUUID())
+  const coreHeaders = buildSecurityHeaders({ nonce, development: process.env.NODE_ENV !== 'production', supabaseUrl: process.env.NEXT_PUBLIC_CORE_SUPABASE_URL })
+
+  function finish(response: NextResponse): NextResponse {
+    const headers = kind ? coreHeaders : [
+      { key: 'Content-Security-Policy', value: buildContentSecurityPolicy({ development: process.env.NODE_ENV !== 'production', supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL }) },
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
+      { key: 'Permissions-Policy', value: 'accelerometer=(), camera=(), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()' },
+      { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+      { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+    ]
+    for (const { key, value } of headers) response.headers.set(key, value)
+    if (kind) {
+      response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+      response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive')
+      response.headers.set('Referrer-Policy', 'no-referrer')
+    } else if (reviewOnly) {
+      response.headers.set('Cache-Control', 'no-store')
+      response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive')
+    }
+    return response
   }
 
-  return response
+  if (pathname === '/api/review-status' && ['GET', 'HEAD'].includes(request.method)) {
+    return NextResponse.json({ reviewOnly }, { status: reviewOnly ? 200 : 404, headers: { 'Cache-Control': 'no-store', 'x-abiptom-review-only': reviewOnly ? '1' : '0' } })
+  }
+  if (shouldBlockPreviewRequest(pathname, request.method, reviewOnly)) {
+    const response = finish(NextResponse.json({ error: 'Operações de escrita desactivadas nesta revisão local.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } }))
+    if (!kind) response.headers.set('Cache-Control', 'no-store')
+    return response
+  }
+  if (kind === 'disabled') return finish(NextResponse.json({ error: 'Não disponível' }, { status: 404 }))
+  if (kind === 'cron') {
+    if (process.env.CORE_CRON_ENABLED !== '1') return finish(NextResponse.json({ error: 'Não disponível' }, { status: 404 }))
+    return finish(NextResponse.next())
+  }
+
+  if (kind) {
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method) && !isAllowedCoreOrigin(request.headers.get('origin'), getSiteOrigin())) {
+      return finish(NextResponse.json({ error: 'Pedido não autorizado.' }, { status: 403 }))
+    }
+    // Next reads this request CSP to attach the nonce to its own scripts.
+    request.headers.set('Content-Security-Policy', coreHeaders.find(header => header.key === 'Content-Security-Policy')!.value)
+    request.headers.set('x-nonce', nonce)
+    const continuation = () => NextResponse.next({ request: { headers: request.headers } })
+    const hasCookie = request.cookies.getAll().some(cookie => cookie.name === 'abiptom-core-auth' || cookie.name.startsWith('abiptom-core-auth.'))
+    const unauthenticated = () => {
+      if (kind === 'private-api') return finish(NextResponse.json({ error: 'Não autenticado' }, { status: 401 }))
+      const url = new URL('/login', request.url)
+      url.searchParams.set('next', pathname + request.nextUrl.search)
+      return finish(NextResponse.redirect(url))
+    }
+    if (reviewOnly || !isCoreConfigured() || !hasCookie) {
+      if (kind === 'auth' && pathname !== '/update-password') return finish(continuation())
+      return unauthenticated()
+    }
+    try {
+      const { updateSession } = await import('./core/lib/supabase/middleware')
+      const { user, supabase, supabaseResponse } = await updateSession(request)
+      if (kind === 'auth') return finish(supabaseResponse)
+      if (!user) return unauthenticated()
+      const { data: profile, error } = await supabase.from('users').select('role, activo').eq('auth_user_id', user.id).maybeSingle()
+      if (error || !profile?.activo || !['ca', 'dg', 'coord', 'staff'].includes(profile.role)) return unauthenticated()
+      if (kind === 'private-page') {
+        const access = resolveProtectedRouteAccess({ hasUser: true, dbUser: { role: profile.role as UserRole, activo: profile.activo }, pathname })
+        if (access.action === 'login') return unauthenticated()
+        if (access.action === 'redirect') {
+          const response = NextResponse.redirect(new URL(access.destination, request.url))
+          for (const cookie of supabaseResponse.cookies.getAll()) response.cookies.set(cookie)
+          return finish(response)
+        }
+      }
+      return finish(supabaseResponse)
+    } catch {
+      return unauthenticated()
+    }
+  }
+
+  let response = NextResponse.next()
+  if (!reviewOnly && process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    try { response = await updatePublicSession(request) } catch { /* Public pages remain available. */ }
+  }
+  return finish(response)
 }
 
-// Configure para quais rotas o middleware deve ser executado
-export const config = {
-  matcher: [
-    // Executar em todas as rotas exceto assets estáticos e API
-    '/((?!_next/static|_next/image|favicon.ico).*)',
-  ],
-}
+export const config = { matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'] }

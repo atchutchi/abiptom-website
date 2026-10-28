@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { sanitizeFilename } from '@/app/api/upload/route'
+import { sanitizeFilename } from '@/lib/upload-filename'
 
 test.describe('security helpers', () => {
   test('sanitizeFilename strips path traversal and dangerous characters', () => {

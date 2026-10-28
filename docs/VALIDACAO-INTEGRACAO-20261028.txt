@@ -1,0 +1,52 @@
+VALIDAÇÃO DA INTEGRAÇÃO ABIPTOM
+28 de Outubro de 2026
+
+Resultado: versão local integrada e disponível para revisão visual. Não publicada. Não aprovada para produção nesta fase.
+
+Versão de teste: http://127.0.0.1:3100/
+Entrada interna: http://127.0.0.1:3100/login
+Título visível confirmado: Área de acesso restrito.
+
+Verificações concluídas
+56 verificações unitárias e de segurança do site passaram.
+103 testes unitários do Core passaram, incluindo o proxy configurado com serviços simulados e sem pedidos de rede.
+24 verificações HTTP passaram na versão compilada. Incluem recusa de cookies falsos, páginas internas, APIs privadas, métodos de escrita, crons e confirmação de autenticação.
+31 testes Chromium passaram na aplicação compilada. Um teste GA4 foi omitido porque a medição manual não está activada no ambiente. Não houve falhas na execução final.
+A compilação Next.js terminou com código 0 e verificação de tipos concluída.
+O lint terminou sem erros e com 38 avisos. Os avisos incluem imports e variáveis não utilizados e regras sobre imagens nos componentes de PDF. Não foram tratados como prova de segurança ou de funcionamento dos módulos.
+A auditoria npm terminou com zero vulnerabilidades conhecidas reportadas, incluindo dependências de desenvolvimento. Não equivale a uma garantia de ausência de vulnerabilidades.
+git diff --check passou.
+
+Revisão independente
+Um revisor fez a leitura dos controlos de acesso, sessões, base de dados, APIs e crons. Não identificou um bypass introduzido pela integração.
+Identificou uma lacuna na cobertura do ramo configurado do proxy. Foram acrescentados testes para sessão rejeitada, perfil ausente, inactivo ou desconhecido, erro do fornecedor, metadados manipulados e cookie do site público.
+Foi alinhada a detecção de configuração com a alternativa CORE_DATABASE_DIRECT_URL.
+Na revisão final foi acrescentada a normalização segura dos redireccionamentos com segmentos relativos. O teste reproduziu a falha e passou depois da correcção.
+
+Verificação visual
+Fluxo site, Login e regresso ao site confirmado no Chrome.
+Título, logotipo e formulário confirmados em computador e a 390 por 844 píxeis.
+O documento móvel não ultrapassou a largura de 390 píxeis.
+Os campos e o botão de autenticação estão desactivados e o motivo está explícito.
+Foram guardadas capturas em output/playwright.
+O Chrome com uma extensão de gravação apresentou um aviso de hidratação relativo ao atributo data-scribe-recorder-ready. A suite Chromium sobre a compilação final passou. O aviso foi registado como efeito do navegador utilizado, não ocultado no código da aplicação.
+
+Ensaios intermédios e correcções
+O sandbox bloqueou inicialmente pastas temporárias, ligações locais e a criação de algumas pastas .next. Foi usado TEMP dentro do workspace e execução autorizada dos comandos locais necessários.
+As fontes Google não estavam acessíveis a partir do sandbox. Foram preservados os ficheiros Barlow já existentes na compilação do site e incluída a licença OFL.
+A primeira regressão no servidor de desenvolvimento teve 28 testes aprovados, três falhas e um teste omitido. Duas falhas eram referências canonical locais e a terceira excedeu o limite de tempo durante a compilação do blog. A origem canonical foi corrigida. A execução final da suite completa usou a aplicação compilada e teve 31 testes aprovados, zero falhas e um omitido.
+
+Limitações e requisitos de publicação
+Não existe uma instância Supabase de testes identificada. O utilizador confirmou essa situação.
+O Docker está instalado, mas o motor local não está disponível. Não foi iniciado nem alterado nesta sessão.
+Não foram testadas sessões reais por perfil, recuperação efectiva por email, acesso à base real, políticas RLS activas, entrega de emails, PDFs com dados reais ou operações financeiras em base isolada.
+Não foi consultada, migrada, limpa ou reinicializada a base de produção. Não foi executado seed ou restauro. Os ficheiros SQL históricos e os seeds não foram incluídos na integração. Permanecem no repositório original.
+Não foi realizado backup ou restauro de produção. A sua existência e recuperação terão de ser confirmadas antes da publicação.
+O projecto Vercel do site público ainda precisa de ser identificado na conta correcta. O projecto abiptom-admin e os respectivos serviços continuam intactos.
+Não foram feitas alterações de domínio, publicação, push ou activação de tarefas agendadas.
+Não foi feito um teste de intrusão completo.
+
+Próximo passo
+Rever a apresentação local. Preparar depois uma instância de testes isolada e validar os fluxos autenticados. A publicação continua dependente dessa validação e da aprovação expressa do utilizador.
+
+Relatório operacional e variáveis: docs/INTEGRACAO-CORE-TESTE.txt.
