@@ -48,3 +48,20 @@ Cópia de segurança conservada em C:\Users\binta\Documents\Abiptom\Backups-Inte
 Limites
 Os testes locais não são um teste de intrusão completo nem uma garantia absoluta contra ataques. A segurança também depende da protecção das contas Vercel e Supabase e das credenciais da equipa.
 O restauro foi validado numa base local separada. Não foi executado restauro sobre produção.
+
+CONCLUSÃO DA PUBLICAÇÃO
+Aplicação e transferência operacional concluídas em 28 de Outubro de 2026. Produção validada no commit a44504f89e178488d8f4a14143592cf96a8eead7, publicação dpl_44nEmnPxbPjQmDxohXxu9FyPuZBQ.
+Endereço da equipa: https://www.abiptom.gw/login. Botão Login no site público. Título Área de acesso restrito. Perfis e credenciais existentes conservados.
+Os três agendamentos estão no projecto abiptom-website, com os horários aprovados e um segredo forte. O backup foi executado no novo endereço, guardado no bucket privado backups e descarregado para confirmação. O SQL gerado foi restaurado na réplica local e as contagens das 36 tabelas públicas coincidem com o inventário desse momento.
+O backup diário conserva o âmbito do serviço anterior: tabelas públicas. A cópia completa anterior à publicação inclui adicionalmente Auth, metadados Storage e os 191 ficheiros descarregados.
+O alojamento antigo foi pausado pela API Vercel. Confirmado HTTP 503 com código DEPLOYMENT_PAUSED no endereço antigo e HTTP 200 no novo login. Os dados Supabase não foram pausados ou removidos. O projecto e o repositório antigos ficam conservados para reversão.
+As referências públicas do caso ABIPTOM Core apontam para o novo login. O endereço antigo deixou de ser usado nesses links.
+Resultado final: 105 testes Core, 57 verificações do site, 39 verificações funcionais isoladas e 12 verificações no domínio. Compilações de produção concluídas. Não foram enviados manualmente emails de mensagens ou relatórios a pessoas reais durante estes testes.
+Foi corrigida a regra herdada de .gitignore que excluía qualquer pasta chamada backup. A exclusão passou a aplicar-se apenas à pasta de cópias na raiz. O código do serviço de backup e os seus testes estão agora versionados. Uma verificação de empacotamento reproduziu a falha antes da correcção e passou depois.
+No inventário final continuam 19 utilizadores internos e 20 contas Auth. Nenhuma tabela teve redução de contagem. A auditoria passou de 1476 para 1477 registos e os contadores de segurança de 10 para 12. Os objectos Storage passaram de 191 para 192 devido ao novo backup verificado.
+Foi revogado o acesso de teste excedente criado pela CLI Vercel. Foi conservada apenas a credencial de automação gerida que a plataforma exige.
+A pasta original C:\Users\binta\Documents\Abiptom\abiptom-website foi actualizada por fast-forward. As alterações locais anteriores do utilizador foram conservadas. O repositório abiptom-admin não foi apagado nem reescrito.
+
+Reversão do código
+Publicação anterior do site: dpl_6cEbztY6GhRJvqqsEcS5UUot7MYq. O regresso ao código anterior não exige restauro da base. Não substituir dados actuais por uma cópia antiga para reverter código.
+Se for necessário retomar o alojamento antigo, desactivar primeiro os agendamentos novos para evitar execuções duplicadas. Retomar depois o projecto antigo e confirmar os endereços Auth necessários. As configurações e os serviços de dados continuam conservados.
