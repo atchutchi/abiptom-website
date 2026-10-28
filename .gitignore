@@ -89,3 +89,5 @@ public/core-assets/core.css
 !.env.integration.example
 
 output/playwright/
+
+.integration-lab/
