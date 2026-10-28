@@ -1,5 +1,11 @@
 .integration-lab
 .integration-lab/**
+node_modules
+node_modules/**
+.next
+.next/**
+.git
+.vercel
 .integration-tmp
 .integration-qa
 .env

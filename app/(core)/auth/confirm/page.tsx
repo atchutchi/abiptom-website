@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { AuthShell } from "@/core/components/auth/AuthShell";
@@ -51,7 +51,8 @@ function getHashSession() {
 function AuthConfirmContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const supabase = useMemo(() => createClient(), []);
+  const supabase = useMemo(() => createClient({ manualConfirmation: true }), []);
+  const pending = useRef<{ key: string; result: Promise<Error | null> } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -68,26 +69,26 @@ function AuthConfirmContent() {
       const tokenHash = searchParams?.get("token_hash") ?? null;
       const code = searchParams?.get("code") ?? null;
 
-      let authError: Error | null = null;
-
-      if (accessToken && refreshToken) {
-        const { error } = await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken,
-        });
-        authError = error;
-      } else if (tokenHash && type) {
-        const { error } = await supabase.auth.verifyOtp({
-          token_hash: tokenHash,
-          type,
-        });
-        authError = error;
-      } else if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        authError = error;
-      } else {
-        authError = new Error("Link de autenticação sem dados válidos.");
+      const key = JSON.stringify([accessToken, refreshToken, tokenHash, type, code]);
+      if (!pending.current || pending.current.key !== key) {
+        // Replayed effects share the result instead of spending the code twice.
+        pending.current = { key, result: (async () => {
+          if (accessToken && refreshToken) {
+            const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+            return error;
+          }
+          if (tokenHash && type) {
+            const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+            return error;
+          }
+          if (code) {
+            const { error } = await supabase.auth.exchangeCodeForSession(code);
+            return error;
+          }
+          return new Error("Link de autenticação sem dados válidos.");
+        })() };
       }
+      const authError = await pending.current.result;
 
       if (cancelled) {
         return;

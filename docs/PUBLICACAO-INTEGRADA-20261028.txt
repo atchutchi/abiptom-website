@@ -22,7 +22,9 @@ Docker e Supabase locais, sem ligação aos dados de produção. Portas publicad
 Contas fictícias ca, dg, coord, staff, inactiva e sem perfil interno. Nenhum bypass de autenticação.
 39 verificações funcionais passaram. Incluem sessões reais, acesso por perfil, recusa de conta inactiva e sem perfil, cookies falsos, revogação de sessão, isolamento dos utilizadores, metadados manipulados, pedidos de outra origem e exportação.
 Foi gerado um PDF de relatório através da API com uma conta fictícia autorizada.
-103 testes unitários Core e 56 verificações do site passaram novamente nesta fase.
+105 testes unitários Core e 56 verificações do site passaram novamente nesta fase. A verificação de tipos passou.
+O pedido de recuperação foi enviado para o Mailpit local. O código PKCE foi validado e abriu o formulário de nova palavra-passe da conta fictícia. A saída de sessão também regressou ao login.
+O primeiro ensaio reproduziu um consumo duplicado do código pela detecção automática do SDK e pelo handler da página. Foi corrigido com cliente de confirmação explícita e partilha da mesma Promise quando o React repete efeitos. O teste unitário falhou antes da correcção e passou depois. Uma revisão independente não encontrou impedimentos nessa correcção.
 As verificações anteriores de compilação, tipos e regressão visual estão documentadas em VALIDACAO-INTEGRACAO-20261028.txt. Os resultados de publicação serão acrescentados após a validação remota.
 
 Autenticação de produção
