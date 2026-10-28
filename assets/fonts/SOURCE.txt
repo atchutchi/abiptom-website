@@ -1,0 +1,3 @@
+Barlow e Barlow Condensed. Autoria: Jeremy Tribby. Licenca SIL Open Font License 1.1.
+Binarios Latin preservados a partir da compilacao do site ABIPTOM 01f0be6.
+Referencia: https://github.com/jpt/barlow

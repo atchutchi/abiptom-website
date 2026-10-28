@@ -80,3 +80,14 @@ Thumbs.db
 
 # Security update logs
 logs/security/
+
+# Integration preview and generated CSS
+.integration-tmp/
+.integration-qa/
+public/core-assets/core.css
+.env*
+!.env.integration.example
+
+output/playwright/
+
+.integration-lab/

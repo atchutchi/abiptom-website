@@ -1,0 +1,44 @@
+PUBLICAÇÃO INTEGRADA ABIPTOM
+28 de Outubro de 2026
+
+Autorização
+O utilizador aprovou a versão visual, pediu a remoção da descrição no login e autorizou expressamente a conclusão e publicação em produção. O título visível é Área de acesso restrito.
+
+Identificação confirmada
+Site público: abiptom-website na equipa atchutchis-projects. Projecto prj_BMl9eXiT8ysj1l4A0KXLJKOEAG4U. Domínio www.abiptom.gw. Publicação anterior baseada em 01f0be6.
+Core activo: abiptom-admin na equipa abiptom-6351s-projects. Projecto prj_wIaHe6XhWtera5ekZOeIZ5MP3obF. Publicação anterior dpl_6ERjEU12uf3onC2GrtJcrp17EVpE, baseada em 28d8fe2.
+A conta do site também contém um projecto antigo chamado abiptom-admin. Tem publicações com erro e não foi usado como origem das credenciais.
+
+Preservação dos dados
+Os serviços Supabase do site e do Core são diferentes. Foram conservados e mantidos separados. As novas variáveis CORE referem os serviços que o Core activo já utiliza. Não foram recriadas contas nem executados seeds ou migrations em produção.
+Inventário inicial obtido em transacção só de leitura. 36 tabelas públicas, todas com RLS activo. 19 utilizadores internos, 20 contas Auth e 191 objectos Storage.
+O esquema da aplicação foi comparado com a base activa. Não faltam colunas esperadas pelo Core integrado.
+Foi criado um dump PostgreSQL dos esquemas public, private, auth e storage. O restauro decorreu numa base local separada, criada a partir de template0. As contagens das 36 tabelas, Auth e metadados Storage coincidem.
+Os 191 ficheiros Storage foram descarregados e verificados por tamanho e SHA-256. Total: 229571724 bytes. Os buckets backups e avatars continuam privados.
+As cópias e configurações privadas ficam fora do Git e dos ficheiros enviados para a Vercel. A pasta .integration-lab está expressamente excluída por .gitignore e .vercelignore.
+
+Testes funcionais isolados
+Docker e Supabase locais, sem ligação aos dados de produção. Portas publicadas exclusivamente em 127.0.0.1. Postgres local com TLS. Registo público local desactivado e fornecedor de login por email activo.
+Contas fictícias ca, dg, coord, staff, inactiva e sem perfil interno. Nenhum bypass de autenticação.
+39 verificações funcionais passaram. Incluem sessões reais, acesso por perfil, recusa de conta inactiva e sem perfil, cookies falsos, revogação de sessão, isolamento dos utilizadores, metadados manipulados, pedidos de outra origem e exportação.
+Foi gerado um PDF de relatório através da API com uma conta fictícia autorizada.
+105 testes unitários Core e 56 verificações do site passaram novamente nesta fase. A verificação de tipos passou.
+O pedido de recuperação foi enviado para o Mailpit local. O código PKCE foi validado e abriu o formulário de nova palavra-passe da conta fictícia. A saída de sessão também regressou ao login.
+O primeiro ensaio reproduziu um consumo duplicado do código pela detecção automática do SDK e pelo handler da página. Foi corrigido com cliente de confirmação explícita e partilha da mesma Promise quando o React repete efeitos. O teste unitário falhou antes da correcção e passou depois. Uma revisão independente não encontrou impedimentos nessa correcção.
+As verificações anteriores de compilação, tipos e regressão visual estão documentadas em VALIDACAO-INTEGRACAO-20261028.txt. Os resultados de publicação serão acrescentados após a validação remota.
+
+Autenticação de produção
+Foi desactivado o registo público e anónimo. O fornecedor de login por email continua activo. As contas e palavras-passe existentes foram conservadas.
+O endereço principal Auth passou a https://www.abiptom.gw. Foram permitidas as rotas de confirmação e recuperação desse domínio. Foram removidas as permissões de redireccionamento para localhost e previews genéricos.
+O endereço antigo continua temporariamente permitido para facilitar o regresso à versão anterior.
+Foram configurados segredos novos de limitação de tentativas e cron, como Secret na Vercel. As credenciais privadas Core também foram guardadas como Secret, apenas em Production. As definições do site público foram conservadas.
+
+Agendamentos
+CORE_CRON_ENABLED mantém-se em 0 no projecto integrado. O vercel.json mantém crons vazio. O projecto antigo conserva os três agendamentos existentes.
+A revisão automática de aprovação rejeitou a activação dos agendamentos no novo projecto antes de um cutover validado, por exigir autorização operacional específica.
+Depois da validação da nova produção, solicitar autorização específica para transferir o backup diário das 03:00 UTC, os emails de mensagens das 08:00 UTC e o relatório mensal do dia 5 às 06:00 UTC. Só depois retirar os agendamentos antigos e activar os novos uma única vez.
+Conservar o projecto antigo até à confirmação dessa transferência e da nova entrada.
+
+Limites
+Os testes locais não são um teste de intrusão completo nem uma garantia absoluta contra ataques. A segurança também depende da protecção das contas Vercel e Supabase e das credenciais da equipa.
+O restauro foi validado numa base local separada. Não foi executado restauro sobre produção.

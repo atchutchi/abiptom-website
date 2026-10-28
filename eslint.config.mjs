@@ -6,6 +6,9 @@ const eslintConfig = [
     ignores: [
       "**/._*",
       ".next/**",
+      ".integration-tmp/**",
+      ".integration-qa/**",
+      "output/**",
       "node_modules/**",
       "playwright-report/**",
       "test-results/**",
