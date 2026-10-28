@@ -34,10 +34,16 @@ O endereço antigo continua temporariamente permitido para facilitar o regresso 
 Foram configurados segredos novos de limitação de tentativas e cron, como Secret na Vercel. As credenciais privadas Core também foram guardadas como Secret, apenas em Production. As definições do site público foram conservadas.
 
 Agendamentos
-CORE_CRON_ENABLED mantém-se em 0 no projecto integrado. O vercel.json mantém crons vazio. O projecto antigo conserva os três agendamentos existentes.
-A revisão automática de aprovação rejeitou a activação dos agendamentos no novo projecto antes de um cutover validado, por exigir autorização operacional específica.
-Depois da validação da nova produção, solicitar autorização específica para transferir o backup diário das 03:00 UTC, os emails de mensagens das 08:00 UTC e o relatório mensal do dia 5 às 06:00 UTC. Só depois retirar os agendamentos antigos e activar os novos uma única vez.
-Conservar o projecto antigo até à confirmação dessa transferência e da nova entrada.
+Inicialmente, CORE_CRON_ENABLED foi mantido em 0 e os agendamentos ficaram no projecto antigo. A revisão automática exigiu autorização específica para a transferência operacional.
+Depois da publicação validada, o utilizador autorizou expressamente transferir os três agendamentos e pausar o alojamento antigo. Foram conservados os horários: backup diário às 03:00 UTC, emails de mensagens às 08:00 UTC e relatório mensal no dia 5 às 06:00 UTC.
+CORE_CRON_ENABLED passou a 1 em Production. O vercel.json contém os três agendamentos originais. Pré-visualizações continuam impedidas de executar cron e todos os endpoints continuam a exigir um segredo forte.
+Confirmar a publicação desta configuração e testar o backup antes de pausar o alojamento antigo. Não executar manualmente o envio de emails mensais ou de mensagens fora do horário previsto.
+
+Publicação da aplicação
+PR 3 integrado em master no commit 72f986e5042bca8487ef45c581f47dce0f780305. A versão final foi promovida para www.abiptom.gw a partir de dpl_HknM6RmPv977yBAnXnkKUWs1vGyu.
+12 verificações no domínio público passaram. A página de acesso está activa e não apresenta a descrição removida nem o aviso de teste. APIs privadas recusam pedidos anónimos e cookies falsos. Pedidos de outra origem são recusados antes de escrever dados.
+As contagens posteriores das 36 tabelas são iguais às anteriores. Mantêm-se 19 utilizadores internos, 20 contas Auth e 191 ficheiros Storage. Não foi feito login de um utilizador real durante os testes de produção.
+Cópia de segurança conservada em C:\Users\binta\Documents\Abiptom\Backups-Integracao-20261028\backups. Dump e ficheiros verificados por hash. Restauro e contagens validados.
 
 Limites
 Os testes locais não são um teste de intrusão completo nem uma garantia absoluta contra ataques. A segurança também depende da protecção das contas Vercel e Supabase e das credenciais da equipa.
