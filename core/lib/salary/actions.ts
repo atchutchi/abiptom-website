@@ -1444,8 +1444,16 @@ async function loadActual2024EngineInput(
     throw new Error("Periodo nao encontrado");
   }
 
-  const usersInput = await loadUsersForParticipants(period.participants);
   const projectsById = await loadProjectsForPeriod(period.periodProjects);
+  // Include referenced users for diagnostics, without enrolling them in payroll.
+  // Inactive project assignees may be absent from the participant snapshot.
+  const usersInput = await loadUsersForParticipants([
+    ...period.participants,
+    ...Array.from(projectsById.values()).flatMap((project) => [
+      ...(project.pontoFocalId ? [{ userId: project.pontoFocalId }] : []),
+      ...project.assistants.map((assistant) => ({ userId: assistant.userId })),
+    ]),
+  ]);
   const monthExpenses = await loadExpensesForMonth(period.ano, period.mes);
 
   return {
