@@ -593,6 +593,7 @@ export const salaryPeriodProjects = pgTable(
     coordId: uuid("coord_id").references(() => users.id, {
       onDelete: "set null",
     }),
+    excludedUserIds: uuid("excluded_user_ids").array().notNull().default(sql`'{}'::uuid[]`),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
