@@ -228,6 +228,66 @@ function typicalFixture() {
 }
 
 describe("actual_2024 - contrato novo do motor", () => {
+  it("identifica um auxiliar com pagamento mas sem participação no período", () => {
+    const input = {
+      period: { year: 2026, month: 10 },
+      projects: [makeProject("projecto-teste", 150_000, {
+        pontoFocalId: "pf",
+        assistants: [{ userId: "aux1" }, { userId: "aux-ausente" }, { userId: "aux2" }],
+      })],
+      participants: [makeParticipant("pf"), makeParticipant("aux1"), makeParticipant("aux2")],
+      expenses: [],
+      users: [makeUser("pf", 0), makeUser("aux1", 0), makeUser("aux2", 0), makeUser("aux-ausente", 0)],
+      policyDefaults: POLICY_DEFAULTS,
+    };
+    expect(() => calculate(input)).toThrow(/aux-ausente.*15\s000 XOF.*projecto-teste/);
+    expect(() => calculate(input)).toThrow(/participantes do período/);
+  });
+
+  it("mantém a parcela de projecto quando o auxiliar é incluído sem base nem subsídio", () => {
+    const result = calculate({
+      period: { year: 2026, month: 10 },
+      projects: [makeProject("projecto-teste", 150_000, {
+        pontoFocalId: "pf",
+        assistants: [{ userId: "aux1" }, { userId: "aux-ausente" }, { userId: "aux2" }],
+      })],
+      participants: [makeParticipant("pf"), makeParticipant("aux1"), makeParticipant("aux2"),
+        makeParticipant("aux-ausente", { isElegivelSubsidio: false, salarioBaseOverride: 0 })],
+      expenses: [],
+      users: [makeUser("pf", 0), makeUser("aux1", 0), makeUser("aux2", 0), makeUser("aux-ausente", 90_000)],
+      policyDefaults: POLICY_DEFAULTS,
+    });
+    expect(lineByUser(result, "aux-ausente")).toMatchObject({
+      salarioBase: 0, subsidioDinamico: 0, pagamentoGestaoPessoa: 0,
+      pagamentosProjectos: 15_000, totalLiquidoCalculado: 15_000,
+    });
+    expect(result.aggregates.numeroElegiveis).toBe(3);
+    expect(result.projectPayments.reduce((sum, payment) => sum + payment.valorRecebido, 0))
+      .toBe(result.salaryLines.reduce((sum, line) => sum + line.pagamentosProjectos, 0));
+  });
+
+  it("não bloqueia atribuições sem pagamento e não cria participantes automaticamente", () => {
+    const result = calculate({
+      period: { year: 2026, month: 10 },
+      projects: [makeProject("sem receita", 0, { pontoFocalId: "ausente", assistants: [{ userId: "outro" }] })],
+      participants: [makeParticipant("pf")], expenses: [], users: [makeUser("pf", 0)],
+      policyDefaults: POLICY_DEFAULTS,
+    });
+    expect(result.salaryLines).toHaveLength(1);
+    expect(result.projectPayments).toHaveLength(0);
+  });
+
+  it("identifica o ponto focal ausente e agrega as suas parcelas de vários projectos", () => {
+    expect(() => calculate({
+      period: { year: 2026, month: 10 },
+      projects: [makeProject("projecto-a", 100_000, { pontoFocalId: "pf-ausente" }),
+        makeProject("projecto-b", 200_000, { pontoFocalId: "pf-ausente" })],
+      participants: [makeParticipant("outro")], expenses: [],
+      users: [makeUser("outro", 0), makeUser("pf-ausente", 0)],
+      policyDefaults: POLICY_DEFAULTS,
+    })).toThrow(/pf-ausente.*90\s000 XOF.*projecto-a, projecto-b/);
+  });
+
   it("1. fluxo completo típico: totais, descontos, subsídios e outros benefícios batem certo", () => {
     const result = calculate(typicalFixture());
 

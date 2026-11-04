@@ -216,6 +216,27 @@ function calculateActual2024V2(
     });
   }
 
+  // Project assignments can outlive an active account or the period snapshot.
+  // Every positive allocation needs a salary line. Never drop it or silently
+  // enrol someone with a base salary/subsidy the administrator did not choose.
+  const participantIds = new Set(participants.map((participant) => participant.userId));
+  const missingRecipients = Array.from(pagamentosProjectosPorUser.entries())
+    .filter(([userId, amount]) => amount > 0 && !participantIds.has(userId));
+  if (missingRecipients.length > 0) {
+    const projectNames = new Map(projects.map((project) => [project.id, project.titulo]));
+    const details = missingRecipients.map(([userId, amount]) => {
+      const name = usersById.get(userId)?.nomeCurto ?? userId;
+      const titles = Array.from(new Set(projectPayments
+        .filter((payment) => payment.userId === userId && payment.valorRecebido > 0)
+        .map((payment) => projectNames.get(payment.projectId) ?? payment.projectId)));
+      const value = amount.toLocaleString("pt-PT").replace(/\s/g, " ");
+      return `${name} (${value} XOF, projectos: ${titles.join(", ")})`;
+    });
+    throw new Error(
+      `Existem pagamentos para colaboradores fora dos participantes do período: ${details.join(" | ")}. Revê os participantes e as atribuições dos projectos antes de calcular a folha.`,
+    );
+  }
+
   let totalDespesasOperacionais = 0;
   const expensesXof = operationalExpenses;
 
