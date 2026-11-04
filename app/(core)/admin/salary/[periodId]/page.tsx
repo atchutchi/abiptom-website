@@ -15,6 +15,7 @@ import { SalaryParticipantsEditor } from "@/core/components/forms/SalaryParticip
 import { getCurrentUser } from "@/core/lib/auth/actions";
 import { getSalaryExecutionOverview } from "@/core/lib/execution/actions";
 import { getSalaryPeriod } from "@/core/lib/salary/actions";
+import { applyPeriodProjectExclusions } from "@/core/lib/salary/project-participation";
 import type { ProjectPaymentRecord } from "@/core/lib/salary/types";
 import { formatCurrency, formatDate } from "@/core/lib/utils/format";
 
@@ -215,7 +216,14 @@ export default async function SalaryPeriodPage({ params }: PageProps) {
                       </td>
                     </tr>
                   ) : (
-                    period.periodProjects.map((entry) => (
+                    period.periodProjects.map((entry) => {
+                      const project = applyPeriodProjectExclusions(
+                        { ...entry.project, coordId: entry.coordId }, entry.excludedUserIds,
+                      );
+                      const excludedNames = entry.project.assistants
+                        .filter(assistant => entry.excludedUserIds.includes(assistant.userId))
+                        .map(assistant => assistant.user.nomeCurto);
+                      return (
                       <tr key={entry.id}>
                         <td className="px-4 py-3">
                           <p className="font-medium text-gray-900">{entry.project.titulo}</p>
@@ -227,23 +235,37 @@ export default async function SalaryPeriodPage({ params }: PageProps) {
                         </td>
                         <td className="px-4 py-3 text-gray-600">{entry.project.client.nome}</td>
                         <td className="px-4 py-3 text-gray-600">
-                          {entry.project.pontoFocalId
-                            ? period.participants.find((participant) => participant.userId === entry.project.pontoFocalId)?.user.nomeCurto ?? "PF removido"
+                          {project.pontoFocalId
+                            ? period.participants.find((participant) => participant.userId === project.pontoFocalId)?.user.nomeCurto ?? "PF removido"
                             : "-"}
+                          {entry.project.pontoFocalId && !project.pontoFocalId && (
+                            <p className="mt-1 text-xs text-gray-500">PF excluído apenas deste período</p>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-gray-600">
-                          {entry.project.assistants.length > 0
-                            ? entry.project.assistants.map((assistant) => assistant.user.nomeCurto).join(", ")
+                          {project.assistants.length > 0
+                            ? project.assistants.map((assistant) => assistant.user.nomeCurto).join(", ")
                             : "-"}
+                          {excludedNames.length > 0 && (
+                            <p className="mt-1 text-xs text-gray-500">
+                              Excluídos apenas deste período: {excludedNames.join(", ")}
+                            </p>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-gray-600">
-                          {entry.coord?.nomeCurto ?? "-"}
+                          {project.coordId ? entry.coord?.nomeCurto ?? "-" : "-"}
+                          {entry.coordId && !project.coordId && (
+                            <p className="mt-1 text-xs text-gray-500">
+                              Excluído apenas deste período: {entry.coord?.nomeCurto}
+                            </p>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-right tabular-nums">
                           {formatCurrency(entry.valorLiquido)}
                         </td>
                       </tr>
-                    ))
+                      );
+                    })
                   )}
                 </tbody>
               </table>

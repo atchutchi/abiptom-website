@@ -19,6 +19,7 @@ import { insertAuditLog } from "@/core/lib/db/audit";
 import { getCurrentUser } from "@/core/lib/auth/actions";
 import { authorizeOperation } from "@/core/lib/auth/authorization";
 import { calculateActual2024 } from "./engines/actual-2024";
+import { applyPeriodProjectExclusions } from "./project-participation";
 import { calculateGuia2026 } from "./engines/guia-2026";
 import { toXofInteger, toXofString } from "@/core/lib/utils/money";
 import type {
@@ -1361,8 +1362,11 @@ async function buildGuia2026CalculatedPayload(args: {
 
   const projectsById = await loadProjectsForPeriod(period.periodProjects);
   const projectInputs: ProjectInput[] = period.periodProjects.map((entry) => {
-    const project = projectsById.get(entry.projectId);
-    if (!project) throw new Error(`Projecto ${entry.projectId} nao encontrado`);
+    const assignedProject = projectsById.get(entry.projectId);
+    if (!assignedProject) throw new Error(`Projecto ${entry.projectId} nao encontrado`);
+    const project = applyPeriodProjectExclusions(
+      { ...assignedProject, coordId: entry.coordId }, entry.excludedUserIds,
+    );
     return {
       id: project.id,
       titulo: project.titulo,
@@ -1372,7 +1376,7 @@ async function buildGuia2026CalculatedPayload(args: {
         entry.pfPercentagemOverride !== null
           ? Number(entry.pfPercentagemOverride)
           : null,
-      coordId: entry.coordId,
+      coordId: project.coordId,
       assistants: project.assistants.map((assistant) => ({
         userId: assistant.userId,
         percentagemOverride:
@@ -1459,8 +1463,9 @@ async function loadActual2024EngineInput(
   return {
     period: { year: period.ano, month: period.mes },
     projects: period.periodProjects.map((entry) => {
-      const project = projectsById.get(entry.projectId);
-      if (!project) throw new Error(`Projecto ${entry.projectId} nao encontrado`);
+      const assignedProject = projectsById.get(entry.projectId);
+      if (!assignedProject) throw new Error(`Projecto ${entry.projectId} nao encontrado`);
+      const project = applyPeriodProjectExclusions(assignedProject, entry.excludedUserIds);
       return {
         id: project.id,
         titulo: project.titulo,
