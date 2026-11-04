@@ -7,9 +7,11 @@ import { UserForm } from "@/core/components/forms/UserForm";
 import {
   updateUser,
   deactivateUser,
+  activateUser,
   deleteUserPermanently,
 } from "@/core/lib/users/actions";
 import { DeactivateUserButton } from "@/core/components/forms/DeactivateUserButton";
+import { ActivateUserButton } from "@/core/components/forms/ActivateUserButton";
 import { DeleteUserPermanentlyButton } from "@/core/components/forms/DeleteUserPermanentlyButton";
 import { getCurrentUser } from "@/core/lib/auth/actions";
 
@@ -54,14 +56,19 @@ export default async function EditUserPage({ params }: Props) {
           {target.id !== actor.id && (
             <div className="bg-white rounded-lg border p-6">
               <h2 className="text-sm font-medium text-gray-900 mb-4">
-                Zona de perigo
+                Estado da conta
               </h2>
-              <DeactivateUserButton
-                userId={id}
-                isActive={target.activo}
-                onDeactivate={deactivateUser}
-              />
+              {target.activo ? (
+                <DeactivateUserButton
+                  userId={id}
+                  isActive={target.activo}
+                  onDeactivate={deactivateUser}
+                />
+              ) : (
+                <ActivateUserButton userId={id} onActivate={activateUser} />
+              )}
               <div className="mt-5 border-t pt-5">
+                <h3 className="mb-4 text-sm font-medium text-gray-900">Zona de perigo</h3>
                 <DeleteUserPermanentlyButton
                   userId={id}
                   onDelete={deleteUserPermanently}
