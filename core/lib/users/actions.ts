@@ -256,12 +256,20 @@ export async function updateUser(id: string, formData: Partial<UserFormData>) {
 }
 
 export async function deactivateUser(id: string) {
+  return setUserActiveStatus(id, false);
+}
+
+export async function activateUser(id: string) {
+  return setUserActiveStatus(id, true);
+}
+
+async function setUserActiveStatus(id: string, active: boolean) {
   const { dbUser: actor } = await getCurrentUser();
   if (!actor || !actor.activo || !isOperationAllowed("usersWrite", actor.role)) {
     return { error: "Sem permissão." };
   }
 
-  if (actor.id === id) return { error: "Não podes desactivar a tua própria conta." };
+  if (!active && actor.id === id) return { error: "Não podes desactivar a tua própria conta." };
 
   const existing = await dbAdmin.query.users.findFirst({
     where: eq(users.id, id),
@@ -278,26 +286,26 @@ export async function deactivateUser(id: string) {
     syncedExisting.authUserId,
     buildAuthAppMetadataUpdatePayload({
       role: syncedExisting.role,
-      active: false,
+      active,
       mfaEnabled: syncedExisting.mfaEnabled,
     })
   );
 
   if (authError) {
     return {
-      error: authError.message ?? "Erro ao desactivar utilizador no Supabase.",
+      error: authError.message ?? `Erro ao ${active ? "activar" : "desactivar"} utilizador no Supabase.`,
     };
   }
 
   const [updated] = await dbAdmin
     .update(users)
-    .set({ activo: false, updatedAt: new Date() })
+    .set({ activo: active, updatedAt: new Date() })
     .where(eq(users.id, id))
     .returning();
 
   await insertAuditLog({
     userId: actor.id,
-    acao: "desactivar_utilizador",
+    acao: active ? "activar_utilizador" : "desactivar_utilizador",
     entidade: "users",
     entidadeId: id,
     dadosAntes: syncedExisting,
@@ -305,6 +313,7 @@ export async function deactivateUser(id: string) {
   });
 
   revalidatePath("/admin/users");
+  revalidatePath(`/admin/users/${id}`);
   return { success: true };
 }
 
