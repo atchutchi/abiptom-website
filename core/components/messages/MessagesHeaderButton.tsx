@@ -53,7 +53,7 @@ export function MessagesHeaderButton() {
         <MessageSquare className="h-4 w-4" aria-hidden="true" />
         <span className="hidden sm:inline">Chat</span>
         {count > 0 && (
-          <span className="absolute -right-1 -top-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[color:var(--brand-gold)] px-1 text-[10px] font-bold text-[color:var(--brand-ink)] ring-1 ring-white">
+          <span data-slot="message-count" className="absolute -right-1 -top-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[color:var(--brand-gold)] px-1 text-[10px] font-bold text-[color:var(--brand-ink)] ring-1 ring-white">
             {count > 99 ? "99+" : count}
           </span>
         )}

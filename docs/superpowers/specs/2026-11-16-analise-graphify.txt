@@ -1,0 +1,40 @@
+ABIPTOM: análise estrutural com Graphify
+16 de Novembro de 2026
+
+Âmbito
+Análise do site público, da aplicação administrativa integrada e do repositório administrativo anterior. A implementação autorizada nesta fase abrange a experiência administrativa, em versão de teste. Não inclui publicação nem redesenho do site público.
+
+Fontes verificadas
+Graphify disponibilizou os dois repositórios depois de o utilizador os activar. O índice de atchutchi/abiptom-website corresponde ao commit 6e959807a9bbd8039628cc8fafdb2a9df5676f82, igual ao HEAD de base utilizado nesta implementação. O índice de atchutchi/abiptom-admin corresponde a 28d8fe207cdfcff71ec94e5f826863063da6f210, confirmado no checkout local desse repositório.
+
+Foram consultados query_graph e graphify_file_neighbors. As consultas semânticas largas devolveram por vezes resultados incompletos ou predominantemente administrativos. Para o site público, a análise foi concretizada através das dependências exactas de app/(public)/page.tsx e app/(public)/layout.tsx. Não se interpreta ausência de arestas como ausência de dependências. O grafo é uma análise estática e não substitui testes ou medição de desempenho.
+
+Site público
+O layout público liga SiteHeader, SiteFooter, ChatBot, TrackingConsent, SmoothScroll, CustomCursor, PageNoize e BackToTop. A página principal liga HeroSection, PortfolioPreview, ClientLogos, ServiceCard, AnimatedSection e TextSplitter. O Button público pertence a components/ui/button.tsx, diferente do Button do Core.
+
+Esta separação permite melhorar a área administrativa sem trocar o cabeçalho, o menu, os formulários de captação ou a apresentação pública. As fontes Barlow e Barlow Condensed são partilhadas através de lib/brand-fonts.ts. Foram mantidas.
+
+Há vários componentes de movimento e efeitos no layout público. Uma avaliação futura de desempenho deverá medir o seu custo real, sobretudo em telemóvel e com movimento reduzido. O grafo, por si só, não demonstra lentidão. Nenhuma remoção ou alteração desses efeitos foi realizada nesta tarefa.
+
+Área administrativa
+O layout Core tem uma raiz própria e uma folha de estilos compilada separadamente. O layout administrativo utiliza Sidebar, PresenceHeartbeat, getCurrentUser e a resolução do avatar. Os serviços de dados e de autenticação devem permanecer no servidor.
+
+O repositório anterior confirma que Sidebar também serve o layout de colaboradores e que a navegação depende do perfil. Por isso, trocar o tema dos componentes partilhados globalmente afectaria outra área. A implementação introduz AdminSurface apenas em /admin e um contentor para portais, sem alargar a sessão ou as permissões.
+
+Os componentes actuais têm variáveis de tema, mas também fundos claros fixos, cores inline em classes e overrides com !important. Activar apenas dark não seria suficiente. A correcção é confinada à raiz administrativa, mantendo fallback sólido para navegadores sem desfocagem.
+
+Gráficos
+Graphify identificou ChartContainer, ChartConfig, ChartTooltipContent e ChartStyle em components/ui/chart.tsx. O componente depende de Recharts e lib/utils.ts. A versão existente é compatível com Recharts 2 instalado. Foi reutilizada sem actualizar dependências ou alterar o ficheiro partilhado.
+
+Os totais do painel e os relatórios mensal e trimestral já possuem os valores necessários para os novos gráficos. Os novos adaptadores apenas seleccionam e rotulam esses valores. Não alteram fórmulas, não criam históricos, não consultam novos períodos e não introduzem dados sem autorização.
+
+Critérios e efeitos concretos
+Conservar a ordem e os destinos do menu, as regras salariais, os filtros e os destinos de exportação. Melhorar botões, campos, foco, estados, tabelas, painéis, gráficos e mensagens. Separar facturado de recebido, preservar negativos e apresentar montantes exactos em XOF.
+
+Uma revisão independente detectou que o token brand-ink era usado simultaneamente como texto e como fundo de mensagens. Os balões próprios e o contador de mensagens receberam selectores semânticos e cores específicas do tema administrativo. Não houve alteração do envio de mensagens.
+
+Demonstração
+/review/admin utiliza exclusivamente amostras sintéticas e reutiliza as vistas de apresentação. O controlo recusa explicitamente produção. Os acessos normais a /admin e às APIs continuam protegidos e as escritas continuam bloqueadas em modo de revisão. Esta demonstração permite avaliar a interface, mas não prova uma sessão autenticada real ou operações sobre dados de produção.
+
+Skills aplicadas
+superpowers:brainstorming, superpowers:writing-plans, superpowers:using-git-worktrees, superpowers:executing-plans, superpowers:test-driven-development, impeccable, vercel:react-best-practices, superpowers:requesting-code-review e verificação antes da entrega. Navegação e prova visual pelo navegador suportado.

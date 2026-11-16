@@ -6,6 +6,7 @@ import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { cn } from "@/core/lib/utils"
 import { Button } from "@/core/components/ui/button"
 import { XIcon } from "lucide-react-core"
+import { useAdminPortalContainer } from "@/core/components/layout/AdminSurface"
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
@@ -16,7 +17,8 @@ function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
 }
 
 function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
+  const container = useAdminPortalContainer()
+  return <DialogPrimitive.Portal data-slot="dialog-portal" container={container ?? undefined} {...props} />
 }
 
 function DialogClose({ ...props }: DialogPrimitive.Close.Props) {
