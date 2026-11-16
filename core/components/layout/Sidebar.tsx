@@ -164,12 +164,15 @@ interface SidebarProps {
   role: UserRole;
   userName: string;
   userAvatarUrl?: string | null;
+  activePath?: string;
+  storageKey?: string;
 }
 
 const SIDEBAR_COLLAPSED_KEY = "abiptom_sidebar_collapsed";
 
-export function Sidebar({ role, userName, userAvatarUrl }: SidebarProps) {
-  const pathname = usePathname();
+export function Sidebar({ role, userName, userAvatarUrl, activePath, storageKey = SIDEBAR_COLLAPSED_KEY }: SidebarProps) {
+  const currentPathname = usePathname();
+  const pathname = activePath ?? currentPathname;
   const isStaffSurface = role === "staff";
   const [collapsed, setCollapsed] = useState(false);
 
@@ -183,7 +186,7 @@ export function Sidebar({ role, userName, userAvatarUrl }: SidebarProps) {
   const initials = getUserInitials(userName);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(SIDEBAR_COLLAPSED_KEY);
+    const stored = window.localStorage.getItem(storageKey);
     if (stored === "1") {
       setCollapsed(true);
       return;
@@ -192,18 +195,18 @@ export function Sidebar({ role, userName, userAvatarUrl }: SidebarProps) {
     if (stored === null && window.innerWidth < 1024) {
       setCollapsed(true);
     }
-  }, []);
+  }, [storageKey]);
 
   function toggleSidebar() {
     setCollapsed((prev) => {
       const next = !prev;
-      window.localStorage.setItem(SIDEBAR_COLLAPSED_KEY, next ? "1" : "0");
+      window.localStorage.setItem(storageKey, next ? "1" : "0");
       return next;
     });
   }
 
   return (
-    <aside
+    <aside data-slot="sidebar" data-collapsed={collapsed}
       className={cn(
         "flex min-h-screen flex-col border-r border-[rgb(245_184_0_/_20%)] bg-[linear-gradient(180deg,#12100b_0%,#1d170f_56%,#0d0b08_100%)] text-[#fff8df] shadow-[8px_0_30px_rgb(18_16_11_/_10%)] transition-[width] duration-200",
         collapsed ? "w-20" : "w-64"
@@ -260,7 +263,7 @@ export function Sidebar({ role, userName, userAvatarUrl }: SidebarProps) {
           type="button"
           onClick={toggleSidebar}
           className="ml-auto rounded-md p-2 text-[#fff3c2] transition-colors hover:bg-[rgb(245_184_0_/_15%)] hover:text-[color:var(--brand-gold)]"
-          aria-label={collapsed ? "Expandir sidebar" : "Minimizar sidebar"}
+          aria-expanded={!collapsed} aria-label={collapsed ? "Expandir sidebar" : "Minimizar sidebar"}
         >
           {collapsed ? (
             <PanelLeftOpen className="h-4 w-4" aria-hidden="true" />
@@ -286,7 +289,7 @@ export function Sidebar({ role, userName, userAvatarUrl }: SidebarProps) {
                 <Link
                   href={item.href}
                   prefetch={false}
-                  title={collapsed ? item.label : undefined}
+                  aria-current={active ? "page" : undefined} title={collapsed ? item.label : undefined}
                   className={cn(
                     "flex items-center rounded-lg py-2 text-sm transition-colors",
                     collapsed ? "justify-center px-2" : "gap-3 px-3",

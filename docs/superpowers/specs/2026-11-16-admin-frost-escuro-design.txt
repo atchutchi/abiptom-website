@@ -1,0 +1,83 @@
+ABIPTOM CORE
+Modernização da experiência administrativa
+Proposta de concepção, 16 de Novembro de 2026
+Estado: aprovado pelo utilizador em 16 de Novembro de 2026. Versão de teste implementada. Publicação pendente de avaliação.
+
+OBJECTIVO E DECISÕES CONFIRMADAS
+
+Melhorar a leitura dos relatórios e a utilização diária da área administrativa de acesso restrito. O utilizador escolheu vidro fosco escuro e a manutenção da organização actual das páginas e do menu. Pediu componentes shadcn/ui, gráficos mais claros e botões mais atractivos.
+
+O menu conserva os nomes, a ordem, os destinos e a visibilidade por perfil. As páginas conservam as tarefas e as operações existentes. A modernização abrange a apresentação de todas as páginas /admin, com trabalho específico no painel e nos relatórios. A execução será progressiva numa mesma versão de teste, sem publicar módulos parcialmente convertidos.
+
+ABORDAGENS CONSIDERADAS
+
+Modernizar os componentes mantendo a organização foi a opção escolhida. Reduz a aprendizagem necessária e permite concentrar a revisão na legibilidade, na consistência e na apresentação dos dados.
+
+Reorganizar também o menu e a estrutura das páginas foi a alternativa apresentada. Exigiria redesenhar percursos e validar novas posições para as funções. O utilizador preferiu manter a organização actual.
+
+PROPOSTA VISUAL
+
+Fundo principal em carvão próximo de #0A0A0A. Painéis em cinza escuro próximo de #222222, com transparência discreta, contorno de um píxel e sombra curta. Ouro #F5B800 nas acções principais, na selecção activa e no foco. Texto principal próximo de #F5F3EE. Estados de sucesso, aviso e erro mantêm cores semânticas distintas, acompanhadas por texto ou ícone.
+
+O vidro fosco será mais visível no menu lateral, no cabeçalho e nos painéis de resumo. Tabelas, campos de formulário, menus de opções e mensagens terão fundos suficientemente opacos para não misturar conteúdos. Na ausência de suporte a backdrop-filter, a interface usará um fundo sólido equivalente. Não haverá fundos animados ou desfocagem aplicada ao texto.
+
+Barlow continua como fonte da interface, dos botões, dos rótulos e dos números. Barlow Condensed continua nos títulos, respeitando o sistema da ABIPTOM. Números financeiros usam alinhamento à direita e algarismos tabulares. Os montantes mantêm a formatação actual em XOF.
+
+COMPONENTES E INTERACÇÃO
+
+Adaptar os componentes shadcn/ui ao sistema ABIPTOM. Reutilizar as bases existentes e introduzir apenas os componentes em falta. Não substituir todas as bibliotecas nem actualizar dependências sem necessidade. As bases Radix e Base UI existentes serão verificadas antes de escolher a variante de cada componente.
+
+Uniformizar botões, campos, selectores, tabelas, etiquetas de estado, separadores, menus, janelas e mensagens de retorno. Distinguir a acção principal, as acções secundárias e as acções destrutivas. Os botões devem indicar processamento e impedir submissões repetidas enquanto aguardam resposta. Preservar as confirmações de operações sensíveis.
+
+Nos formulários administrativos, manter todos os campos, regras, valores predefinidos e destinos de submissão. Melhorar rótulos, espaçamento, foco e apresentação dos erros. Não acrescentar operações em massa, novos estados de negócio ou novos filtros que precisem de regras não existentes.
+
+As tabelas terão cabeçalhos legíveis, linhas com separação discreta, indicação clara de interacção e deslocação horizontal apenas dentro da tabela quando necessário. Os filtros actuais mantêm os seus parâmetros e comportamento. Os estados vazios distinguem ausência de resultados de falha de carregamento.
+
+PAINEL E RELATÓRIOS
+
+O painel mantém os indicadores e os destinos actuais. A apresentação dará prioridade aos valores, ao período e aos avisos que exigem acção. Acrescentar um gráfico comparativo dos totais do mês já disponibilizados ao utilizador, com categorias claramente identificadas. Facturado e recebido continuam separados, pois representam conceitos diferentes.
+
+Nos relatórios, apresentar um gráfico de barras por categoria de despesa com os valores existentes e uma comparação dos totais do período. No relatório trimestral, usar a série mensal já existente para mostrar receitas recebidas, despesas e saldo, com os respectivos rótulos. Confirmar os campos exactos antes da implementação. Se não existir série temporal num determinado relatório, usar apenas os totais disponíveis. Não criar históricos fictícios, percentagens de evolução sem base ou novas consultas de períodos adicionais nesta fase.
+
+Cada gráfico terá título, unidade XOF, legenda e valores exactos através de foco ou interacção. Eixos podem abreviar valores, mas os detalhes mostram o montante completo. Saldos negativos permanecem negativos. Uma tabela ou resumo textual equivalente permanece disponível. As cores não serão a única forma de distinguir séries. O gráfico não substituirá a informação detalhada nem as exportações existentes.
+
+A instalação actual tem Recharts 2.15.0. A documentação actual do Chart do shadcn/ui usa Recharts 3. A implementação avaliará a migração dessa dependência isoladamente, verificando todos os consumidores existentes e a compatibilidade React. Não copiar código incompatível. Usar uma implementação oficial compatível, caso a actualização afecte componentes do site público. A escolha técnica será registada no plano e validada com build e testes.
+
+LIMITES E ISOLAMENTO
+
+Esta proposta não altera o site público, o início de sessão ou as páginas /staff. Os componentes partilhados terão variantes ou estilos confinados à raiz administrativa. O tema escuro não será aplicado globalmente ao documento de todas as rotas. Janelas, selectores e outros elementos apresentados em portais devem receber o tema administrativo sem modificar os estilos das restantes áreas.
+
+Não alterar a base de dados, os registos, as permissões, os factores de autenticação, as fórmulas salariais, os estados de pagamento ou os critérios financeiros. Não executar cálculos, confirmações, pagamentos, activações de contas ou alterações de dados para demonstrar a interface. As fontes financeiras actuais continuam a definir os números. O trabalho visual não amplia os dados entregues ao navegador ou a perfis sem permissão.
+
+A área administrativa utiliza CSS compilado separadamente em public/core-assets/core.css. Rever os valores fixos e os overrides com !important existentes, porque activar apenas a classe dark não corrige os fundos claros nem o texto de todas as páginas. O isolamento deve abranger também os componentes Header, Sidebar e os portais. O CSS do site público mantém o seu processo actual.
+
+VERSÃO DE TESTE E PUBLICAÇÃO
+
+Primeiro validar a implementação numa versão de teste isolada. O modo de revisão actual bloqueia o acesso às páginas administrativas e não deve ser enfraquecido para mostrar o novo visual. Criar uma demonstração específica com dados sintéticos, identificada como demonstração e disponível apenas em modo de revisão. Reutilizar os componentes de apresentação reais. Não usar sessões fictícias para contornar o controlo de acesso, credenciais de produção ou cópias de dados pessoais. As acções de negócio na demonstração não chamam serviços nem escrevem dados.
+
+A demonstração deve permitir avaliar o painel, os relatórios, uma tabela e um formulário representativos, incluindo erros, carregamento e ausência de resultados. As restantes páginas administrativas serão verificadas por inventário de componentes e revisão visual. Nos casos em que a demonstração não prova uma integração autenticada real, essa limitação será declarada na entrega.
+
+Apresentar a versão de teste ao utilizador antes de publicar. A aprovação desta proposta autoriza a implementação e os testes. A publicação em produção depende da revisão dessa versão e de autorização posterior. Preservar uma revisão anterior pronta para reversão do código. Não haverá migração de dados associada a esta mudança.
+
+CRITÉRIOS DE ACEITAÇÃO
+
+Conservar os nomes, a ordem e os destinos do menu, os campos dos formulários, as regras financeiras, as permissões e os comportamentos das operações existentes. Todos os módulos /admin devem ter fundos, texto e estados legíveis no tema escuro. Não aceitar texto claro sobre fundo claro, etiquetas sem contraste ou janelas que apareçam com tema incorrecto.
+
+Verificar desktop a 1440 píxeis, tablet a 768 píxeis e telemóvel a 390 píxeis. A página não deve transbordar horizontalmente. O menu mantém a organização e adapta-se ao espaço disponível. Os controlos principais devem permitir utilização por toque sem depender de hover.
+
+Contraste mínimo de 4,5:1 no texto normal e 3:1 no texto grande. Navegação por teclado, foco visível, rótulos acessíveis, abertura e fecho de janelas, retorno do foco e acesso aos valores dos gráficos devem ser verificados. Respeitar prefers-reduced-motion. Usar transições curtas sem atrasar a leitura.
+
+Comparar os gráficos com os totais e tabelas das mesmas amostras. Cobrir valores zero, negativos, categorias longas e períodos sem dados. Não converter erro em valor zero. Os testes financeiros e de segurança existentes devem continuar a passar, além do TypeScript, lint dos ficheiros alterados e build.
+
+Verificar também que as páginas públicas, o login e /staff mantêm a apresentação anterior. Confirmar que utilizadores anónimos continuam sem acesso ao admin e que a demonstração não existe em produção. Rever separadamente o código antes de propor a publicação.
+
+DECISÕES TÉCNICAS DELEGADAS À IMPLEMENTAÇÃO
+
+Definir opacidades, intensidade do blur, espaçamentos, raios, hierarquia fina e componentes adicionais estritamente necessários. Seleccionar a integração compatível de Chart e a composição da demonstração. Decidir quais adaptações exigem variantes em vez de estilos globais. Estas decisões devem cumprir os critérios acima e não alterar o âmbito funcional.
+
+FONTES
+
+Decisões do utilizador nesta conversa e Design-System-ABIPTOM.
+Código actual de app/(core)/admin, core/components/ui, core/components/layout, core/styles.source.css, core/lib/dashboard/actions.ts e core/lib/reports/actions.ts.
+https://ui.shadcn.com/
+https://ui.shadcn.com/docs/components/chart

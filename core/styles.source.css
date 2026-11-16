@@ -2,8 +2,10 @@
 @source "./components";
 @source "../app/(core)";
 @source "./lib";
+@source "../components/ui/chart.tsx";
 @import "tw-animate-css";
 @import "./shadcn.css";
+@import "./admin-frost.css";
 
 @custom-variant dark (&:is(.dark *));
 

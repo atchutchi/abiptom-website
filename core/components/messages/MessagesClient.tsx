@@ -425,6 +425,8 @@ export function MessagesClient({
                       className={cn("flex", mine ? "justify-end" : "justify-start")}
                     >
                       <div
+                        data-slot="message-bubble"
+                        data-mine={mine}
                         className={cn(
                           "max-w-[min(40rem,85%)] rounded-lg px-3 py-2 shadow-sm",
                           mine

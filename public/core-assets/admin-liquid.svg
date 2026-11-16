@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <defs>
+    <linearGradient id="metal" x1="1280" y1="40" x2="480" y2="1160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172027"/>
+      <stop offset=".22" stop-color="#7D929E"/>
+      <stop offset=".38" stop-color="#C7CEC6"/>
+      <stop offset=".49" stop-color="#485962"/>
+      <stop offset=".64" stop-color="#A38E54"/>
+      <stop offset=".8" stop-color="#39474E"/>
+      <stop offset="1" stop-color="#121A23"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="1420" y1="0" x2="320" y2="1180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#708995" stop-opacity="0"/>
+      <stop offset=".32" stop-color="#C4D4D9" stop-opacity=".85"/>
+      <stop offset=".56" stop-color="#CCAA56" stop-opacity=".68"/>
+      <stop offset=".76" stop-color="#859BA6" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#708995" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow"><stop stop-color="#6D592D" stop-opacity=".7"/><stop offset="1" stop-color="#6D592D" stop-opacity="0"/></radialGradient>
+    <filter id="frost" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="38"/></filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+  <ellipse cx="1280" cy="520" rx="620" ry="680" fill="url(#glow)"/>
+  <path d="M1350-230C630-100 1640 210 1050 450S500 750 1180 1450" stroke="url(#metal)" stroke-width="310" filter="url(#frost)" opacity=".78"/>
+  <path d="M1370-230C650-100 1660 210 1070 450S520 750 1200 1450" stroke="url(#edge)" stroke-width="78" filter="url(#soft)" opacity=".7"/>
+  <path d="M1640 100C1080 220 1540 520 910 720S200 1110 390 1370" stroke="url(#metal)" stroke-width="150" filter="url(#frost)" opacity=".55"/>
+  <path d="M1650 100C1090 220 1550 520 920 720S210 1110 400 1370" stroke="url(#edge)" stroke-width="24" filter="url(#soft)" opacity=".55"/>
+</svg>

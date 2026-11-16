@@ -1,0 +1,48 @@
+Plano de implementação: experiência administrativa ABIPTOM
+Proposta: docs/superpowers/specs/2026-11-16-admin-frost-escuro-design.txt
+Autorização: versão de teste aprovada em 16 de Novembro de 2026.
+Execução: superpowers:executing-plans, num worktree existente, ramo codex/admin-frost-escuro.
+
+Objectivo
+Modernizar a apresentação de /admin com vidro fosco escuro e componentes shadcn/ui, preservando dados, regras, permissões, navegação e apresentação pública, /login e /staff.
+
+Arquitectura
+Tema confinado a uma raiz administrativa e ao respectivo contentor de portais. Componentes visuais recebem dados já autorizados no servidor. Demonstração separada com dados sintéticos, sem acesso aos serviços do Core e indisponível em produção. Reutilizar components/ui/chart.tsx, já compatível com Recharts 2, sem actualizar dependências.
+
+Riscos a verificar
+Portais fora da raiz administrativa devem conservar o tema e o funcionamento do foco.
+Estilos claros fixos e overrides com !important não podem produzir texto ilegível.
+Montantes negativos e zero devem conservar o valor exacto e não ser confundidos com ausência de dados.
+A demonstração não pode abrir acesso às rotas administrativas nem existir em produção.
+Tabelas largas e menu não podem tornar a página inteira mais larga do que o ecrã.
+
+Tarefa 1: análise e segurança da demonstração
+Consultar o Graphify para ambos os repositórios e comparar o commit indexado com HEAD. Se o acesso não estiver disponível, registar a limitação e continuar com análise local, sem atribuir resultados locais ao Graphify.
+Inventariar as dependências do site público, os componentes partilhados e as rotas administrativas.
+Criar core/lib/admin/review-policy.ts com isAdminDesignReviewEnabled(env), que exige modo de revisão e rejeita VERCEL_ENV=production mesmo quando existe ABIPTOM_REVIEW_ONLY=1.
+Criar core/tests/unit/admin/review-policy.test.ts, executar antes e depois da implementação. Cobrir produção, preview, execução local explícita e execução local normal.
+Não alterar o controlo de acesso a /admin, /staff ou às APIs.
+
+Tarefa 2: tema e componentes
+Criar core/components/layout/AdminSurface.tsx, que recebe children e confina o tema e um destino de portais ao admin. Usar um contexto para Dialog e Select, preservando o comportamento anterior quando não existe AdminSurface.
+Alterar apenas o invólucro em app/(core)/admin/layout.tsx para usar AdminSurface.
+Criar core/admin-frost.css, importado por core/styles.source.css. Todos os selectores devem começar na raiz administrativa. Manter uma cor sólida como fallback e respeitar reduced-motion.
+Identificar Header e Sidebar com data-slot e variantes sem alterar a ordem e os destinos do menu. Acrescentar aria-current e aria-expanded. Confinar melhorias de tamanho e foco ao admin.
+Acrescentar data-variant ao Button. Manter as variantes existentes e corrigir a apresentação de campos, botões, etiquetas, tabelas, painéis e estados sem alterar operações.
+Validar visualmente contraste, campos, navegação por teclado, portais e isolamento em /login e no site público.
+
+Tarefa 3: gráficos e vistas reutilizáveis
+Criar core/lib/admin/chart-data.ts com projectores puros para totais do painel, totais do relatório, categorias de despesa e série trimestral. Não calcular novas regras financeiras.
+Criar core/tests/unit/admin/chart-data.test.ts com montantes negativos, zero, ausência de série mensal, ordenação de categorias e manutenção da distinção facturado/recebido. Verificar RED e GREEN.
+Criar core/components/reports/FinancialCharts.tsx usando ChartContainer e ChartTooltipContent existentes, BarChart, LineChart e os tokens do tema. Manter alturas explícitas, tabelas de valores acessíveis e animações desactivadas para não depender do movimento.
+Extrair o JSX de dashboard/page.tsx para core/components/dashboard/DashboardView.tsx com props stats e userName. O servidor mantém autenticação e carregamento de dados. A vista permite ocultar o cabeçalho autenticado na demonstração.
+Extrair o JSX de reports/page.tsx para core/components/reports/ReportsView.tsx com props report, ano, mes, trimestre e periodo. Preservar filtros, tabela e exportação.
+Enviar aos gráficos apenas os campos necessários que já são entregues às vistas. Nenhuma nova consulta ou permissão.
+
+Tarefa 4: demonstração e validação
+Criar app/(core)/review/admin/page.tsx e core/components/review/AdminDesignReview.tsx. A página usa a política da tarefa 1 e devolve notFound fora da revisão.
+Criar core/components/review/admin-fixtures.ts com dados inteiramente fictícios e tipos importados apenas como type. Reutilizar as vistas e os componentes reais. Não importar serviços de autenticação, base de dados ou mutações na demonstração.
+A demonstração permite navegar entre painel, relatórios e exemplos de formulários e tabelas. As acções indicam que são locais e não chamam serviços. Exercitar um Dialog e um Select reais e mostrar ausência de dados e erro de validação local.
+Executar test:core, test:security, tsc --noEmit, lint dos ficheiros alterados, build e test:preview. Registar resultados concretos.
+Usar o navegador suportado para avaliar desktop, tablet e telemóvel, texto e números, teclado, portais, gráficos e overflow. Guardar imagens de prova fora dos ficheiros versionados.
+Revisão independente do diff antes da entrega. Entregar a versão de teste e as limitações da verificação, sem publicar em produção. Preservar todas as alterações anteriores do utilizador.

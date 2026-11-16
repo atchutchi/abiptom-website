@@ -28,7 +28,7 @@ export function Header({ title }: HeaderProps) {
   }
 
   return (
-    <header className="h-16 border-b border-[rgb(245_184_0_/_30%)] bg-[linear-gradient(90deg,#fffdf8_0%,#fff8df_55%,#fff3c2_100%)] flex items-center justify-between px-6 shadow-[0_1px_0_rgb(245_184_0_/_12%)]">
+    <header data-slot="admin-header" className="h-16 border-b border-[rgb(245_184_0_/_30%)] bg-[linear-gradient(90deg,#fffdf8_0%,#fff8df_55%,#fff3c2_100%)] flex items-center justify-between px-6 shadow-[0_1px_0_rgb(245_184_0_/_12%)]">
       <div className="flex min-w-0 items-center gap-4">
         <Link href={homeHref} aria-label={APP_NAME} className="flex min-w-0 items-center gap-3">
           <Image
