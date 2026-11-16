@@ -1,6 +1,13 @@
 // Synthetic examples only. This module never imports a database or an action at runtime.
 import type { DashboardStats } from '@/core/lib/dashboard/actions';
 import type { ProfitLossReport } from '@/core/lib/reports/actions';
+import type { UserListItem } from '@/core/components/users/UsersTable';
+
+export const demoUsers: UserListItem[] = [
+  { id: 'demo-user-a', nomeCompleto: 'Utilizador de Demonstração com Nome Completo Extenso', email: 'utilizador.com.endereco.muito.extenso@exemplo.gw', cargo: 'Responsável de Coordenação de Projectos e Desenvolvimento Tecnológico', role: 'coord', percentagemDescontoFolha: '0', elegivelSubsidioDinamicoDefault: true, activo: true },
+  { id: 'demo-user-b', nomeCompleto: 'Utilizadora de Demonstração', email: 'utilizadora@exemplo.gw', cargo: 'Design e Comunicação', role: 'staff', percentagemDescontoFolha: '0.125', elegivelSubsidioDinamicoDefault: false, activo: false },
+  { id: 'demo-user-c', nomeCompleto: 'Administração de Demonstração', email: 'administracao@exemplo.gw', cargo: null, role: 'ca', percentagemDescontoFolha: '1', elegivelSubsidioDinamicoDefault: false, activo: true },
+];
 
 export const demoStats: DashboardStats = {
   facturasAbertas: { count: 8, totalXof: 1250000 }, facturasVencidas: { count: 2, totalXof: 320000 },

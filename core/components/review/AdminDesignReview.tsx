@@ -7,13 +7,14 @@ import { AdminSurface } from '@/core/components/layout/AdminSurface';
 import { Sidebar } from '@/core/components/layout/Sidebar';
 import { DashboardView } from '@/core/components/dashboard/DashboardView';
 import { ReportsView } from '@/core/components/reports/ReportsView';
+import { UsersTable } from '@/core/components/users/UsersTable';
 import { Button } from '@/core/components/ui/button';
 import { Input } from '@/core/components/ui/input';
 import { Label } from '@/core/components/ui/label';
 import { Badge } from '@/core/components/ui/badge';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/core/components/ui/dialog';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/core/components/ui/select';
-import { demoStats, demoReport, demoMonthlyReport } from './admin-fixtures';
+import { demoStats, demoReport, demoMonthlyReport, demoUsers } from './admin-fixtures';
 
 export function AdminDesignReview() {
   const [section, setSection] = useState('Painel');
@@ -30,6 +31,7 @@ export function AdminDesignReview() {
     if (href.startsWith('/api/')) { setNotice('A exportação está desactivada nesta demonstração.'); return; }
     setActivePath(href.split('?')[0]);
     if (href.includes('reports')) setSection('Relatórios');
+    else if (href === '/admin/users') setSection('Utilizadores');
     else if (href.includes('dashboard')) setSection('Painel');
     else { setSection('Componentes'); setNotice('Exemplo visual. As operações reais continuam disponíveis apenas na aplicação autenticada.'); }
   }
@@ -55,11 +57,11 @@ export function AdminDesignReview() {
           <Button variant="outline" onClick={() => setSection('Componentes')}><SlidersHorizontal aria-hidden="true" className="size-4" /><span className="hidden sm:inline">Explorar componentes</span></Button>
         </header>
         <div className="review-tabs" aria-label="Vistas da demonstração">
-          {['Painel', 'Relatórios', 'Componentes'].map(name => <Button key={name} variant="ghost" aria-pressed={section === name} onClick={() => { setSection(name); setActivePath(name === 'Painel' ? '/admin/dashboard' : name === 'Relatórios' ? '/admin/reports' : '/admin/users'); setNotice(''); }}>{name}</Button>)}
+          {['Painel', 'Relatórios', 'Utilizadores', 'Componentes'].map(name => <Button key={name} variant="ghost" aria-pressed={section === name} onClick={() => { setSection(name); setActivePath(name === 'Painel' ? '/admin/dashboard' : name === 'Relatórios' ? '/admin/reports' : '/admin/users'); setNotice(''); }}>{name}</Button>)}
           {section === 'Painel' && <Button variant="outline" className="ml-auto" aria-pressed={empty} onClick={() => setEmpty(!empty)}>{empty ? 'Mostrar amostra' : 'Testar estado vazio'}</Button>}
         </div>
         {notice && <p role="status" className="mx-4 mt-4 rounded-lg border border-border px-4 py-3 text-sm text-muted-foreground md:mx-8">{notice}</p>}
-        {section === 'Painel' ? <DashboardView stats={stats} userName="Equipa" /> : section === 'Relatórios' ? <ReportsView report={periodo === 'mensal' ? demoMonthlyReport : demoReport} ano={2026} mes={11} trimestre={4} periodo={periodo} /> : <ComponentExamples />}
+        {section === 'Painel' ? <DashboardView stats={stats} userName="Equipa" /> : section === 'Relatórios' ? <ReportsView report={periodo === 'mensal' ? demoMonthlyReport : demoReport} ano={2026} mes={11} trimestre={4} periodo={periodo} /> : section === 'Utilizadores' ? <main><div className="mx-auto max-w-6xl space-y-4"><h1>Utilizadores</h1><p className="text-sm text-muted-foreground">Exemplos fictícios com textos longos para verificar todas as colunas.</p><UsersTable users={demoUsers} /></div></main> : <ComponentExamples />}
       </div>
     </AdminSurface>
   );
