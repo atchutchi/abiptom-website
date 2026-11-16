@@ -161,6 +161,13 @@
   .admin-surface thead { background: #25272c; }
   .admin-surface th { white-space: nowrap; font-size: .8125rem; letter-spacing: .01em; }
   .admin-surface :is(th, td) { padding-block: .9rem; }
+  @media (min-width: 1280px) {
+    .admin-surface [data-slot="users-table"] :is(th, td) {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .admin-surface [data-slot="users-table"] th { line-height: 1.4; }
+  }
   .admin-surface tbody tr:hover { background-color: rgb(255 255 255 / 3%) !important; }
   .admin-surface [data-financial-panel] {
     border: 1px solid #3a3d43; border-radius: .875rem; background: #1b1d20; padding: 1.5rem; min-width: 0;
